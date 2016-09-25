@@ -101,6 +101,7 @@
             this.but_Ingresar.TabIndex = 4;
             this.but_Ingresar.Text = "Ingresar";
             this.but_Ingresar.UseVisualStyleBackColor = true;
+            this.but_Ingresar.Click += new System.EventHandler(this.but_Ingresar_Click);
             // 
             // tex_username
             // 
@@ -113,6 +114,7 @@
             // 
             this.tex_password.Location = new System.Drawing.Point(67, 63);
             this.tex_password.Name = "tex_password";
+            this.tex_password.PasswordChar = '*';
             this.tex_password.Size = new System.Drawing.Size(121, 20);
             this.tex_password.TabIndex = 3;
             // 

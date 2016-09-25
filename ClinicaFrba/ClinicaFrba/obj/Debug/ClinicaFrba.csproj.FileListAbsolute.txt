@@ -15,3 +15,15 @@ C:\Users\ricardo\Desktop\GDD\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debu
 C:\Users\ricardo\Desktop\GDD\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.frm_inicio_sesion.resources
 C:\Users\ricardo\Desktop\GDD\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Properties.Resources.resources
 C:\Users\ricardo\Desktop\GDD\Aplicacion Desktop\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.exe.config
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.exe
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.pdb
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csprojResolveAssemblyReference.cache
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.frm_inicio_sesion.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.frm_tareas_administrativo.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.frm_tareas_afiliado.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.frm_tareas_profesional.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Properties.Resources.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.exe
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.pdb

@@ -16,5 +16,15 @@ namespace ClinicaFrba
         {
             InitializeComponent();
         }
+
+        private void but_Ingresar_Click(object sender, EventArgs e)
+        {
+            Conexion conexion = new Conexion();
+            conexion.conectar();
+            if (conexion.verificarLogeo(tex_username.Text, tex_password.Text))
+            {
+                dgw_Roles_a_elegir.DataSource = conexion.roles(tex_username.Text);
+            }
+        }
     }
 }

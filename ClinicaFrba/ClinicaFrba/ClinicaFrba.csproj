@@ -86,6 +86,7 @@
     <Compile Include="Compra Bono\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Conexion.cs" />
     <Compile Include="frm_tareas_profesional.cs">
       <SubType>Form</SubType>
     </Compile>
