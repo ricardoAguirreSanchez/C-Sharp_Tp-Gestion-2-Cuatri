@@ -35,5 +35,24 @@ namespace ClinicaFrba
             }
 
         }
+
+        private void but_Aceptar_Click(object sender, EventArgs e)
+        {
+            if (dgw_Roles_a_elegir.CurrentRow.Cells[0].Value.ToString() == "ADMIN")
+            {
+                frm_tareas_administrativo admin = new frm_tareas_administrativo();
+                admin.Show();
+            }
+            if (dgw_Roles_a_elegir.CurrentRow.Cells[0].Value.ToString() == "PACIENTE")
+            {
+                frm_tareas_afiliado afil = new frm_tareas_afiliado();
+                afil.Show();
+            }
+            if (dgw_Roles_a_elegir.CurrentRow.Cells[0].Value.ToString() == "MEDICO")
+            {
+                frm_tareas_profesional prof = new frm_tareas_profesional();
+                prof.Show();
+            }
+        }
     }
 }

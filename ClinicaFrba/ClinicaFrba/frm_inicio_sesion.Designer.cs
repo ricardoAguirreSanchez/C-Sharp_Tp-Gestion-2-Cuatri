@@ -61,6 +61,7 @@
             this.but_Aceptar.TabIndex = 1;
             this.but_Aceptar.Text = "Aceptar";
             this.but_Aceptar.UseVisualStyleBackColor = true;
+            this.but_Aceptar.Click += new System.EventHandler(this.but_Aceptar_Click);
             // 
             // dgw_Roles_a_elegir
             // 
