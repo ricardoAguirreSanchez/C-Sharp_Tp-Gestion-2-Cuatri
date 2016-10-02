@@ -44,12 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Abm Afiliado\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Abm Afiliado\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Abm Especialidades Medicas\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,11 +62,42 @@
     <Compile Include="Abm Profesional\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="AbmRol\Form1.cs">
+    <Compile Include="AbmRol\frm_modificar_eliminar_rol.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AbmRol\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="AbmRol\frm_modificar_eliminar_rol.Designer.cs">
+      <DependentUpon>frm_modificar_eliminar_rol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\frm_agregar_rol.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\frm_agregar_rol.Designer.cs">
+      <DependentUpon>frm_agregar_rol.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbmRol\frm_administrar_roles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbmRol\frm_administrar_roles.Designer.cs">
+      <DependentUpon>frm_administrar_roles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_administrar_afiliado.cs" />
+    <Compile Include="Registro Llegada\frm_registrar_llegada.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registro Llegada\frm_registrar_llegada.Designer.cs">
+      <DependentUpon>frm_registrar_llegada.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Listados\frm_consultar_estadisticas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Listados\frm_consultar_estadisticas.Designer.cs">
+      <DependentUpon>frm_consultar_estadisticas.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Abm Afiliado\frm_administrar_afiliados.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Abm Afiliado\frm_administrar_afiliados.Designer.cs">
+      <DependentUpon>frm_administrar_afiliados.cs</DependentUpon>
     </Compile>
     <Compile Include="Cancelar Atencion\Form1.cs">
       <SubType>Form</SubType>
@@ -111,12 +136,6 @@
     <Compile Include="frm_inicio_sesion.Designer.cs">
       <DependentUpon>frm_inicio_sesion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Listados\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Listados\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Pedir Turno\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -131,18 +150,27 @@
     <Compile Include="Registrar Agenta Medico\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Registro Llegada\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Registro Llegada\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Registro Resultado\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Registro Resultado\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Abm Afiliado\frm_administrar_afiliados.resx">
+      <DependentUpon>frm_administrar_afiliados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\frm_administrar_roles.resx">
+      <DependentUpon>frm_administrar_roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\frm_agregar_rol.resx">
+      <DependentUpon>frm_agregar_rol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AbmRol\frm_modificar_eliminar_rol.resx">
+      <DependentUpon>frm_modificar_eliminar_rol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Listados\frm_consultar_estadisticas.resx">
+      <DependentUpon>frm_consultar_estadisticas.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frm_inicio_sesion.resx">
       <DependentUpon>frm_inicio_sesion.cs</DependentUpon>
     </EmbeddedResource>
@@ -164,6 +192,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Registro Llegada\frm_registrar_llegada.resx">
+      <DependentUpon>frm_registrar_llegada.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

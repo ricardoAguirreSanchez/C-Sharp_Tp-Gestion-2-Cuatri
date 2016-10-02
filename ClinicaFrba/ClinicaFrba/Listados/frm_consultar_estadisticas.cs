@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ClinicaFrba.AbmRol
 {
-    public partial class Form1 : Form
+    public partial class frm_consultar_estadisticas : Form
     {
-        public Form1()
+        public frm_consultar_estadisticas()
         {
             InitializeComponent();
         }

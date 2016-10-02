@@ -27,3 +27,9 @@ C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\C
 C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
 C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.exe
 C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.pdb
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_administrar_afiliados.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_administrar_roles.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_consultar_estadisticas.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_registrar_llegada.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_agregar_rol.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_modificar_eliminar_rol.resources

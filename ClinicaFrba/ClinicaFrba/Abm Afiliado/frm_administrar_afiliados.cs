@@ -8,13 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ClinicaFrba.Registro_Llegada
+namespace ClinicaFrba.AbmRol
 {
-    public partial class Form1 : Form
+    public partial class frm_administrar_afiliados : Form
     {
-        public Form1()
+        public frm_administrar_afiliados()
         {
             InitializeComponent();
+        }
+
+        private void frm_administrar_afiliados_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

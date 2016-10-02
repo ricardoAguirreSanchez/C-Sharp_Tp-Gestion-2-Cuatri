@@ -33,8 +33,8 @@
             this.but_administrar_afiliado = new System.Windows.Forms.Button();
             this.but_administrar_rol = new System.Windows.Forms.Button();
             this.group_por_afiliado = new System.Windows.Forms.GroupBox();
-            this.but_comprar_bonos = new System.Windows.Forms.Button();
             this.but_pedir_turno = new System.Windows.Forms.Button();
+            this.but_comprar_bonos = new System.Windows.Forms.Button();
             this.group_por_afiliado.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,6 +46,7 @@
             this.but_registrar_llegada.TabIndex = 7;
             this.but_registrar_llegada.Text = "Registrar Llegada";
             this.but_registrar_llegada.UseVisualStyleBackColor = true;
+            this.but_registrar_llegada.Click += new System.EventHandler(this.but_registrar_llegada_Click);
             // 
             // but_consultar_estadisticas
             // 
@@ -55,6 +56,7 @@
             this.but_consultar_estadisticas.TabIndex = 6;
             this.but_consultar_estadisticas.Text = "Consultar Estadisticas";
             this.but_consultar_estadisticas.UseVisualStyleBackColor = true;
+            this.but_consultar_estadisticas.Click += new System.EventHandler(this.but_consultar_estadisticas_Click);
             // 
             // but_administrar_afiliado
             // 
@@ -64,6 +66,7 @@
             this.but_administrar_afiliado.TabIndex = 5;
             this.but_administrar_afiliado.Text = "Administrar Afiliados";
             this.but_administrar_afiliado.UseVisualStyleBackColor = true;
+            this.but_administrar_afiliado.Click += new System.EventHandler(this.but_administrar_afiliado_Click);
             // 
             // but_administrar_rol
             // 
@@ -73,6 +76,7 @@
             this.but_administrar_rol.TabIndex = 4;
             this.but_administrar_rol.Text = "Administrar Roles";
             this.but_administrar_rol.UseVisualStyleBackColor = true;
+            this.but_administrar_rol.Click += new System.EventHandler(this.but_administrar_rol_Click);
             // 
             // group_por_afiliado
             // 
@@ -85,15 +89,6 @@
             this.group_por_afiliado.TabStop = false;
             this.group_por_afiliado.Text = "Por el afiliado";
             // 
-            // but_comprar_bonos
-            // 
-            this.but_comprar_bonos.Location = new System.Drawing.Point(65, 19);
-            this.but_comprar_bonos.Name = "but_comprar_bonos";
-            this.but_comprar_bonos.Size = new System.Drawing.Size(121, 27);
-            this.but_comprar_bonos.TabIndex = 5;
-            this.but_comprar_bonos.Text = "Comprar Bonos";
-            this.but_comprar_bonos.UseVisualStyleBackColor = true;
-            // 
             // but_pedir_turno
             // 
             this.but_pedir_turno.Location = new System.Drawing.Point(65, 52);
@@ -102,6 +97,15 @@
             this.but_pedir_turno.TabIndex = 6;
             this.but_pedir_turno.Text = "Pedir Turno";
             this.but_pedir_turno.UseVisualStyleBackColor = true;
+            // 
+            // but_comprar_bonos
+            // 
+            this.but_comprar_bonos.Location = new System.Drawing.Point(65, 19);
+            this.but_comprar_bonos.Name = "but_comprar_bonos";
+            this.but_comprar_bonos.Size = new System.Drawing.Size(121, 27);
+            this.but_comprar_bonos.TabIndex = 5;
+            this.but_comprar_bonos.Text = "Comprar Bonos";
+            this.but_comprar_bonos.UseVisualStyleBackColor = true;
             // 
             // frm_tareas_administrativo
             // 
