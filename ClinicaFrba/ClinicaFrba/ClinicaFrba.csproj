@@ -80,7 +80,6 @@
     <Compile Include="AbmRol\frm_administrar_roles.Designer.cs">
       <DependentUpon>frm_administrar_roles.cs</DependentUpon>
     </Compile>
-    <Compile Include="frm_administrar_afiliado.cs" />
     <Compile Include="Registro Llegada\frm_registrar_llegada.cs">
       <SubType>Form</SubType>
     </Compile>
