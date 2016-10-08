@@ -104,11 +104,11 @@
     <Compile Include="Cancelar Atencion\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Compra Bono\Form1.cs">
+    <Compile Include="Compra Bono\frm_comprar_bono.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Compra Bono\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Compra Bono\frm_comprar_bono.Designer.cs">
+      <DependentUpon>frm_comprar_bono.cs</DependentUpon>
     </Compile>
     <Compile Include="Conexion.cs" />
     <Compile Include="frm_tareas_profesional.cs">
@@ -135,11 +135,11 @@
     <Compile Include="frm_inicio_sesion.Designer.cs">
       <DependentUpon>frm_inicio_sesion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Pedir Turno\Form1.cs">
+    <Compile Include="Pedir Turno\frm_pedir_turno.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Pedir Turno\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Pedir Turno\frm_pedir_turno.Designer.cs">
+      <DependentUpon>frm_pedir_turno.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -167,6 +167,9 @@
     <EmbeddedResource Include="AbmRol\frm_modificar_eliminar_rol.resx">
       <DependentUpon>frm_modificar_eliminar_rol.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Compra Bono\frm_comprar_bono.resx">
+      <DependentUpon>frm_comprar_bono.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Listados\frm_consultar_estadisticas.resx">
       <DependentUpon>frm_consultar_estadisticas.cs</DependentUpon>
     </EmbeddedResource>
@@ -181,6 +184,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frm_tareas_profesional.resx">
       <DependentUpon>frm_tareas_profesional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pedir Turno\frm_pedir_turno.resx">
+      <DependentUpon>frm_pedir_turno.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
