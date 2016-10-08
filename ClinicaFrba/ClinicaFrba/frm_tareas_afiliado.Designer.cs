@@ -41,6 +41,7 @@
             this.but_comprar_bonos.TabIndex = 7;
             this.but_comprar_bonos.Text = "Comprar Bonos";
             this.but_comprar_bonos.UseVisualStyleBackColor = true;
+            this.but_comprar_bonos.Click += new System.EventHandler(this.but_comprar_bonos_Click);
             // 
             // but_pedir_turno
             // 
@@ -50,6 +51,7 @@
             this.but_pedir_turno.TabIndex = 8;
             this.but_pedir_turno.Text = "Pedir Turno";
             this.but_pedir_turno.UseVisualStyleBackColor = true;
+            this.but_pedir_turno.Click += new System.EventHandler(this.but_pedir_turno_Click);
             // 
             // but_cancelar_atencion
             // 

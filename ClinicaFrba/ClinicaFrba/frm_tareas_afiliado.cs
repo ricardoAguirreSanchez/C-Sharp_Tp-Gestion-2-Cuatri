@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ClinicaFrba.Compra_Bono;
+using ClinicaFrba.Pedir_Turno;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,6 +22,18 @@ namespace ClinicaFrba
         private void but_Gestion_Rol_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void but_comprar_bonos_Click(object sender, EventArgs e)
+        {
+            frm_comprar_bono comprarBono = new frm_comprar_bono();
+            comprarBono.Show();
+        }
+
+        private void but_pedir_turno_Click(object sender, EventArgs e)
+        {
+            frm_pedir_turno pedirTurno = new frm_pedir_turno();
+            pedirTurno.Show();
         }
     }
 }

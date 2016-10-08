@@ -97,6 +97,7 @@
             this.but_pedir_turno.TabIndex = 6;
             this.but_pedir_turno.Text = "Pedir Turno";
             this.but_pedir_turno.UseVisualStyleBackColor = true;
+            this.but_pedir_turno.Click += new System.EventHandler(this.but_pedir_turno_Click);
             // 
             // but_comprar_bonos
             // 
@@ -106,6 +107,7 @@
             this.but_comprar_bonos.TabIndex = 5;
             this.but_comprar_bonos.Text = "Comprar Bonos";
             this.but_comprar_bonos.UseVisualStyleBackColor = true;
+            this.but_comprar_bonos.Click += new System.EventHandler(this.but_comprar_bonos_Click);
             // 
             // frm_tareas_administrativo
             // 

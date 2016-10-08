@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace ClinicaFrba.Compra_Bono
 {
-    public partial class Form1 : Form
+    public partial class frm_comprar_bono : Form
     {
-        public Form1()
+        public frm_comprar_bono()
         {
             InitializeComponent();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
