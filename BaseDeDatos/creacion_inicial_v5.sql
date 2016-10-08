@@ -56,6 +56,11 @@ xx/SEP/2016		(v3).
 01/OCT/2016		(v4).
 05/OCT/2016		Se agrega la fecha de baja en la tabla Paciente.
 05/OCT/2016		Se agrega la seccion 8, para ctivar constraints post-migración.
+06/OCT/2016		Se modifica el cod del afiliado y el nro del afiliado, todo a un sólo campo.
+06/OCT/2016		Como resultado de la modificación anterior, no es necesario la sección 8 y es eliminada.
+06/OCT/2016		Se crea el procedimiento para la migración de Pacientes, genrando un nro de afiliado titular durante la migración.
+07/OCT/2016		Se agrega el campo 'hpa_plan_nuevo' en tabla Hist_Plan_Afiliado.
+07/OCT/2016		En 'Estado_Turno' se agraga el estado = 4 & se modifica el tamaño del campo descripcion del estado.
 
 */
 
@@ -118,6 +123,11 @@ IF OBJECT_ID('SOLARIS.Especialidad') IS NOT NULL
 IF OBJECT_ID('SOLARIS.Tipo_Especialidad') IS NOT NULL
 	DROP TABLE SOLARIS.Tipo_Especialidad;
 
+-- Tabla "Bono_Consulta"
+-- Precede a: "Paciente"
+IF OBJECT_ID('SOLARIS.Bono_Consulta') IS NOT NULL
+	DROP TABLE SOLARIS.Bono_Consulta;
+
 -- Tabla "Consulta"
 -- Precede a: "Bono","Turno"
 IF OBJECT_ID('SOLARIS.Consulta') IS NOT NULL
@@ -147,10 +157,9 @@ IF OBJECT_ID('SOLARIS.Dia') IS NOT NULL
 	DROP TABLE SOLARIS.Dia;
 */
 
--- Tabla "Bono_Consulta"
--- Precede a: "Paciente"
-IF OBJECT_ID('SOLARIS.Bono_Consulta') IS NOT NULL
-	DROP TABLE SOLARIS.Bono_Consulta;
+-- Tabla "Bono_Bono_Farmacia"
+IF OBJECT_ID('SOLARIS.Bono_Farmacia') IS NOT NULL
+	DROP TABLE SOLARIS.Bono_Farmacia;
 
 -- Tabla "Hist_Plan_Afiliado"
 IF OBJECT_ID('SOLARIS.Hist_Plan_Afiliado') IS NOT NULL
@@ -316,9 +325,7 @@ ALTER TABLE SOLARIS.Relacion ADD CONSTRAINT PK_Relacion PRIMARY KEY(rel_codigo);
 
 -- Tabla "Paciente"
 CREATE TABLE SOLARIS.Paciente (
-	pac_cod_interno		INT	IDENTITY	NOT NULL,		-- En un código interno, se usa como PK.
-	pac_nro_raiz		INT,
-	pac_nro_personal	TINYINT,
+	pac_nro_afiliado	INT NOT NULL,
 	pac_usuario			INT,		-- [FK]
 	pac_apellido		VARCHAR(255),
 	pac_nombre			VARCHAR(255),
@@ -332,50 +339,43 @@ CREATE TABLE SOLARIS.Paciente (
 	pac_estado_civil	TINYINT,	-- [FK]
 	pac_cant_familiares	TINYINT,
 	pac_plan_medico		NUMERIC(18,0),	-- [FK]
-	pac_titular			INT,			-- [FK]
+	--pac_titular			INT,			-- [FK]
 	pac_tit_relacion	TINYINT,		-- [FK]
 	pac_esta_activo		BIT,
 	pac_fecha_baja		DATETIME
 );
 
---ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT PK_Paciente PRIMARY KEY(pac_nro_raiz, pac_nro_personal);
-ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT PK_Paciente PRIMARY KEY(pac_cod_interno);
+
+ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT PK_Paciente PRIMARY KEY(pac_nro_afiliado);
 
 ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT FK_Paciente_01 FOREIGN KEY (pac_usuario) REFERENCES SOLARIS.Usuario(usu_codigo);
 ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT FK_Paciente_02 FOREIGN KEY (pac_tipo_doc) REFERENCES SOLARIS.Tipo_Documento(tdc_codigo);
 ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT FK_Paciente_03 FOREIGN KEY (pac_estado_civil) REFERENCES SOLARIS.Estado_Civil(ecv_codigo);
 ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT FK_Paciente_04 FOREIGN KEY (pac_plan_medico) REFERENCES SOLARIS.Plan_Medico(plm_codigo);
-ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT FK_Paciente_05 FOREIGN KEY (pac_titular) REFERENCES SOLARIS.Paciente(pac_cod_interno);
 ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT FK_Paciente_06 FOREIGN KEY (pac_tit_relacion) REFERENCES SOLARIS.Relacion(rel_codigo);
 
-ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT CK_Nro_Personal_Max CHECK (pac_nro_personal <= 99);
 ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT CK_Afiliado_EstaActivo CHECK (pac_esta_activo = 0 OR pac_esta_activo = 1);
-
---ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT UQ_Afiliado_Raiz_Personal UNIQUE (pac_nro_raiz, pac_nro_personal);
 
 
 -- Tabla "Hist_Plan_Afiliado"
 
 CREATE TABLE SOLARIS.Hist_Plan_Afiliado (
-	--hpa_nro_raiz		INT		NOT NULL,			-- [FK]
-	--hpa_nro_personal	TINYINT	NOT NULL,			-- [FK]
 	hpa_cod_afiliado	INT NOT NULL,				-- [FK]
-	hpa_plan_medico		NUMERIC(18,0)	NOT NULL,	-- [FK]
-	hpa_fecha			DATETIME		NOT NULL,
+	hpa_plan_anterior	NUMERIC(18,0)	NOT NULL,	-- [FK]
+	hpa_plan_nuevo		NUMERIC(18,0)	NOT NULL,	-- [FK]
+	hpa_fecha_cambio	DATETIME		NOT NULL,
 	hpa_comentarios		VARCHAR(1022)
 );
 
 ALTER TABLE SOLARIS.Hist_Plan_Afiliado 
-	ADD CONSTRAINT PK_Hist_Plan_Afiliado PRIMARY KEY(hpa_cod_afiliado, hpa_plan_medico, hpa_fecha);
+	ADD CONSTRAINT PK_Hist_Plan_Afiliado PRIMARY KEY(hpa_cod_afiliado, hpa_plan_anterior, hpa_plan_nuevo, hpa_fecha_cambio);
 
-/*
 ALTER TABLE SOLARIS.Hist_Plan_Afiliado 
-	ADD CONSTRAINT FK_Hist_Plan_Afiliado_01 FOREIGN KEY (hpa_nro_raiz, hpa_nro_personal) REFERENCES SOLARIS.Paciente(pac_nro_raiz, pac_nro_personal);
-*/
+	ADD CONSTRAINT FK_Hist_Plan_Afiliado_01 FOREIGN KEY (hpa_cod_afiliado) REFERENCES SOLARIS.Paciente(pac_nro_afiliado);
 ALTER TABLE SOLARIS.Hist_Plan_Afiliado 
-	ADD CONSTRAINT FK_Hist_Plan_Afiliado_01 FOREIGN KEY (hpa_cod_afiliado) REFERENCES SOLARIS.Paciente(pac_cod_interno);
+	ADD CONSTRAINT FK_Hist_Plan_Afiliado_02 FOREIGN KEY (hpa_plan_anterior) REFERENCES SOLARIS.Plan_Medico(plm_codigo);
 ALTER TABLE SOLARIS.Hist_Plan_Afiliado 
-	ADD CONSTRAINT FK_Hist_Plan_Afiliado_02 FOREIGN KEY (hpa_plan_medico) REFERENCES SOLARIS.Plan_Medico(plm_codigo);
+	ADD CONSTRAINT FK_Hist_Plan_Afiliado_03 FOREIGN KEY (hpa_plan_nuevo) REFERENCES SOLARIS.Plan_Medico(plm_codigo);
 
 
 
@@ -485,34 +485,27 @@ ALTER TABLE SOLARIS.Horario ADD CONSTRAINT PK_Horario PRIMARY KEY(hor_codigo);
 ALTER TABLE SOLARIS.Horario ADD CONSTRAINT CK_hor_dia CHECK (hor_dia >= 1 AND hor_dia <= 7);
 
 
--- Tabla "Bono_Consulta"
-CREATE TABLE SOLARIS.Bono_Consulta (
-	bon_numero			INT identity(1,1),
-	bon_fecha_compra	datetime,
-	bon_plan_afiliado	NUMERIC(18,0),		-- [FK]
-	--bon_afiliado_raiz	INT,				-- [FK]*
-	--bon_afiliado_pers	TINYINT,			-- [FK]*
-	bon_cod_afiliado	INT,				-- [FK]
-	bon_fue_utilizado	BIT
+-- Tabla "Bono_Farmacia"
+CREATE TABLE SOLARIS.Bono_Farmacia (
+	bfm_numero				INT identity(1,1),
+	bfm_precio				NUMERIC(18,0),
+	bfm_fecha_compra		datetime,
+	bfm_afiliado_compra		INT,				-- [FK]
+	bfm_plan_afiliado		NUMERIC(18,0),		-- [FK]
 );
 
+ALTER TABLE SOLARIS.Bono_Farmacia ADD CONSTRAINT PK_Bono_Farmacia PRIMARY KEY(bfm_numero);
 
-ALTER TABLE SOLARIS.Bono_Consulta ADD CONSTRAINT PK_Bono_Consulta PRIMARY KEY(bon_numero);
+ALTER TABLE SOLARIS.Bono_Farmacia
+	ADD CONSTRAINT FK_Bono_Farmacia_01 FOREIGN KEY (bfm_plan_afiliado) REFERENCES SOLARIS.Plan_Medico(plm_codigo);
+ALTER TABLE SOLARIS.Bono_Farmacia
+	ADD CONSTRAINT FK_Bono_Farmacia_02 FOREIGN KEY (bfm_afiliado_compra) REFERENCES SOLARIS.Paciente(pac_nro_afiliado);
 
-ALTER TABLE SOLARIS.Bono_Consulta 
-	ADD CONSTRAINT FK_Bono_Consulta_01 FOREIGN KEY (bon_plan_afiliado) REFERENCES SOLARIS.Plan_Medico(plm_codigo);
-/*ALTER TABLE SOLARIS.Bono_Consulta 
-	ADD CONSTRAINT FK_Bono_Consulta_02 FOREIGN KEY (bon_afiliado_raiz, bon_afiliado_pers) REFERENCES SOLARIS.Paciente(pac_nro_raiz, pac_nro_personal);*/
-ALTER TABLE SOLARIS.Bono_Consulta 
-	ADD CONSTRAINT FK_Bono_Consulta_02 FOREIGN KEY (bon_cod_afiliado) REFERENCES SOLARIS.Paciente(pac_cod_interno);
-
-ALTER TABLE SOLARIS.Bono_Consulta ADD CONSTRAINT DF_Bono_Nuevo_Sin_Usar DEFAULT 0 FOR bon_fue_utilizado;
-ALTER TABLE SOLARIS.Bono_Consulta ADD CONSTRAINT CK_bon_fue_utilizado CHECK (bon_fue_utilizado = 0 OR bon_fue_utilizado = 1);
 
 -- Tabla "Estado Turno"
 CREATE TABLE SOLARIS.Estado_Turno (
 	etu_codigo	TINYINT NOT NULL,
-	etu_nombre	VARCHAR(25)
+	etu_nombre	VARCHAR(37)
 );
 
 ALTER TABLE SOLARIS.Estado_Turno ADD CONSTRAINT PK_Estado_Turno PRIMARY KEY(etu_codigo);
@@ -522,32 +515,30 @@ ALTER TABLE SOLARIS.Estado_Turno ADD CONSTRAINT PK_Estado_Turno PRIMARY KEY(etu_
 	1 = FINALIZADO
 	2 = CANCELADO POR PACIENTE
 	3 = CANCELADO POR MEDICO
+	4 = CANCELADO POR BAJA DEL AFILIADO
 */
 
 -- Tabla "Turno"
 CREATE TABLE SOLARIS.Turno (
-	tur_numero			INT IDENTITY(1,1),
-	--tur_afiliado_raiz	INT,		-- [FK]
-	--tur_afiliado_pers	TINYINT,	-- [FK]
+	tur_numero			INT NOT NULL,
 	tur_afiliado		INT,		-- [FK]
 	tur_medico			INT,		-- [FK]
 	tur_fecha_solicitud	datetime,
-	tur_fecha			datetime,
+	tur_fecha_turno		datetime,
 	tur_estado			TINYINT,	-- [FK]
 	tur_motivo_cancel	VARCHAR(255)	-- Si se cancela, se carga el motivo en este campo.
 );
 
 ALTER TABLE SOLARIS.Turno ADD CONSTRAINT PK_Turno PRIMARY KEY(tur_numero);
 
-/*ALTER TABLE SOLARIS.Turno 
-	ADD CONSTRAINT FK_Turno_01 FOREIGN KEY (tur_afiliado_raiz, tur_afiliado_pers) REFERENCES SOLARIS.Paciente(pac_nro_raiz, pac_nro_personal);*/
 ALTER TABLE SOLARIS.Turno 
-	ADD CONSTRAINT FK_Turno_01 FOREIGN KEY (tur_afiliado) REFERENCES SOLARIS.Paciente(pac_cod_interno);
+	ADD CONSTRAINT FK_Turno_01 FOREIGN KEY (tur_afiliado) REFERENCES SOLARIS.Paciente(pac_nro_afiliado);
 
 ALTER TABLE SOLARIS.Turno ADD CONSTRAINT FK_Turno_02 FOREIGN KEY (tur_medico) REFERENCES SOLARIS.Medico(med_cod_medico);
 ALTER TABLE SOLARIS.Turno ADD CONSTRAINT FK_Turno_03 FOREIGN KEY (tur_estado) REFERENCES SOLARIS.Estado_Turno(etu_codigo);
 
 ALTER TABLE SOLARIS.Turno ADD CONSTRAINT DF_Cancelacion_en_null DEFAULT NULL FOR tur_motivo_cancel;
+ALTER TABLE SOLARIS.Turno ADD CONSTRAINT CK_Nro_Turno CHECK (tur_numero > 0);
 
 
 -- Tabla "Consulta"
@@ -555,29 +546,57 @@ CREATE TABLE SOLARIS.Consulta (
 	con_numero				INT IDENTITY(1,1),
 	con_fecha				datetime,
 	con_turno				INT,			-- [FK]
-	--con_afiliado_raiz		INT,			-- [FK]
-	--con_afiliado_pers		TINYINT,		-- [FK]
 	con_afiliado			INT,			-- [FK]
-	con_bono_relacionado	INT,			-- [FK]
+	--con_bono_relacionado	INT,			-- [FK]
 	con_cod_medico			INT,			-- [FK]
 	con_hora_llegada		datetime,
 	con_hora_medico			datetime,
-	con_diagnostico			VARCHAR(4000)
+	con_diagnostico			VARCHAR(1022)
 );
 
 ALTER TABLE SOLARIS.Consulta ADD CONSTRAINT PK_Consulta PRIMARY KEY(con_numero);
 
 ALTER TABLE SOLARIS.Consulta 
 	ADD CONSTRAINT FK_Consulta_01 FOREIGN KEY (con_turno) REFERENCES SOLARIS.Turno(tur_numero);
-/*ALTER TABLE SOLARIS.Consulta 
-	ADD CONSTRAINT FK_Consulta_02 FOREIGN KEY (con_afiliado_raiz, con_afiliado_pers) REFERENCES SOLARIS.Paciente(pac_nro_raiz, pac_nro_personal);*/
 ALTER TABLE SOLARIS.Consulta 
-	ADD CONSTRAINT FK_Consulta_02 FOREIGN KEY (con_afiliado) REFERENCES SOLARIS.Paciente(pac_cod_interno);
+	ADD CONSTRAINT FK_Consulta_02 FOREIGN KEY (con_afiliado) REFERENCES SOLARIS.Paciente(pac_nro_afiliado);
 
-ALTER TABLE SOLARIS.Consulta 
-	ADD CONSTRAINT FK_Consulta_03 FOREIGN KEY (con_bono_relacionado) REFERENCES SOLARIS.Bono_Consulta(bon_numero);
+/*ALTER TABLE SOLARIS.Consulta 
+	ADD CONSTRAINT FK_Consulta_03 FOREIGN KEY (con_bono_relacionado) REFERENCES SOLARIS.Bono_Consulta(bon_numero);*/
 ALTER TABLE SOLARIS.Consulta 
 	ADD CONSTRAINT FK_Consulta_04 FOREIGN KEY (con_cod_medico) REFERENCES SOLARIS.Medico(med_cod_medico);
+
+
+
+-- Tabla "Bono_Consulta"
+CREATE TABLE SOLARIS.Bono_Consulta (
+	bon_numero				INT NOT NULL,
+	bon_precio				NUMERIC(18,0),
+	bon_fecha_compra		datetime,
+	bon_fecha_impresion		datetime,
+	bon_afiliado_compra		INT,				-- [FK]
+	bon_plan_afiliado		NUMERIC(18,0),		-- [FK]
+	bon_nro_consulta_med	INT,				-- [FK]
+	bon_fue_utilizado		BIT,
+	bon_afiliado_uso		INT					-- [FK]
+);
+
+
+ALTER TABLE SOLARIS.Bono_Consulta ADD CONSTRAINT PK_Bono_Consulta PRIMARY KEY(bon_numero);
+
+ALTER TABLE SOLARIS.Bono_Consulta 
+	ADD CONSTRAINT FK_Bono_Consulta_01 FOREIGN KEY (bon_plan_afiliado) REFERENCES SOLARIS.Plan_Medico(plm_codigo);
+ALTER TABLE SOLARIS.Bono_Consulta 
+	ADD CONSTRAINT FK_Bono_Consulta_02 FOREIGN KEY (bon_afiliado_compra) REFERENCES SOLARIS.Paciente(pac_nro_afiliado);
+ALTER TABLE SOLARIS.Bono_Consulta 
+	ADD CONSTRAINT FK_Bono_Consulta_03 FOREIGN KEY (bon_nro_consulta_med) REFERENCES SOLARIS.Consulta(con_numero);
+ALTER TABLE SOLARIS.Bono_Consulta 
+	ADD CONSTRAINT FK_Bono_Consulta_04 FOREIGN KEY (bon_afiliado_uso) REFERENCES SOLARIS.Paciente(pac_nro_afiliado);
+
+ALTER TABLE SOLARIS.Bono_Consulta ADD CONSTRAINT DF_Bono_Nuevo_Sin_Usar DEFAULT 0 FOR bon_fue_utilizado;
+ALTER TABLE SOLARIS.Bono_Consulta ADD CONSTRAINT CK_bon_fue_utilizado CHECK (bon_fue_utilizado = 0 OR bon_fue_utilizado = 1);
+
+
 
 
 PRINT 'Tablas creadas ...';
@@ -678,7 +697,8 @@ INSERT INTO SOLARIS.Estado_Turno
 		(0, 'RESERVADO'),
 		(1, 'FINALIZADO'),
 		(2, 'CANCELADO POR PACIENTE'),
-		(3, 'CANCELADO POR MEDICO');
+		(3, 'CANCELADO POR MEDICO'),
+		(4, 'CANCELADO POR BAJA AFILIADO');
 		
 
 -- Tabla "Usuario" 
@@ -702,6 +722,139 @@ INSERT INTO SOLARIS.Rol_x_Usuario
 		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'ricardo'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'ADMIN'))
 	;
 
+
+
+/* ****************************************************************************
+* SECCION_5 : 
+**************************************************************************** */
+GO
+
+IF OBJECT_ID('SOLARIS.ufn_getNroUltimoAfiliado') IS NOT NULL
+	DROP FUNCTION SOLARIS.ufn_getNroUltimoAfiliado;
+GO
+CREATE FUNCTION SOLARIS.ufn_getNroUltimoAfiliado()
+	RETURNS INT
+AS
+BEGIN
+	DECLARE @nro_afiliado INT;
+	
+	set @nro_afiliado = (SELECT TOP 1 pac_nro_afiliado
+		FROM SOLARIS.Paciente 
+		ORDER BY pac_nro_afiliado DESC);
+
+	IF (@nro_afiliado IS NULL)
+		set @nro_afiliado = 0; 
+	
+	RETURN @nro_afiliado;
+
+END;
+
+
+
+GO
+IF OBJECT_ID('SOLARIS.usp_MigrarAfiliados') IS NOT NULL
+	DROP PROCEDURE SOLARIS.usp_MigrarAfiliados;
+GO
+CREATE PROCEDURE SOLARIS.usp_MigrarAfiliados
+AS
+BEGIN
+	-- Declaración de variables
+	declare @nro_afiliado		INT;
+	declare @cur_apellido		VARCHAR(255);
+	declare @cur_nombre			VARCHAR(255);
+	declare @cur_dni			NUMERIC(18,0);
+	declare @cur_direccion		VARCHAR(255);
+	declare @cur_telefono		NUMERIC(18,0);
+	declare @cur_mail			VARCHAR(255);
+	declare @cur_fecha_nac		DATETIME;
+	declare @cur_plan_medico	NUMERIC(18,0);
+	
+	DECLARE cur_Afiliados_tmp CURSOR FOR
+		select distinct Paciente_Apellido, 
+						Paciente_Nombre, 
+						Paciente_Dni, 
+						Paciente_Direccion, 
+						Paciente_Telefono, 
+						Paciente_Mail, 
+						Paciente_Fecha_Nac, 
+						Plan_Med_Codigo			
+		from gd_esquema.Maestra
+		where Paciente_Dni IS NOT NULL
+		;
+
+	OPEN cur_Afiliados_tmp;
+	FETCH NEXT FROM cur_Afiliados_tmp INTO @cur_apellido,
+							@cur_nombre,
+							@cur_dni,
+							@cur_direccion,
+							@cur_telefono,
+							@cur_mail,
+							@cur_fecha_nac,
+							@cur_plan_medico;
+							
+	WHILE (@@FETCH_STATUS = 0)
+	BEGIN	
+		set @nro_afiliado = ((FLOOR(SOLARIS.ufn_getNroUltimoAfiliado()/100) + 1) * 100) + 1;
+
+		INSERT INTO SOLARIS.Paciente
+			(	
+				pac_nro_afiliado,
+				pac_apellido, 
+				pac_nombre, 
+				pac_nro_doc, 
+				pac_direccion, 
+				pac_telefono, 
+				pac_mail, 
+				pac_fecha_nac, 
+				pac_plan_medico, 
+				pac_cant_familiares, 
+				pac_estado_civil, 
+				pac_usuario, 
+				--pac_titular, 
+				pac_tit_relacion, 
+				pac_sexo, 
+				pac_tipo_doc,
+				pac_esta_activo,
+				pac_fecha_baja
+			)
+			VALUES 
+			(
+				@nro_afiliado,
+				@cur_apellido,
+				@cur_nombre,
+				@cur_dni,
+				@cur_direccion,
+				@cur_telefono,
+				@cur_mail,
+				@cur_fecha_nac,
+				@cur_plan_medico,
+				0,		-- Cant Familiares
+				NULL,	-- Estado Civil
+				NULL,	-- Usuario
+				NULL,	-- Relacion con el titular
+				NULL,	-- Sexo
+				(select t.tdc_codigo from SOLARIS.Tipo_Documento t where t.tdc_sigla = 'DNI'),	-- Se elige DNI por default para aquellos que son migrados ...
+				1,		-- Se setea el Afiliado como ACTIVO.
+				NULL
+			);
+
+		FETCH NEXT FROM cur_Afiliados_tmp INTO @cur_apellido,
+							@cur_nombre,
+							@cur_dni,
+							@cur_direccion,
+							@cur_telefono,
+							@cur_mail,
+							@cur_fecha_nac,
+							@cur_plan_medico;
+
+	END;	-- End while
+
+	CLOSE cur_Afiliados_tmp;
+	DEALLOCATE cur_Afiliados_tmp;
+
+END;
+
+GO
 
 /* ****************************************************************************
 * SECCION_5 : MIGRACION DE DATOS DE TABLA MAESTRA
@@ -778,56 +931,54 @@ INSERT INTO SOLARIS.Especialidad_x_Medico
 	;
 
 
-INSERT INTO SOLARIS.Paciente
-		(	pac_apellido, 
-			pac_nombre, 
-			pac_nro_doc, 
-			pac_direccion, 
-			pac_telefono, 
-			pac_mail, 
-			pac_fecha_nac, 
-			pac_plan_medico, 
-			pac_cant_familiares, 
-			pac_estado_civil, 
-			pac_nro_raiz, 
-			pac_nro_personal, 
-			pac_usuario, 
-			pac_titular, 
-			pac_tit_relacion, 
-			pac_sexo, 
-			pac_tipo_doc,
-			pac_esta_activo,
-			pac_fecha_baja
-		)
-	select distinct Paciente_Apellido, Paciente_Nombre, Paciente_Dni, Paciente_Direccion, Paciente_Telefono, Paciente_Mail, Paciente_Fecha_Nac, 
-		Plan_Med_Codigo,
-		0,		-- Cant Familiares
-		NULL,	-- Estado Civil
-		NULL,	-- Nro_Raiz
-		NULL,	-- Nro_personal
-		NULL,	-- Usuario
-		NULL,	-- Titular
-		NULL,	-- Relacion con el titular
-		NULL,	-- Sexo
-		(select t.tdc_codigo from SOLARIS.Tipo_Documento t where t.tdc_sigla = 'DNI'),	-- Se elige DNI por default para aquellos que son migrados ...
-		0,		-- Se setea el Afiliado como INACTIVO por default para aquellos que son migrados ...
-		NULL
-	from gd_esquema.Maestra
-	where Paciente_Dni IS NOT NULL
+-- Carga de los Pacientes ...
+EXEC SOLARIS.usp_MigrarAfiliados;
+
+
+-- Carga de Turnos ...
+
+INSERT INTO SOLARIS.Turno
+		(tur_numero, tur_fecha_turno, tur_afiliado, tur_medico, tur_fecha_solicitud, tur_estado, tur_motivo_cancel)
+	select distinct	Turno_Numero, 
+					Turno_Fecha, 
+					p.pac_nro_afiliado,
+					mm.med_cod_medico,
+					NULL,
+					NULL,
+					NULL
+	from gd_esquema.Maestra m
+		JOIN SOLARIS.Paciente p ON m.Paciente_Dni = p.pac_nro_doc
+		JOIN SOLARIS.Medico mm ON m.Medico_Dni = mm.med_nro_doc
+	where Turno_Numero IS NOT NULL
 	;
 
+-- Carga de Bonos_Consulta ...
 
-
-
-/* ****************************************************************************
-* SECCION_8 : ACTIVACIÓN DE CONSTRAINTS POST-MIGRACIÓN
-**************************************************************************** */
-
---ALTER TABLE SOLARIS.Paciente ADD CONSTRAINT UQ_Afiliado_Raiz_Personal UNIQUE (pac_nro_raiz, pac_nro_personal);
-
-CREATE UNIQUE NONCLUSTERED INDEX IDX_Afiliado_NotNull
-	ON SOLARIS.Paciente(pac_nro_raiz, pac_nro_personal)
-	WHERE pac_nro_raiz IS NOT NULL AND pac_nro_personal IS NOT NULL;
+INSERT INTO SOLARIS.Bono_Consulta
+		(	bon_numero, 
+			bon_fecha_compra, 
+			bon_fecha_impresion, 
+			bon_precio, 
+			bon_afiliado_compra, 
+			bon_plan_afiliado, 
+			bon_nro_consulta_med, 
+			bon_fue_utilizado,
+			bon_afiliado_uso
+		)
+	select distinct Bono_Consulta_Numero, 
+					Compra_Bono_Fecha, 
+					Bono_Consulta_Fecha_Impresion,
+					Plan_Med_Precio_Bono_Consulta,
+					p.pac_nro_afiliado,
+					Plan_Med_Codigo,
+					NULL,
+					0,
+					NULL
+	from gd_esquema.Maestra m
+		JOIN SOLARIS.Paciente p ON m.Paciente_Dni = p.pac_nro_doc
+	where Bono_Consulta_Numero IS NOT NULL
+		AND Compra_Bono_Fecha IS NOT NULL
+	;
 
 
 -- [EOF]
