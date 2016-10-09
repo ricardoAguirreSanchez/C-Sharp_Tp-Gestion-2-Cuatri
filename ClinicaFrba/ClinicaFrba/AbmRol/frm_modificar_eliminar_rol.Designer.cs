@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.gro_Datos_rol = new System.Windows.Forms.GroupBox();
+            this.but_guardar_cambios = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.lis_Listado_funcionalidades_existentes_sistema = new System.Windows.Forms.ListBox();
             this.but_Borrar_funcionalidad = new System.Windows.Forms.Button();
             this.lab_codigo_rol = new System.Windows.Forms.Label();
             this.lab_Descripcion = new System.Windows.Forms.Label();
@@ -38,15 +41,16 @@
             this.tex_Nombre = new System.Windows.Forms.TextBox();
             this.but_Eliminar_rol = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.lis_Listado_funcionalidades_existentes_sistema = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.but_guardar_cambios = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cb_habilitado_si_no = new System.Windows.Forms.ComboBox();
             this.gro_Datos_rol.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // gro_Datos_rol
             // 
+            this.gro_Datos_rol.Controls.Add(this.cb_habilitado_si_no);
+            this.gro_Datos_rol.Controls.Add(this.label2);
             this.gro_Datos_rol.Controls.Add(this.but_guardar_cambios);
             this.gro_Datos_rol.Controls.Add(this.label1);
             this.gro_Datos_rol.Controls.Add(this.lis_Listado_funcionalidades_existentes_sistema);
@@ -65,6 +69,32 @@
             this.gro_Datos_rol.TabIndex = 25;
             this.gro_Datos_rol.TabStop = false;
             this.gro_Datos_rol.Text = "Datos del rol";
+            // 
+            // but_guardar_cambios
+            // 
+            this.but_guardar_cambios.Location = new System.Drawing.Point(353, 264);
+            this.but_guardar_cambios.Name = "but_guardar_cambios";
+            this.but_guardar_cambios.Size = new System.Drawing.Size(109, 23);
+            this.but_guardar_cambios.TabIndex = 24;
+            this.but_guardar_cambios.Text = "Guardar cambios";
+            this.but_guardar_cambios.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(317, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(247, 13);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "Listado de funcionalidades existentes en el sistema";
+            // 
+            // lis_Listado_funcionalidades_existentes_sistema
+            // 
+            this.lis_Listado_funcionalidades_existentes_sistema.FormattingEnabled = true;
+            this.lis_Listado_funcionalidades_existentes_sistema.Location = new System.Drawing.Point(320, 45);
+            this.lis_Listado_funcionalidades_existentes_sistema.Name = "lis_Listado_funcionalidades_existentes_sistema";
+            this.lis_Listado_funcionalidades_existentes_sistema.Size = new System.Drawing.Size(214, 160);
+            this.lis_Listado_funcionalidades_existentes_sistema.TabIndex = 22;
             // 
             // but_Borrar_funcionalidad
             // 
@@ -142,31 +172,22 @@
             this.dataGridView1.Size = new System.Drawing.Size(227, 70);
             this.dataGridView1.TabIndex = 16;
             // 
-            // lis_Listado_funcionalidades_existentes_sistema
+            // label2
             // 
-            this.lis_Listado_funcionalidades_existentes_sistema.FormattingEnabled = true;
-            this.lis_Listado_funcionalidades_existentes_sistema.Location = new System.Drawing.Point(320, 45);
-            this.lis_Listado_funcionalidades_existentes_sistema.Name = "lis_Listado_funcionalidades_existentes_sistema";
-            this.lis_Listado_funcionalidades_existentes_sistema.Size = new System.Drawing.Size(214, 160);
-            this.lis_Listado_funcionalidades_existentes_sistema.TabIndex = 22;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(157, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 13);
+            this.label2.TabIndex = 25;
+            this.label2.Text = "Habilitado:";
             // 
-            // label1
+            // cb_habilitado_si_no
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(317, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(247, 13);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "Listado de funcionalidades existentes en el sistema";
-            // 
-            // but_guardar_cambios
-            // 
-            this.but_guardar_cambios.Location = new System.Drawing.Point(353, 264);
-            this.but_guardar_cambios.Name = "but_guardar_cambios";
-            this.but_guardar_cambios.Size = new System.Drawing.Size(109, 23);
-            this.but_guardar_cambios.TabIndex = 24;
-            this.but_guardar_cambios.Text = "Guardar cambios";
-            this.but_guardar_cambios.UseVisualStyleBackColor = true;
+            this.cb_habilitado_si_no.FormattingEnabled = true;
+            this.cb_habilitado_si_no.Location = new System.Drawing.Point(211, 25);
+            this.cb_habilitado_si_no.Name = "cb_habilitado_si_no";
+            this.cb_habilitado_si_no.Size = new System.Drawing.Size(79, 21);
+            this.cb_habilitado_si_no.TabIndex = 26;
             // 
             // frm_modificar_eliminar_rol
             // 
@@ -199,5 +220,7 @@
         private System.Windows.Forms.TextBox tex_Nombre;
         private System.Windows.Forms.Button but_Eliminar_rol;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.ComboBox cb_habilitado_si_no;
+        private System.Windows.Forms.Label label2;
     }
 }

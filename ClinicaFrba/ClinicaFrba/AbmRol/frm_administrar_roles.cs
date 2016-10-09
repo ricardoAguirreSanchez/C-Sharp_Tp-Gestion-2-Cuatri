@@ -34,6 +34,28 @@ namespace ClinicaFrba.AbmRol
             /*1.- se da en BUSCAR ROLES EXISTENTES
               2.- de la lista q se despliega, se puede elegir uno y modificarlo o eliminarlo
               3.- si no se elige ninguno, entonces puede agregar uno nuevo*/
+            but_Agregar.Enabled = true;
+            but_Modificar_eliminar_rol.Enabled = true;
+        }
+
+        private void but_Buscar_roles_existentes_Click(object sender, EventArgs e)
+        {
+
+            Conexion conexion = new Conexion();
+            conexion.conectar();
+            if (conexion.verificarRoles())
+            {
+                MessageBox.Show("Elija el rol que desea modificar/eliminar o agregue uno nuevo");
+                dgv_Listado_roles.DataSource = conexion.rolesTotal();
+                but_Agregar.Enabled = true;
+                but_Modificar_eliminar_rol.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("No hay roles en el sistema");
+                but_Modificar_eliminar_rol.Enabled = false;
+               
+            }
         }
     }
 }

@@ -137,6 +137,7 @@
             this.Controls.Add(this.gro_Inicio_de_sesion);
             this.Name = "frm_inicio_sesion";
             this.Text = "Inicio Sesion";
+            this.Load += new System.EventHandler(this.frm_inicio_sesion_Load);
             this.gro_Roles_a_elegir.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgw_Roles_a_elegir)).EndInit();
             this.gro_Inicio_de_sesion.ResumeLayout(false);

@@ -54,5 +54,10 @@ namespace ClinicaFrba
                 prof.Show();
             }
         }
+
+        private void frm_inicio_sesion_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

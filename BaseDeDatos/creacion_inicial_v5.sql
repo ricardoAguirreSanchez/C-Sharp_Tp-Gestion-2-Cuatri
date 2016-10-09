@@ -61,7 +61,7 @@ xx/SEP/2016		(v3).
 06/OCT/2016		Se crea el procedimiento para la migración de Pacientes, genrando un nro de afiliado titular durante la migración.
 07/OCT/2016		Se agrega el campo 'hpa_plan_nuevo' en tabla Hist_Plan_Afiliado.
 07/OCT/2016		En 'Estado_Turno' se agraga el estado = 4 & se modifica el tamaño del campo descripcion del estado.
-
+09/OCT/2016		Se agregan los primeros procedimientos en el apartado 7, los mismos son usados en la app.
 */
 
 
@@ -625,6 +625,36 @@ INSERT INTO SOLARIS.Rol
 		('ADMIN'),
 		('PACIENTE'),
 		('MEDICO');
+-- Tabla "Funcionalidades"
+INSERT INTO SOLARIS.Funcionalidad
+		(fun_codigo,fun_nombre)
+	VALUES 
+		(1,'Administrar Roles'),
+		(2,'Administrar Afiliados'),
+		(3,'Consultar Estadisticas'),
+		(4,'Registrar Llegada'),
+		(5,'Comprar Bonos'),
+		(6,'Pedir Turno'),
+		(7,'Registrar Resultados'),
+		(8,'Cancelar Atencion');
+
+-- Tabla "Roles x Funcionalidades"
+INSERT INTO SOLARIS.Funcionalidad_x_Rol
+		(fxr_rol, fxr_funcionalidad)
+	VALUES
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'ADMIN'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Administrar Roles')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'ADMIN'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Administrar Afiliados')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'ADMIN'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Consultar Estadisticas')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'ADMIN'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Registrar Llegada')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'ADMIN'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Comprar Bonos')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'ADMIN'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Pedir Turno')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'PACIENTE'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Comprar Bonos')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'PACIENTE'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Pedir Turno')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'PACIENTE'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Cancelar Atencion')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'MEDICO'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Cancelar Atencion')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'MEDICO'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Registrar Resultados'))
+
+	;
 
 -- Tabla "Tipo_Documento"
 
@@ -997,7 +1027,7 @@ CREATE PROCEDURE SOLARIS.buscarUsuario
 	as
 		select usu_usuario from SOLARIS.Usuario where HASHBYTES('SHA2_256',@usu_passwd) = usu_passwd
 GO
--- procedimiento de buscar roles
+-- procedimiento de buscar roles de un usuario especifico
 GO
 
 IF OBJECT_ID('SOLARIS.buscarRoles') IS NOT NULL
@@ -1006,11 +1036,92 @@ GO
 
 GO
 CREATE PROCEDURE SOLARIS.buscarRoles
-	@id varchar(255)
+	@usuario varchar(255)
 	as
-		select rol_nombre from SOLARIS.Rol_x_Usuario join SOLARIS.Rol on (rxu_rol = rol_codigo) join SOLARIS.Usuario on (rxu_usuario = usu_codigo) where usu_usuario = @id
+		select rol_nombre as Rol from SOLARIS.Rol_x_Usuario join SOLARIS.Rol on (rxu_rol = rol_codigo) join SOLARIS.Usuario on (rxu_usuario = usu_codigo) where usu_usuario = @usuario and rol_esta_activo=1
 
 GO
+
+-- procedimiento de buscar roles totales
+GO
+
+IF OBJECT_ID('SOLARIS.buscarRolesTotal') IS NOT NULL
+	DROP PROCEDURE SOLARIS.buscarRolesTotal;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.buscarRolesTotal
 	
+	as
+		select rol_nombre as Rol from SOLARIS.Rol;
+
+GO
+-- procedimiento de buscar roles de un codigo especifico
+GO
+
+IF OBJECT_ID('SOLARIS.buscarRolesPorNombre') IS NOT NULL
+	DROP PROCEDURE SOLARIS.buscarRolesPorNombre;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.buscarRolesPorNombre
+@codigo VARCHAR(25)
+	
+	as
+		select rol_nombre as Rol from SOLARIS.Rol where rol_nombre = @codigo ;
+GO
+
+-- procedimiento de buscar funcionalidades totales
+GO
+
+IF OBJECT_ID('SOLARIS.funcionalidadesTotal') IS NOT NULL
+	DROP PROCEDURE SOLARIS.funcionalidadesTotal;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.funcionalidadesTotal
+
+	
+	as
+		select fun_nombre as Funcionalidades from SOLARIS.Funcionalidad;
+GO
+-- procedimiento para insertar roles  
+		
+GO
+
+IF OBJECT_ID('SOLARIS.insertaRol') IS NOT NULL
+	DROP PROCEDURE SOLARIS.insertaRol;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.insertaRol
+@nomreROL VARCHAR(25)
+	
+	as
+		INSERT INTO SOLARIS.Rol
+		(rol_nombre,rol_esta_activo)
+	VALUES 
+		(@nomreROL,1)
+GO
+	
+-- procedimiento para asociar funcionalidad a un rol  
+		
+GO
+
+IF OBJECT_ID('SOLARIS.insertaFuncionalidadARol') IS NOT NULL
+	DROP PROCEDURE SOLARIS.insertaFuncionalidadARol;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.insertaFuncionalidadARol
+@nomreROL VARCHAR(25),
+@nomreFUNCIONALIDAD VARCHAR(22)	
+	as
+		INSERT INTO SOLARIS.Funcionalidad_x_Rol
+		(fxr_rol, fxr_funcionalidad)
+	VALUES
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = @nomreROL), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = @nomreFUNCIONALIDAD));
+GO
+
 
 -- [EOF]

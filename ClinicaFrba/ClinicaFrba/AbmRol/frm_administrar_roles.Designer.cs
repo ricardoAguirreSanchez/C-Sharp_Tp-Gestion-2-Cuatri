@@ -56,12 +56,15 @@
             this.but_Buscar_roles_existentes.TabIndex = 15;
             this.but_Buscar_roles_existentes.Text = "Buscar roles existentes";
             this.but_Buscar_roles_existentes.UseVisualStyleBackColor = true;
+            this.but_Buscar_roles_existentes.Click += new System.EventHandler(this.but_Buscar_roles_existentes_Click);
             // 
             // dgv_Listado_roles
             // 
             this.dgv_Listado_roles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_Listado_roles.Location = new System.Drawing.Point(19, 53);
+            this.dgv_Listado_roles.MultiSelect = false;
             this.dgv_Listado_roles.Name = "dgv_Listado_roles";
+            this.dgv_Listado_roles.RowHeadersVisible = false;
             this.dgv_Listado_roles.Size = new System.Drawing.Size(231, 104);
             this.dgv_Listado_roles.TabIndex = 22;
             // 

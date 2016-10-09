@@ -56,10 +56,11 @@ namespace ClinicaFrba
 
         }
 
-        public DataTable roles(String id)
+        //trae todos los roles de un usuario especifico
+        public DataTable roles(String usuario)
         {
-            //ejecuta el comando select para buscar si existe 
-            da = new SqlDataAdapter("Execute SOLARIS.buscarRoles '" + id + "'", cn);
+
+            da = new SqlDataAdapter("Execute SOLARIS.buscarRoles '" + usuario + "'", cn);
 
             
 
@@ -69,5 +70,76 @@ namespace ClinicaFrba
 
         }
 
+        //verifica la existencia de algun rol
+        public Boolean verificarRoles()
+        {
+
+            Boolean result = false;
+            
+            cm = new SqlCommand("Execute SOLARIS.buscarRolesTotal ", cn);
+            dr = cm.ExecuteReader();
+            //se lee, si no hay nada, no entra en el while, si hay algo, entra
+            while (dr.Read())
+            {
+                result = true;
+            }
+            dr.Close();
+            return result;
+
+
+        }
+
+        public DataTable rolesTotal()
+        {
+            
+            da = new SqlDataAdapter("Execute SOLARIS.buscarRolesTotal ", cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
+
+        //verifica la existencia de un rol espeficifo
+        public Boolean buscarRolesPorNombre(String id)
+        {
+
+            Boolean result = false;
+
+            cm = new SqlCommand("Execute SOLARIS.buscarRolesPorNombre '" + id + "'", cn);
+            dr = cm.ExecuteReader();
+            //se lee, si no hay nada, no entra en el while, si hay algo, entra
+            while (dr.Read())
+            {
+                result = true;
+            }
+            dr.Close();
+            return result;
+
+
+        }
+        //total de funcionalidades
+        public DataTable funcionalidadesTotales()
+        {
+
+            da = new SqlDataAdapter("Execute SOLARIS.funcionalidadesTotal ", cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
+
+
+        public void agregaRol(String nombreRol)
+        {
+            cm = new SqlCommand("Execute SOLARIS.insertaRol " + nombreRol, cn);
+            cm.ExecuteNonQuery();
+
+        }
+        public void agregaFuncionalidadARol(String nombreRol, String nombreFuncionalidad)
+        {
+            cm = new SqlCommand("Execute SOLARIS.insertaFuncionalidadARol " + nombreRol +",'"+ nombreFuncionalidad+"'", cn);
+            cm.ExecuteNonQuery();
+
+        }
     }
 }
