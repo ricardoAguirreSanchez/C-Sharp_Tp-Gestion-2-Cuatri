@@ -33,3 +33,7 @@ C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\C
 C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_registrar_llegada.resources
 C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_agregar_rol.resources
 C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_modificar_eliminar_rol.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Compra_Bono.frm_comprar_bono.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Pedir_Turno.frm_pedir_turno.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Cancelar_Atencion.frm_cancelar_atencion_afiliado.resources
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Cancelar_Atencion.frm_cancelar_atencion_medico.resources

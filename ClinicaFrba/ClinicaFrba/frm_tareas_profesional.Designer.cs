@@ -40,6 +40,7 @@
             this.but_registro_resultado.TabIndex = 5;
             this.but_registro_resultado.Text = "Registro de Resultado";
             this.but_registro_resultado.UseVisualStyleBackColor = true;
+            this.but_registro_resultado.Click += new System.EventHandler(this.but_registro_resultado_Click);
             // 
             // but_cancelar_atencion
             // 
@@ -49,6 +50,7 @@
             this.but_cancelar_atencion.TabIndex = 4;
             this.but_cancelar_atencion.Text = "Cancelar Atencion ";
             this.but_cancelar_atencion.UseVisualStyleBackColor = true;
+            this.but_cancelar_atencion.Click += new System.EventHandler(this.but_cancelar_atencion_Click);
             // 
             // frm_tareas_profesional
             // 

@@ -61,6 +61,7 @@
             this.but_cancelar_atencion.TabIndex = 9;
             this.but_cancelar_atencion.Text = "Cancelar Atencion ";
             this.but_cancelar_atencion.UseVisualStyleBackColor = true;
+            this.but_cancelar_atencion.Click += new System.EventHandler(this.but_cancelar_atencion_Click);
             // 
             // frm_tareas_afiliado
             // 

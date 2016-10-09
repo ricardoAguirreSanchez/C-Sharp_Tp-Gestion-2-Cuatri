@@ -30,9 +30,9 @@
         {
             this.tex_numero_afiliado = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.dtp_fecha_nacimiento = new System.Windows.Forms.DateTimePicker();
+            this.dtp_fecha_desde = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtp_fecha_hasta = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.but_buscar = new System.Windows.Forms.Button();
             this.dgv_listado_turnos = new System.Windows.Forms.DataGridView();
@@ -57,37 +57,37 @@
             this.label1.TabIndex = 3;
             this.label1.Text = "Numero de afiliado:";
             // 
-            // dtp_fecha_nacimiento
+            // dtp_fecha_desde
             // 
-            this.dtp_fecha_nacimiento.Location = new System.Drawing.Point(130, 49);
-            this.dtp_fecha_nacimiento.Name = "dtp_fecha_nacimiento";
-            this.dtp_fecha_nacimiento.Size = new System.Drawing.Size(200, 20);
-            this.dtp_fecha_nacimiento.TabIndex = 31;
+            this.dtp_fecha_desde.Location = new System.Drawing.Point(130, 49);
+            this.dtp_fecha_desde.Name = "dtp_fecha_desde";
+            this.dtp_fecha_desde.Size = new System.Drawing.Size(200, 20);
+            this.dtp_fecha_desde.TabIndex = 31;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(14, 49);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(109, 13);
+            this.label5.Size = new System.Drawing.Size(72, 13);
             this.label5.TabIndex = 30;
-            this.label5.Text = "Fecha de nacimiento:";
+            this.label5.Text = "Fecha desde:";
             // 
-            // dateTimePicker1
+            // dtp_fecha_hasta
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(130, 85);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 33;
+            this.dtp_fecha_hasta.Location = new System.Drawing.Point(130, 85);
+            this.dtp_fecha_hasta.Name = "dtp_fecha_hasta";
+            this.dtp_fecha_hasta.Size = new System.Drawing.Size(200, 20);
+            this.dtp_fecha_hasta.TabIndex = 33;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 85);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(109, 13);
+            this.label2.Size = new System.Drawing.Size(69, 13);
             this.label2.TabIndex = 32;
-            this.label2.Text = "Fecha de nacimiento:";
+            this.label2.Text = "Fecha hasta:";
             // 
             // but_buscar
             // 
@@ -133,9 +133,9 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dgv_listado_turnos);
             this.Controls.Add(this.but_buscar);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dtp_fecha_hasta);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.dtp_fecha_nacimiento);
+            this.Controls.Add(this.dtp_fecha_desde);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tex_numero_afiliado);
             this.Controls.Add(this.label1);
@@ -151,9 +151,9 @@
 
         private System.Windows.Forms.TextBox tex_numero_afiliado;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dtp_fecha_nacimiento;
+        private System.Windows.Forms.DateTimePicker dtp_fecha_desde;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtp_fecha_hasta;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button but_buscar;
         private System.Windows.Forms.DataGridView dgv_listado_turnos;

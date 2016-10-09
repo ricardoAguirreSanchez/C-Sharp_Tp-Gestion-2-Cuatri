@@ -1,4 +1,5 @@
-﻿using ClinicaFrba.Compra_Bono;
+﻿using ClinicaFrba.Cancelar_Atencion;
+using ClinicaFrba.Compra_Bono;
 using ClinicaFrba.Pedir_Turno;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,13 @@ namespace ClinicaFrba
         {
             frm_pedir_turno pedirTurno = new frm_pedir_turno();
             pedirTurno.Show();
+        }
+
+        private void but_cancelar_atencion_Click(object sender, EventArgs e)
+        {
+            frm_cancelar_atencion_afiliado cancelarAtencion = new frm_cancelar_atencion_afiliado();
+            cancelarAtencion.Show();
+
         }
     }
 }

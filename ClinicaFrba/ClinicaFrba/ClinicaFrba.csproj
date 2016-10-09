@@ -56,11 +56,11 @@
     <Compile Include="Abm Planes\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Profesional\Form1.cs">
+    <Compile Include="Abm Profesional\Form1%28no es necesario la implementacion%29.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Profesional\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Profesional\Form1%28no es necesario la implementacion%29.Designer.cs">
+      <DependentUpon>Form1%28no es necesario la implementacion%29.cs</DependentUpon>
     </Compile>
     <Compile Include="AbmRol\frm_modificar_eliminar_rol.cs">
       <SubType>Form</SubType>
@@ -80,6 +80,12 @@
     <Compile Include="AbmRol\frm_administrar_roles.Designer.cs">
       <DependentUpon>frm_administrar_roles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Cancelar Atencion\frm_cancelar_atencion_afiliado.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cancelar Atencion\frm_cancelar_atencion_afiliado.Designer.cs">
+      <DependentUpon>frm_cancelar_atencion_afiliado.cs</DependentUpon>
+    </Compile>
     <Compile Include="Registro Llegada\frm_registrar_llegada.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,11 +104,11 @@
     <Compile Include="Abm Afiliado\frm_administrar_afiliados.Designer.cs">
       <DependentUpon>frm_administrar_afiliados.cs</DependentUpon>
     </Compile>
-    <Compile Include="Cancelar Atencion\Form1.cs">
+    <Compile Include="Cancelar Atencion\frm_cancelar_atencion_medico.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Cancelar Atencion\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Cancelar Atencion\frm_cancelar_atencion_medico.Designer.cs">
+      <DependentUpon>frm_cancelar_atencion_medico.cs</DependentUpon>
     </Compile>
     <Compile Include="Compra Bono\frm_comprar_bono.cs">
       <SubType>Form</SubType>
@@ -143,17 +149,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Registrar Agenta Medico\Form1.cs">
+    <Compile Include="Registrar Agenta Medico\Form1%28no es necesario su implementacion%29.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registrar Agenta Medico\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Registrar Agenta Medico\Form1%28no es necesario su implementacion%29.Designer.cs">
+      <DependentUpon>Form1%28no es necesario su implementacion%29.cs</DependentUpon>
     </Compile>
-    <Compile Include="Registro Resultado\Form1.cs">
+    <Compile Include="Registro Resultado\frm_registro_resultado.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Registro Resultado\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Registro Resultado\frm_registro_resultado.Designer.cs">
+      <DependentUpon>frm_registro_resultado.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Abm Afiliado\frm_administrar_afiliados.resx">
       <DependentUpon>frm_administrar_afiliados.cs</DependentUpon>
@@ -166,6 +172,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AbmRol\frm_modificar_eliminar_rol.resx">
       <DependentUpon>frm_modificar_eliminar_rol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cancelar Atencion\frm_cancelar_atencion_afiliado.resx">
+      <DependentUpon>frm_cancelar_atencion_afiliado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Cancelar Atencion\frm_cancelar_atencion_medico.resx">
+      <DependentUpon>frm_cancelar_atencion_medico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Compra Bono\frm_comprar_bono.resx">
       <DependentUpon>frm_comprar_bono.cs</DependentUpon>
@@ -199,6 +211,9 @@
     </Compile>
     <EmbeddedResource Include="Registro Llegada\frm_registrar_llegada.resx">
       <DependentUpon>frm_registrar_llegada.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registro Resultado\frm_registro_resultado.resx">
+      <DependentUpon>frm_registro_resultado.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

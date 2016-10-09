@@ -43,7 +43,7 @@ namespace ClinicaFrba
             
             Boolean result = false;
             //ejecuta el comando select para buscar si existe 
-            cm = new SqlCommand("select usu_usuario from SOLARIS.Usuario where HASHBYTES('SHA2_256','" + clave + "') = usu_passwd", cn);
+            cm = new SqlCommand("Execute SOLARIS.buscarUsuario '" + clave + "'", cn);
             dr = cm.ExecuteReader();
             //se lee, si no hay nada, no entra en el while, si hay algo, entra
             while (dr.Read())
@@ -59,7 +59,7 @@ namespace ClinicaFrba
         public DataTable roles(String id)
         {
             //ejecuta el comando select para buscar si existe 
-            da = new SqlDataAdapter("select rol_nombre from SOLARIS.Rol_x_Usuario join SOLARIS.Rol on (rxu_rol = rol_codigo) join SOLARIS.Usuario on (rxu_usuario = usu_codigo) where usu_usuario = '" + id + "'", cn);
+            da = new SqlDataAdapter("Execute SOLARIS.buscarRoles '" + id + "'", cn);
 
             
 

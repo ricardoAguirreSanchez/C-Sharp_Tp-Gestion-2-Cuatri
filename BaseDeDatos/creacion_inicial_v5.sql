@@ -205,6 +205,7 @@ PRINT 'Tablas eliminadas ...';
 
 PRINT 'Creando tablas ...';
 
+
 -- Tabla "Estado Usuario"
 CREATE TABLE SOLARIS.Usuario_Estado (
 	ues_codigo		TINYINT	NOT NULL,
@@ -980,5 +981,36 @@ INSERT INTO SOLARIS.Bono_Consulta
 		AND Compra_Bono_Fecha IS NOT NULL
 	;
 
+/* ****************************************************************************
+* SECCION_7 : CREACIÓN DE FUNCTIONS, PROCEDURES, TRIGGERS
+**************************************************************************** */
+-- procedimiento de verificar logeo
+GO
+
+IF OBJECT_ID('SOLARIS.buscarUsuario') IS NOT NULL
+	DROP PROCEDURE SOLARIS.buscarUsuario;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.buscarUsuario
+	@usu_passwd varchar(255)
+	as
+		select usu_usuario from SOLARIS.Usuario where HASHBYTES('SHA2_256',@usu_passwd) = usu_passwd
+GO
+-- procedimiento de buscar roles
+GO
+
+IF OBJECT_ID('SOLARIS.buscarRoles') IS NOT NULL
+	DROP PROCEDURE SOLARIS.buscarRoles;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.buscarRoles
+	@id varchar(255)
+	as
+		select rol_nombre from SOLARIS.Rol_x_Usuario join SOLARIS.Rol on (rxu_rol = rol_codigo) join SOLARIS.Usuario on (rxu_usuario = usu_codigo) where usu_usuario = @id
+
+GO
+	
 
 -- [EOF]
