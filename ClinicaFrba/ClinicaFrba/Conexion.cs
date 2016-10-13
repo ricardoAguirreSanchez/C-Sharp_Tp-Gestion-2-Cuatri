@@ -26,7 +26,7 @@ namespace ClinicaFrba
         {
             try
             {
-                cn = new SqlConnection("Data Source=MATIAS\\SQLSERVER2012;Initial Catalog=GD2C2016;Persist Security Info=True;User ID=gd;Password=gd2016");
+                cn = new SqlConnection("Data Source=RICARDO-PC\\SQLSERVER2012;Initial Catalog=GD2C2016;Persist Security Info=True;User ID=gd;Password=gd2016");
                 cn.Open();
                 
             }
@@ -98,12 +98,12 @@ namespace ClinicaFrba
         }
 
         //verifica la existencia de un rol espeficifo
-        public Boolean buscarRolesPorNombre(String id)
+        public Boolean buscarRolesPorNombreHabilitado(String id)
         {
 
             Boolean result = false;
 
-            cm = new SqlCommand("Execute SOLARIS.buscarRolesPorNombre '" + id + "'", cn);
+            cm = new SqlCommand("Execute SOLARIS.buscarRolesPorNombreHabilitado " + id, cn);
             dr = cm.ExecuteReader();
             //se lee, si no hay nada, no entra en el while, si hay algo, entra
             while (dr.Read())
@@ -115,11 +115,36 @@ namespace ClinicaFrba
 
 
         }
-        //total de funcionalidades
+        //total de funcionalidades  
         public DataTable funcionalidadesTotales()
         {
 
-            da = new SqlDataAdapter("Execute SOLARIS.funcionalidadesTotal ", cn);
+            da = new SqlDataAdapter("Execute SOLARIS.funcionalidadesTotales ", cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
+        
+        
+        
+        
+        //funcionalidades restantes
+        public DataTable funcionalidadesRestantes(int codigoRol)
+        {
+
+            da = new SqlDataAdapter("Execute SOLARIS.funcionalidadesRestantes " + codigoRol, cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
+
+        //total de funcionalidades por rol
+         public DataTable funcionalidadesTotalesPorRol(String nombreRol)
+        {
+
+            da = new SqlDataAdapter("Execute SOLARIS.funcionalidadesTotalesPorRol " + nombreRol, cn);
             dt = new DataTable();
             da.Fill(dt);
             return dt;
@@ -211,5 +236,45 @@ namespace ClinicaFrba
             cm.ExecuteNonQuery();
 
         }
+
+        public void borrarRol(String nombreRol)
+        {
+            cm = new SqlCommand("Execute SOLARIS.borrarRol " + nombreRol, cn);
+            cm.ExecuteNonQuery();
+
+        }
+
+        public void modificarNombreEstado(int codigoRol,String nombreROL, String estado)
+        {
+            int estadoFinal = 0;
+            if (estado == "SI")
+            {
+                estadoFinal = 1;
+            }
+            else
+            {
+                estadoFinal = 0;
+            }
+           
+            cm = new SqlCommand("Execute SOLARIS.modificarNombreEstado " + codigoRol + " ," + nombreROL + " ," + estadoFinal, cn);
+            cm.ExecuteNonQuery();
+
+        }
+
+        public void modificarFuncionalidadActual(int codigoRol, String nombreFuncionalidad)
+        {
+            cm = new SqlCommand("Execute SOLARIS.modificarFuncionalidadActual " + codigoRol + " , '" + nombreFuncionalidad + "'", cn);
+            cm.ExecuteNonQuery();
+
+        }
+
+
+        public void agregoFuncionalidadActual(int codigoRol, String nombreFuncionalidad)
+        {
+            cm = new SqlCommand("Execute SOLARIS.agregoFuncionalidadActual " + codigoRol + " , '" + nombreFuncionalidad + "'", cn);
+            cm.ExecuteNonQuery();
+
+        }
+
     }
 }

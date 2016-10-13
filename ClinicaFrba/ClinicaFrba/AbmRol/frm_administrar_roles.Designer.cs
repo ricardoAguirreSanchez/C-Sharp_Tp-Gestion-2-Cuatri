@@ -30,17 +30,17 @@
         {
             this.gro_Elegir_rol = new System.Windows.Forms.GroupBox();
             this.but_Buscar_roles_existentes = new System.Windows.Forms.Button();
-            this.dgv_Listado_roles = new System.Windows.Forms.DataGridView();
             this.but_Agregar = new System.Windows.Forms.Button();
             this.but_Modificar_eliminar_rol = new System.Windows.Forms.Button();
+            this.dgv_Listado_roles = new System.Windows.Forms.DataGridView();
             this.gro_Elegir_rol.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_Listado_roles)).BeginInit();
             this.SuspendLayout();
             // 
             // gro_Elegir_rol
             // 
-            this.gro_Elegir_rol.Controls.Add(this.but_Buscar_roles_existentes);
             this.gro_Elegir_rol.Controls.Add(this.dgv_Listado_roles);
+            this.gro_Elegir_rol.Controls.Add(this.but_Buscar_roles_existentes);
             this.gro_Elegir_rol.Location = new System.Drawing.Point(12, 12);
             this.gro_Elegir_rol.Name = "gro_Elegir_rol";
             this.gro_Elegir_rol.Size = new System.Drawing.Size(291, 185);
@@ -50,23 +50,13 @@
             // 
             // but_Buscar_roles_existentes
             // 
-            this.but_Buscar_roles_existentes.Location = new System.Drawing.Point(19, 24);
+            this.but_Buscar_roles_existentes.Location = new System.Drawing.Point(21, 32);
             this.but_Buscar_roles_existentes.Name = "but_Buscar_roles_existentes";
-            this.but_Buscar_roles_existentes.Size = new System.Drawing.Size(139, 23);
+            this.but_Buscar_roles_existentes.Size = new System.Drawing.Size(176, 23);
             this.but_Buscar_roles_existentes.TabIndex = 15;
-            this.but_Buscar_roles_existentes.Text = "Buscar roles existentes";
+            this.but_Buscar_roles_existentes.Text = "Roles para modificar/ eliminar";
             this.but_Buscar_roles_existentes.UseVisualStyleBackColor = true;
             this.but_Buscar_roles_existentes.Click += new System.EventHandler(this.but_Buscar_roles_existentes_Click);
-            // 
-            // dgv_Listado_roles
-            // 
-            this.dgv_Listado_roles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_Listado_roles.Location = new System.Drawing.Point(19, 53);
-            this.dgv_Listado_roles.MultiSelect = false;
-            this.dgv_Listado_roles.Name = "dgv_Listado_roles";
-            this.dgv_Listado_roles.RowHeadersVisible = false;
-            this.dgv_Listado_roles.Size = new System.Drawing.Size(231, 104);
-            this.dgv_Listado_roles.TabIndex = 22;
             // 
             // but_Agregar
             // 
@@ -87,6 +77,18 @@
             this.but_Modificar_eliminar_rol.Text = "Modificar / Eliminar rol";
             this.but_Modificar_eliminar_rol.UseVisualStyleBackColor = true;
             this.but_Modificar_eliminar_rol.Click += new System.EventHandler(this.but_Modificar_eliminar_rol_Click);
+            // 
+            // dgv_Listado_roles
+            // 
+            this.dgv_Listado_roles.AllowUserToAddRows = false;
+            this.dgv_Listado_roles.AllowUserToDeleteRows = false;
+            this.dgv_Listado_roles.AllowUserToResizeRows = false;
+            this.dgv_Listado_roles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_Listado_roles.Location = new System.Drawing.Point(21, 61);
+            this.dgv_Listado_roles.MultiSelect = false;
+            this.dgv_Listado_roles.Name = "dgv_Listado_roles";
+            this.dgv_Listado_roles.Size = new System.Drawing.Size(259, 103);
+            this.dgv_Listado_roles.TabIndex = 16;
             // 
             // frm_administrar_roles
             // 
@@ -110,9 +112,9 @@
 
         private System.Windows.Forms.GroupBox gro_Elegir_rol;
         private System.Windows.Forms.Button but_Buscar_roles_existentes;
-        private System.Windows.Forms.DataGridView dgv_Listado_roles;
         private System.Windows.Forms.Button but_Agregar;
         private System.Windows.Forms.Button but_Modificar_eliminar_rol;
+        private System.Windows.Forms.DataGridView dgv_Listado_roles;
 
     }
 }

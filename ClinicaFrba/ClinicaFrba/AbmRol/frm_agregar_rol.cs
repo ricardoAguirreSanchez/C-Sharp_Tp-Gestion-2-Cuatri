@@ -31,6 +31,9 @@ namespace ClinicaFrba.AbmRol
               3.- en el listbox estaran todas las funcionalidades q existen de las cuales se 
                   tendra q elegir las q se desean agregar para este nuevo rol
               4.- una ves completado todo y elegido las funcionalidades, se da en el boton agregar*/
+            Conexion conexion = new Conexion();
+            conexion.conectar();
+            dataGridView1.DataSource = conexion.funcionalidadesTotales();
         }
 
         private void lab_codigo_rol_Click(object sender, EventArgs e)
@@ -45,16 +48,14 @@ namespace ClinicaFrba.AbmRol
 
         private void gro_Datos_rol_Enter(object sender, EventArgs e)
         {
-            Conexion conexion = new Conexion();
-            conexion.conectar();
-            dataGridView1.DataSource = conexion.funcionalidadesTotales();
+            
         }
 
         private void but_Agregar_Click(object sender, EventArgs e)
         {
             Conexion conexion = new Conexion();
             conexion.conectar();
-            if (conexion.buscarRolesPorNombre(tex_Descripcion.Text))
+            if (conexion.buscarRolesPorNombreHabilitado(tex_Descripcion.Text))
             {
                 MessageBox.Show("Ya existe un rol con ese nombre");
                 tex_Descripcion.Clear();
@@ -86,6 +87,11 @@ namespace ClinicaFrba.AbmRol
           
 
            
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

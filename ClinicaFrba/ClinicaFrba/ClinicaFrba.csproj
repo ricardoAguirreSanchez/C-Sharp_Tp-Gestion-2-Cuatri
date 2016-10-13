@@ -52,11 +52,11 @@
     <Compile Include="Abm Especialidades Medicas\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Abm Planes\Form1.cs">
+    <Compile Include="Abm Planes\Form1%28no es necesario la implementacion.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Abm Planes\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Abm Planes\Form1%28no es necesario la implementacion.Designer.cs">
+      <DependentUpon>Form1%28no es necesario la implementacion.cs</DependentUpon>
     </Compile>
     <Compile Include="Abm Profesional\Form1%28no es necesario la implementacion%29.cs">
       <SubType>Form</SubType>
