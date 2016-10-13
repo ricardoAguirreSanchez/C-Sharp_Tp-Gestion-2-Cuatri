@@ -1053,42 +1053,83 @@ GO
 CREATE PROCEDURE SOLARIS.buscarRolesTotal
 	
 	as
-		select rol_nombre as Rol from SOLARIS.Rol;
+		select rol_nombre,rol_codigo as Rol from SOLARIS.Rol;
 
 GO
--- procedimiento de buscar roles de un codigo especifico
+-- procedimiento de buscar roles de un codigo especifico y activo
 GO
 
-IF OBJECT_ID('SOLARIS.buscarRolesPorNombre') IS NOT NULL
-	DROP PROCEDURE SOLARIS.buscarRolesPorNombre;
+IF OBJECT_ID('SOLARIS.buscarRolesPorNombreHabilitado') IS NOT NULL
+	DROP PROCEDURE SOLARIS.buscarRolesPorNombreHabilitado;
 GO
 
 GO
-CREATE PROCEDURE SOLARIS.buscarRolesPorNombre
+CREATE PROCEDURE SOLARIS.buscarRolesPorNombreHabilitado
 @codigo VARCHAR(25)
 	
 	as
-		select rol_nombre as Rol from SOLARIS.Rol where rol_nombre = @codigo ;
+		select rol_nombre as Rol from SOLARIS.Rol where rol_nombre = @codigo and rol_esta_activo=1 ;
+GO
+
+-- procedimiento de buscar funcionalidades restantes
+GO
+
+IF OBJECT_ID('SOLARIS.funcionalidadesRestantes') IS NOT NULL
+	DROP PROCEDURE SOLARIS.funcionalidadesRestantes;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.funcionalidadesRestantes
+@rol_codigo		int
+	
+	as
+		select fun_nombre as Funcionalidades from SOLARIS.Funcionalidad 
+		where fun_codigo not in (select fxr_funcionalidad from SOLARIS.Funcionalidad_x_Rol where fxr_rol = @rol_codigo ) ;
 GO
 
 -- procedimiento de buscar funcionalidades totales
 GO
 
-IF OBJECT_ID('SOLARIS.funcionalidadesTotal') IS NOT NULL
-	DROP PROCEDURE SOLARIS.funcionalidadesTotal;
+IF OBJECT_ID('SOLARIS.funcionalidadesTotales') IS NOT NULL
+	DROP PROCEDURE SOLARIS.funcionalidadesTotales;
 GO
 
 GO
-CREATE PROCEDURE SOLARIS.funcionalidadesTotal
+CREATE PROCEDURE SOLARIS.funcionalidadesTotales
 
 	
 	as
-		select fun_nombre as Funcionalidades from SOLARIS.Funcionalidad;
+		select fun_nombre as Funcionalidades from SOLARIS.Funcionalidad  
 GO
+
+
+
+
+
+
+
+-- procedimiento de buscar funcionalidades totales por nombre de Rol
+GO
+
+IF OBJECT_ID('SOLARIS.funcionalidadesTotalesPorRol') IS NOT NULL
+	DROP PROCEDURE SOLARIS.funcionalidadesTotalesPorRol;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.funcionalidadesTotalesPorRol
+@nomreROL VARCHAR(25)
+	
+	as
+		select f.fun_nombre as Funcionalidades from SOLARIS.Funcionalidad f join SOLARIS.Funcionalidad_x_Rol fxr 
+		on (f.fun_codigo = fxr.fxr_funcionalidad) join  SOLARIS.Rol r on (fxr.fxr_rol=r.rol_codigo) 
+		where r.rol_nombre = @nomreROL
+GO
+
+
+
 -- procedimiento para insertar roles  
 		
 GO
-
 IF OBJECT_ID('SOLARIS.insertaRol') IS NOT NULL
 	DROP PROCEDURE SOLARIS.insertaRol;
 GO
@@ -1122,7 +1163,9 @@ CREATE PROCEDURE SOLARIS.insertaFuncionalidadARol
 	VALUES
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = @nomreROL), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = @nomreFUNCIONALIDAD));
 GO
-
+IF OBJECT_ID('[SOLARIS].[buscarPacientePorID]') IS NOT NULL
+	DROP PROCEDURE  [SOLARIS].[buscarPacientePorID];
+GO
 GO
 CREATE PROCEDURE [SOLARIS].[buscarPacientePorID]
 	@ID_Paciente varchar(255),
@@ -1154,5 +1197,83 @@ CREATE PROCEDURE [SOLARIS].[buscarPacientePorID]
 
 GO
 
+
+GO
+
+IF OBJECT_ID('SOLARIS.borrarRol') IS NOT NULL
+	DROP PROCEDURE SOLARIS.borrarRol;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.borrarRol
+@nomreROL VARCHAR(25)
+	
+	as
+		Update SOLARIS.Rol set rol_esta_activo = 0 where rol_nombre = @nomreROL
+GO
+
+--modifica el nombre y estado de un rol especifico
+GO
+
+IF OBJECT_ID('SOLARIS.modificarNombreEstado') IS NOT NULL
+	DROP PROCEDURE SOLARIS.modificarNombreEstado;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.modificarNombreEstado
+@rol_codigo		int,
+@rol_nombre		VARCHAR(25),
+@rol_esta_activo	BIT
+	
+	as
+		Update SOLARIS.Rol set rol_esta_activo = @rol_esta_activo, rol_nombre = @rol_nombre where rol_codigo = @rol_codigo
+		
+GO
+
+--borra la funcionalidad de un rol especifico
+GO
+
+IF OBJECT_ID('SOLARIS.modificarFuncionalidadActual') IS NOT NULL
+	DROP PROCEDURE SOLARIS.modificarFuncionalidadActual;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.modificarFuncionalidadActual
+@rol_codigo		int,
+@fun_nombre		VARCHAR(22)
+
+	
+	as
+		delete from SOLARIS.Funcionalidad_x_Rol where fxr_rol = @rol_codigo and 
+		fxr_funcionalidad = (select fun_codigo from SOLARIS.Funcionalidad where fun_nombre = @fun_nombre)
+
+		
+GO
+
+
+--agrego la funcionalidad de un rol especifico
+GO
+
+IF OBJECT_ID('SOLARIS.agregoFuncionalidadActual') IS NOT NULL
+	DROP PROCEDURE SOLARIS.agregoFuncionalidadActual;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.agregoFuncionalidadActual
+@rol_codigo		int,
+@fun_nombre		VARCHAR(22)
+
+	
+	as
+		
+				
+		begin
+			declare @rol_nombre VARCHAR(22)
+			set @rol_nombre= (select rol_nombre as Rol from SOLARIS.Rol where rol_codigo = @rol_codigo and rol_esta_activo=1)
+			execute SOLARIS.insertaFuncionalidadARol @rol_nombre ,  @fun_nombre	
+		end
+
+		
+GO
 
 -- [EOF]
