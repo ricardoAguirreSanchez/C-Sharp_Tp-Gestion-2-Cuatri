@@ -72,6 +72,7 @@
             this.Controls.Add(this.but_pedir_turno);
             this.Controls.Add(this.but_comprar_bonos);
             this.Name = "frm_tareas_afiliado";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tareas Afiliado";
             this.ResumeLayout(false);
 

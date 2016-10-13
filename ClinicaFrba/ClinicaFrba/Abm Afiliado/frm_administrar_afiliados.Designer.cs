@@ -76,6 +76,7 @@
             this.but_buscar.TabIndex = 1;
             this.but_buscar.Text = "Buscar";
             this.but_buscar.UseVisualStyleBackColor = true;
+            this.but_buscar.Click += new System.EventHandler(this.but_buscar_Click);
             // 
             // but_modificar
             // 
@@ -259,7 +260,7 @@
             // 
             // Nuevo
             // 
-            this.Nuevo.Location = new System.Drawing.Point(35, 332);
+            this.Nuevo.Location = new System.Drawing.Point(15, 332);
             this.Nuevo.Name = "Nuevo";
             this.Nuevo.Size = new System.Drawing.Size(61, 24);
             this.Nuevo.TabIndex = 25;
@@ -333,6 +334,7 @@
             this.Controls.Add(this.but_buscar);
             this.Controls.Add(this.label1);
             this.Name = "frm_administrar_afiliados";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Administrar Afiliados";
             this.Load += new System.EventHandler(this.frm_administrar_afiliados_Load);
             this.ResumeLayout(false);

@@ -1123,5 +1123,36 @@ CREATE PROCEDURE SOLARIS.insertaFuncionalidadARol
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = @nomreROL), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = @nomreFUNCIONALIDAD));
 GO
 
+GO
+CREATE PROCEDURE [SOLARIS].[buscarPacientePorID]
+	@ID_Paciente varchar(255),
+	@Nombre varchar(255) OUTPUT
+	,@Apellido varchar(255) OUTPUT
+	,@DNI varchar(255) OUTPUT
+	,@Direccion varchar(255) OUTPUT
+	,@Telefono varchar(255) OUTPUT
+	,@Email varchar(255) OUTPUT
+	,@DNI_Principal varchar(255) OUTPUT
+	
+	as
+	
+	 SELECT
+	 @Nombre = p.pac_nombre 
+	 , @Apellido = p.pac_apellido
+	 --, p.pac_fecha_nac AS 'Fecha_Nacimiento'
+	 ,@DNI = p.pac_nro_doc
+	 , @Direccion = p.pac_direccion
+	 , @Telefono = p.pac_telefono
+	 , @Email = p.pac_mail
+	 --, p.pac_sexo AS 'Sexo'
+	 --, p.pac_plan_medico AS 'Plan'
+	 , @DNI_Principal = p.pac_nro_doc
+	
+	FROM [SOLARIS].[Paciente] p
+	
+	WHERE p.pac_nro_afiliado = @ID_Paciente
+
+GO
+
 
 -- [EOF]

@@ -46,5 +46,26 @@ namespace ClinicaFrba.AbmRol
         {
 
         }
+
+        private void but_buscar_Click(object sender, EventArgs e)
+        {
+            //Conecto a BD
+            Conexion conexion = new Conexion();
+            conexion.conectar();
+
+            string ID_Afiliado = tex_numero_afiliado.Text;
+
+            Array paciente = conexion.buscarPacientePorID(ID_Afiliado);
+
+            //Completo los campos
+            tex_nombre.Text = paciente.GetValue(0).ToString();
+            tex_apellido.Text = paciente.GetValue(1).ToString();
+            tex_dni.Text = paciente.GetValue(2).ToString();
+            tex_direccion.Text = paciente.GetValue(3).ToString();
+            tex_telefono.Text = paciente.GetValue(4).ToString();
+            tex_mail.Text = paciente.GetValue(5).ToString();
+            tex_dni_asociado_principal.Text = paciente.GetValue(6).ToString();
+            //tex_fecha.Text = paciente.GetValue(3).ToString();
+        }
     }
 }

@@ -120,6 +120,7 @@
             this.Controls.Add(this.but_administrar_afiliado);
             this.Controls.Add(this.but_administrar_rol);
             this.Name = "frm_tareas_administrativo";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tareas Administrativo";
             this.group_por_afiliado.ResumeLayout(false);
             this.ResumeLayout(false);

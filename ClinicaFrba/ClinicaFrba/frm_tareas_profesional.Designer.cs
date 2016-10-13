@@ -60,6 +60,7 @@
             this.Controls.Add(this.but_registro_resultado);
             this.Controls.Add(this.but_cancelar_atencion);
             this.Name = "frm_tareas_profesional";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tareas Profesional";
             this.ResumeLayout(false);
 

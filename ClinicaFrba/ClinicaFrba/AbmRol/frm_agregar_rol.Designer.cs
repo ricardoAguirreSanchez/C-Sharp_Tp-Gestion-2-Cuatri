@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.gro_Datos_rol = new System.Windows.Forms.GroupBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Elegir = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.lab_Funcionalidad = new System.Windows.Forms.Label();
             this.lab_Nombre = new System.Windows.Forms.Label();
             this.tex_Descripcion = new System.Windows.Forms.TextBox();
             this.but_Agregar = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Elegir = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.gro_Datos_rol.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -53,6 +53,23 @@
             this.gro_Datos_rol.TabStop = false;
             this.gro_Datos_rol.Text = "Datos del rol";
             this.gro_Datos_rol.Enter += new System.EventHandler(this.gro_Datos_rol_Enter);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Elegir});
+            this.dataGridView1.Location = new System.Drawing.Point(18, 91);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(283, 217);
+            this.dataGridView1.TabIndex = 22;
+            // 
+            // Elegir
+            // 
+            this.Elegir.HeaderText = "Column1";
+            this.Elegir.Name = "Elegir";
             // 
             // lab_Funcionalidad
             // 
@@ -90,23 +107,6 @@
             this.but_Agregar.UseVisualStyleBackColor = true;
             this.but_Agregar.Click += new System.EventHandler(this.but_Agregar_Click);
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Elegir});
-            this.dataGridView1.Location = new System.Drawing.Point(18, 91);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(283, 217);
-            this.dataGridView1.TabIndex = 22;
-            // 
-            // Elegir
-            // 
-            this.Elegir.HeaderText = "Column1";
-            this.Elegir.Name = "Elegir";
-            // 
             // frm_agregar_rol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,6 +114,7 @@
             this.ClientSize = new System.Drawing.Size(342, 420);
             this.Controls.Add(this.gro_Datos_rol);
             this.Name = "frm_agregar_rol";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Agregar Rol Nuevo";
             this.Load += new System.EventHandler(this.frm_agregar_rol_Load);
             this.gro_Datos_rol.ResumeLayout(false);

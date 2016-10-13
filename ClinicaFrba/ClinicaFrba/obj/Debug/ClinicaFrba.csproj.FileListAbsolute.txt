@@ -43,7 +43,6 @@ C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\Cl
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.pdb
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.exe
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.pdb
-C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csprojResolveAssemblyReference.cache
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_administrar_afiliados.resources
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_administrar_roles.resources
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_agregar_rol.resources
@@ -61,3 +60,4 @@ C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\Cl
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_registrar_llegada.resources
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Registro_Resultado.frm_registro_resultado.resources
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
+C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csprojResolveAssemblyReference.cache

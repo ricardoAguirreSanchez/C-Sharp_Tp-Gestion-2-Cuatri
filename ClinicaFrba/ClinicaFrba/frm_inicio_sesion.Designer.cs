@@ -136,6 +136,7 @@
             this.Controls.Add(this.gro_Roles_a_elegir);
             this.Controls.Add(this.gro_Inicio_de_sesion);
             this.Name = "frm_inicio_sesion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Inicio Sesion";
             this.Load += new System.EventHandler(this.frm_inicio_sesion_Load);
             this.gro_Roles_a_elegir.ResumeLayout(false);

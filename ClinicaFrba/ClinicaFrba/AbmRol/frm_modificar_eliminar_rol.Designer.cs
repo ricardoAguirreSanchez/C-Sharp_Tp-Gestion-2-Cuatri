@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.gro_Datos_rol = new System.Windows.Forms.GroupBox();
+            this.cb_habilitado_si_no = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.but_guardar_cambios = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.lis_Listado_funcionalidades_existentes_sistema = new System.Windows.Forms.ListBox();
@@ -41,8 +43,6 @@
             this.tex_Nombre = new System.Windows.Forms.TextBox();
             this.but_Eliminar_rol = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cb_habilitado_si_no = new System.Windows.Forms.ComboBox();
             this.gro_Datos_rol.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -69,6 +69,23 @@
             this.gro_Datos_rol.TabIndex = 25;
             this.gro_Datos_rol.TabStop = false;
             this.gro_Datos_rol.Text = "Datos del rol";
+            // 
+            // cb_habilitado_si_no
+            // 
+            this.cb_habilitado_si_no.FormattingEnabled = true;
+            this.cb_habilitado_si_no.Location = new System.Drawing.Point(211, 25);
+            this.cb_habilitado_si_no.Name = "cb_habilitado_si_no";
+            this.cb_habilitado_si_no.Size = new System.Drawing.Size(79, 21);
+            this.cb_habilitado_si_no.TabIndex = 26;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(157, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 13);
+            this.label2.TabIndex = 25;
+            this.label2.Text = "Habilitado:";
             // 
             // but_guardar_cambios
             // 
@@ -172,23 +189,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(227, 70);
             this.dataGridView1.TabIndex = 16;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(157, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 13);
-            this.label2.TabIndex = 25;
-            this.label2.Text = "Habilitado:";
-            // 
-            // cb_habilitado_si_no
-            // 
-            this.cb_habilitado_si_no.FormattingEnabled = true;
-            this.cb_habilitado_si_no.Location = new System.Drawing.Point(211, 25);
-            this.cb_habilitado_si_no.Name = "cb_habilitado_si_no";
-            this.cb_habilitado_si_no.Size = new System.Drawing.Size(79, 21);
-            this.cb_habilitado_si_no.TabIndex = 26;
-            // 
             // frm_modificar_eliminar_rol
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -196,6 +196,7 @@
             this.ClientSize = new System.Drawing.Size(594, 337);
             this.Controls.Add(this.gro_Datos_rol);
             this.Name = "frm_modificar_eliminar_rol";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Modificar / Eliminar Rol";
             this.Load += new System.EventHandler(this.frm_modificar_eliminar_rol_Load);
             this.gro_Datos_rol.ResumeLayout(false);

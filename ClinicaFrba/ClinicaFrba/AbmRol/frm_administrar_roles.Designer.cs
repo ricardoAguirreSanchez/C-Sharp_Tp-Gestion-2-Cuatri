@@ -97,6 +97,7 @@
             this.Controls.Add(this.gro_Elegir_rol);
             this.Controls.Add(this.but_Agregar);
             this.Name = "frm_administrar_roles";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Administrar Roles";
             this.Load += new System.EventHandler(this.frm_administrar_roles_Load);
             this.gro_Elegir_rol.ResumeLayout(false);
