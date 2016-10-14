@@ -152,5 +152,29 @@ namespace ClinicaFrba.AbmRol
             but_descartarNuevo.Visible = false;
             but_buscar.Enabled = true;
         }
+
+        private void but_modificar_Click(object sender, EventArgs e)
+        {
+          
+            //modifico el nombre y estado
+            try
+            {
+                Conexion conexion = new Conexion();
+                conexion.conectar();
+
+                DateTime fecha_nac = dtp_fecha_nacimiento.Value;
+                String sexo = rdb_masculino.Checked.ToString();
+                int plan_medico = conexion.traigoIDPlan(com_plan_medico.SelectedItem.ToString());    //ANCLADO PARA CORREGIR!!
+                //paso todos los valores para actualizar
+                conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico);
+                MessageBox.Show("Modificado!");
+            }
+            catch (Exception er1)
+            {
+                MessageBox.Show("Error al actualizar el paciente:" + er1);
+            }
+
+            this.Close();
+        }
     }
 }

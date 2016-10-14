@@ -1276,4 +1276,57 @@ CREATE PROCEDURE SOLARIS.agregoFuncionalidadActual
 		
 GO
 
+--modifica el nombre y estado de un paciente especifico
+GO
+
+IF OBJECT_ID('SOLARIS.modificarPaciente') IS NOT NULL
+	DROP PROCEDURE SOLARIS.modificarNombreEstado;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.modificarPaciente
+@pac_nro_afiliado int,
+@pac_nombre	VARCHAR(255),
+@pac_apellido		VARCHAR(255),
+@pac_nro_doc	numeric(18,0),
+@pac_fecha_nac  datetime,
+@pac_direccion VARCHAR(25),
+@pac_telefono numeric(18,0),
+@pac_mail VARCHAR(255),
+@pac_sexo char(1),
+@pac_plan_medico numeric(18,0)
+	
+as
+
+update solaris.Paciente
+set
+Solaris.paciente.pac_nombre = @pac_nombre
+,Solaris.paciente.pac_apellido = @pac_apellido
+,Solaris.paciente.pac_nro_doc = @pac_nro_doc
+,Solaris.paciente.pac_fecha_nac = @pac_fecha_nac
+,Solaris.paciente.pac_direccion = @pac_direccion
+,Solaris.paciente.pac_telefono = @pac_telefono
+,Solaris.paciente.pac_mail = @pac_mail 
+,Solaris.paciente.pac_sexo = @pac_sexo
+,Solaris.paciente.pac_plan_medico = @pac_plan_medico
+where Solaris.paciente.pac_nro_afiliado = @pac_nro_afiliado
+
+GO
+--Devuelve el ID del plan de un plan especifico
+GO
+
+IF OBJECT_ID('SOLARIS.traigoIDPlan') IS NOT NULL
+	DROP PROCEDURE SOLARIS.traigoIDPlan;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.traigoIDPlan
+@plm_descripcion varchar(255),
+@plm_codigo numeric(18,0) OUTPUT
+AS
+Select @plm_codigo = plm_codigo from solaris.Plan_Medico 
+where plm_descripcion = @plm_descripcion
+
+GO
 -- [EOF]

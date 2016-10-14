@@ -92,6 +92,7 @@
             this.but_modificar.TabIndex = 3;
             this.but_modificar.Text = "Modificar";
             this.but_modificar.UseVisualStyleBackColor = true;
+            this.but_modificar.Click += new System.EventHandler(this.but_modificar_Click);
             // 
             // but_eliminar
             // 
@@ -261,6 +262,12 @@
             // com_plan_medico
             // 
             this.com_plan_medico.FormattingEnabled = true;
+            this.com_plan_medico.Items.AddRange(new object[] {
+            "Plan Medico 110",
+            "Plan Medico 120",
+            "Plan Medico 130",
+            "Plan Medico 140",
+            "Plan Medico 150"});
             this.com_plan_medico.Location = new System.Drawing.Point(145, 307);
             this.com_plan_medico.Name = "com_plan_medico";
             this.com_plan_medico.Size = new System.Drawing.Size(204, 21);

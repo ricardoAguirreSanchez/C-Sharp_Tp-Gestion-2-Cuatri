@@ -26,7 +26,7 @@ namespace ClinicaFrba
         {
             try
             {
-                cn = new SqlConnection("Data Source=RICARDO-PC\\SQLSERVER2012;Initial Catalog=GD2C2016;Persist Security Info=True;User ID=gd;Password=gd2016");
+                cn = new SqlConnection("Data Source=MATIAS\\SQLSERVER2012;Initial Catalog=GD2C2016;Persist Security Info=True;User ID=gd;Password=gd2016");
                 cn.Open();
                 
             }
@@ -260,6 +260,39 @@ namespace ClinicaFrba
             cm.ExecuteNonQuery();
 
         }
+        public int traigoIDPlan(string nombrePlan)
+        {
+            SqlCommand command = new SqlCommand("SOLARIS.traigoIDPlan", cn);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlParameter ID = new SqlParameter("@plm_codigo", SqlDbType.VarChar, 255);
+            ID.Direction = ParameterDirection.Output;
+            command.Parameters.Add(ID);
+
+            command.Parameters.AddWithValue("@plm_descripcion", nombrePlan);
+            command.ExecuteScalar();
+            return int.Parse(command.Parameters["@plm_codigo"].Value.ToString());
+            
+        }
+        public void modificarAfiliado(int tex_numero_afiliado, String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, String rdb_masculino, int com_plan_medico)
+        {
+            SqlCommand command = new SqlCommand("SOLARIS.modificarPaciente", cn);
+            command.CommandType = CommandType.StoredProcedure;
+
+            command.Parameters.AddWithValue("@pac_nro_afiliado", tex_numero_afiliado);
+            command.Parameters.AddWithValue("@pac_nombre", tex_Nombre);
+            command.Parameters.AddWithValue("@pac_apellido", tex_apellido);
+            command.Parameters.AddWithValue("@pac_nro_doc", tex_dni);
+            command.Parameters.AddWithValue("@pac_fecha_nac", dtp_fecha_nacimiento);
+            command.Parameters.AddWithValue("@pac_direccion", tex_direccion);
+            command.Parameters.AddWithValue("@pac_telefono", tex_telefono);
+            command.Parameters.AddWithValue("@pac_mail", tex_mail);
+            command.Parameters.AddWithValue("@pac_sexo", rdb_masculino);
+            command.Parameters.AddWithValue("@pac_plan_medico", com_plan_medico);
+
+            command.ExecuteNonQuery();
+
+        }
+
 
         public void modificarFuncionalidadActual(int codigoRol, String nombreFuncionalidad)
         {
@@ -275,6 +308,7 @@ namespace ClinicaFrba
             cm.ExecuteNonQuery();
 
         }
+
 
     }
 }
