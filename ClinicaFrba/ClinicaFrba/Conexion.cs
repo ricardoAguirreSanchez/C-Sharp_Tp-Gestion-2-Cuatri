@@ -305,5 +305,15 @@ namespace ClinicaFrba
             return dt;
 
         }
+
+        public DataTable bonosDisponiblesPorAfiliado(int codigoAfiliado)
+        {
+
+            da = new SqlDataAdapter("Execute SOLARIS.bonosDisponiblesPorAfiliado " + codigoAfiliado, cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
     }
 }

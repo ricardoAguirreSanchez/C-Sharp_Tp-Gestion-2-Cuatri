@@ -1338,4 +1338,31 @@ CREATE PROCEDURE SOLARIS.datosTurnoPorCodigoMedico
 
 		
 GO
+
+
+GO
+
+IF OBJECT_ID('SOLARIS.bonosDisponiblesPorAfiliado') IS NOT NULL
+	DROP PROCEDURE SOLARIS.bonosDisponiblesPorAfiliado;
+GO
+
+GO
+--devuelve los bonos disponibles para ese afiliado tomando encuenta el plan actual q tiene y q no fue usado
+CREATE PROCEDURE SOLARIS.bonosDisponiblesPorAfiliado
+@codigoAfiliado	int
+	as
+		
+				
+		begin
+			select bon_numero as 'Codigo  de bonos disponibles' 
+			from SOLARIS.Bono_Consulta
+			where bon_afiliado_compra/ 100 = @codigoAfiliado / 100 and
+			bon_plan_afiliado = (select pac_plan_medico from SOLARIS.Paciente where pac_nro_afiliado = @codigoAfiliado) and
+			bon_fue_utilizado = 0
+		end
+
+		
+GO
+
+
 -- [EOF]

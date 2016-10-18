@@ -30,26 +30,26 @@
         {
             this.but_registrar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.but_Buscar_turnos = new System.Windows.Forms.Button();
+            this.but_buscar_medicos = new System.Windows.Forms.Button();
+            this.dgv_especialidades = new System.Windows.Forms.DataGridView();
             this.dgv_listado_medicos = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.but_Buscar_bono = new System.Windows.Forms.Button();
             this.dgv_bono_consulta_disponibles = new System.Windows.Forms.DataGridView();
             this.dtp_hora_llegada = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.dgv_turnos_del_dia = new System.Windows.Forms.DataGridView();
-            this.dgv_especialidades = new System.Windows.Forms.DataGridView();
-            this.but_buscar_medicos = new System.Windows.Forms.Button();
-            this.but_Buscar_turnos = new System.Windows.Forms.Button();
-            this.but_Buscar_bono = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_especialidades)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_listado_medicos)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_bono_consulta_disponibles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_turnos_del_dia)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_especialidades)).BeginInit();
             this.SuspendLayout();
             // 
             // but_registrar
@@ -75,6 +75,41 @@
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Buscar medico";
+            // 
+            // but_Buscar_turnos
+            // 
+            this.but_Buscar_turnos.Location = new System.Drawing.Point(154, 291);
+            this.but_Buscar_turnos.Name = "but_Buscar_turnos";
+            this.but_Buscar_turnos.Size = new System.Drawing.Size(105, 23);
+            this.but_Buscar_turnos.TabIndex = 14;
+            this.but_Buscar_turnos.Text = "Buscar Turnos";
+            this.but_Buscar_turnos.UseVisualStyleBackColor = true;
+            this.but_Buscar_turnos.Click += new System.EventHandler(this.but_Buscar_turnos_Click);
+            // 
+            // but_buscar_medicos
+            // 
+            this.but_buscar_medicos.Location = new System.Drawing.Point(154, 151);
+            this.but_buscar_medicos.Name = "but_buscar_medicos";
+            this.but_buscar_medicos.Size = new System.Drawing.Size(105, 23);
+            this.but_buscar_medicos.TabIndex = 13;
+            this.but_buscar_medicos.Text = "Buscar Medicos";
+            this.but_buscar_medicos.UseVisualStyleBackColor = true;
+            this.but_buscar_medicos.Click += new System.EventHandler(this.but_buscar_medicos_Click);
+            // 
+            // dgv_especialidades
+            // 
+            this.dgv_especialidades.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.dgv_especialidades.AllowUserToAddRows = false;
+            this.dgv_especialidades.AllowUserToDeleteRows = false;
+            this.dgv_especialidades.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_especialidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_especialidades.Location = new System.Drawing.Point(6, 53);
+            this.dgv_especialidades.Name = "dgv_especialidades";
+            this.dgv_especialidades.ReadOnly = true;
+            this.dgv_especialidades.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.dgv_especialidades.Size = new System.Drawing.Size(253, 92);
+            this.dgv_especialidades.TabIndex = 12;
+            this.dgv_especialidades.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_especialidades_CellContentClick_3);
             // 
             // dgv_listado_medicos
             // 
@@ -125,6 +160,16 @@
             this.groupBox2.TabIndex = 14;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Crear consulta";
+            // 
+            // but_Buscar_bono
+            // 
+            this.but_Buscar_bono.Location = new System.Drawing.Point(376, 112);
+            this.but_Buscar_bono.Name = "but_Buscar_bono";
+            this.but_Buscar_bono.Size = new System.Drawing.Size(105, 23);
+            this.but_Buscar_bono.TabIndex = 22;
+            this.but_Buscar_bono.Text = "Buscar Bonos";
+            this.but_Buscar_bono.UseVisualStyleBackColor = true;
+            this.but_Buscar_bono.Click += new System.EventHandler(this.but_Buscar_bono_Click);
             // 
             // dgv_bono_consulta_disponibles
             // 
@@ -181,50 +226,6 @@
             this.dgv_turnos_del_dia.Size = new System.Drawing.Size(463, 65);
             this.dgv_turnos_del_dia.TabIndex = 13;
             // 
-            // dgv_especialidades
-            // 
-            this.dgv_especialidades.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
-            this.dgv_especialidades.AllowUserToAddRows = false;
-            this.dgv_especialidades.AllowUserToDeleteRows = false;
-            this.dgv_especialidades.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dgv_especialidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_especialidades.Location = new System.Drawing.Point(6, 53);
-            this.dgv_especialidades.Name = "dgv_especialidades";
-            this.dgv_especialidades.ReadOnly = true;
-            this.dgv_especialidades.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dgv_especialidades.Size = new System.Drawing.Size(253, 92);
-            this.dgv_especialidades.TabIndex = 12;
-            this.dgv_especialidades.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_especialidades_CellContentClick_3);
-            // 
-            // but_buscar_medicos
-            // 
-            this.but_buscar_medicos.Location = new System.Drawing.Point(154, 151);
-            this.but_buscar_medicos.Name = "but_buscar_medicos";
-            this.but_buscar_medicos.Size = new System.Drawing.Size(105, 23);
-            this.but_buscar_medicos.TabIndex = 13;
-            this.but_buscar_medicos.Text = "Buscar Medicos";
-            this.but_buscar_medicos.UseVisualStyleBackColor = true;
-            this.but_buscar_medicos.Click += new System.EventHandler(this.but_buscar_medicos_Click);
-            // 
-            // but_Buscar_turnos
-            // 
-            this.but_Buscar_turnos.Location = new System.Drawing.Point(154, 291);
-            this.but_Buscar_turnos.Name = "but_Buscar_turnos";
-            this.but_Buscar_turnos.Size = new System.Drawing.Size(105, 23);
-            this.but_Buscar_turnos.TabIndex = 14;
-            this.but_Buscar_turnos.Text = "Buscar Turnos";
-            this.but_Buscar_turnos.UseVisualStyleBackColor = true;
-            this.but_Buscar_turnos.Click += new System.EventHandler(this.but_Buscar_turnos_Click);
-            // 
-            // but_Buscar_bono
-            // 
-            this.but_Buscar_bono.Location = new System.Drawing.Point(376, 112);
-            this.but_Buscar_bono.Name = "but_Buscar_bono";
-            this.but_Buscar_bono.Size = new System.Drawing.Size(105, 23);
-            this.but_Buscar_bono.TabIndex = 22;
-            this.but_Buscar_bono.Text = "Buscar Bonos";
-            this.but_Buscar_bono.UseVisualStyleBackColor = true;
-            // 
             // frm_registrar_llegada
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -237,12 +238,12 @@
             this.Load += new System.EventHandler(this.frm_registrar_llegada_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_especialidades)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_listado_medicos)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_bono_consulta_disponibles)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_turnos_del_dia)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_especialidades)).EndInit();
             this.ResumeLayout(false);
 
         }

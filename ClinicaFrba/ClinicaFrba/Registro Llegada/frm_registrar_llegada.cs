@@ -100,6 +100,16 @@ namespace ClinicaFrba.AbmRol
             this.dgv_listado_medicos.Columns["Codigo"].Visible = false;
         }
 
+        private void but_Buscar_bono_Click(object sender, EventArgs e)
+        {
+            
+            Conexion conexion = new Conexion();
+            conexion.conectar();
+
+            int codigoAfiliado =Convert.ToInt32( dgv_turnos_del_dia.CurrentRow.Cells[1].Value.ToString());
+            dgv_bono_consulta_disponibles.DataSource = conexion.bonosDisponiblesPorAfiliado(codigoAfiliado);
+        }
+
         
     }
 }
