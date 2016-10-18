@@ -544,13 +544,14 @@ ALTER TABLE SOLARIS.Turno ADD CONSTRAINT CK_Nro_Turno CHECK (tur_numero > 0);
 
 -- Tabla "Consulta"
 CREATE TABLE SOLARIS.Consulta (
+	--esto lo completa el administrativo
 	con_numero				INT IDENTITY(1,1),
 	con_fecha				datetime,
 	con_turno				INT,			-- [FK]
 	con_afiliado			INT,			-- [FK]
-	--con_bono_relacionado	INT,			-- [FK]
 	con_cod_medico			INT,			-- [FK]
 	con_hora_llegada		datetime,
+	--esto lo completa el medico
 	con_hora_medico			datetime,
 	con_diagnostico			VARCHAR(1022)
 );
@@ -1276,4 +1277,65 @@ CREATE PROCEDURE SOLARIS.agregoFuncionalidadActual
 		
 GO
 
+IF OBJECT_ID('SOLARIS.especialidadesNombreCodigo') IS NOT NULL
+	DROP PROCEDURE SOLARIS.especialidadesNombreCodigo;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.especialidadesNombreCodigo
+
+	as
+		
+				
+		begin
+			select  esp_codigo as Codigo, esp_descripcion as Especialidad from SOLARIS.Especialidad 
+		end
+
+		
+GO
+
+
+
+GO
+
+IF OBJECT_ID('SOLARIS.nombreMedicoPorCodigoEspecialidad') IS NOT NULL
+	DROP PROCEDURE SOLARIS.nombreMedicoPorCodigoEspecialidad;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.nombreMedicoPorCodigoEspecialidad
+@esp_codigo		numeric(18,0)
+	as
+		
+				
+		begin
+			select  med_cod_medico as Codigo, med_nombre as Nombre, med_apellido as Apellido 
+			from SOLARIS.Medico m join SOLARIS.Especialidad_x_Medico exm on (m.med_cod_medico=exm.exm_cod_medico)  
+			where exm.exm_cod_especialidad = @esp_codigo 
+		end
+
+		
+GO
+
+
+GO
+
+IF OBJECT_ID('SOLARIS.datosTurnoPorCodigoMedico') IS NOT NULL
+	DROP PROCEDURE SOLARIS.datosTurnoPorCodigoMedico;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.datosTurnoPorCodigoMedico
+@med_cod_medico		int
+	as
+		
+				
+		begin
+			select tur_numero as Codigo, tur_afiliado as 'Codigo Afiliado', tur_medico as 'Codigo Medico', tur_fecha_turno as 'Fecha del Turno'
+			from SOLARIS.Turno 
+			where tur_medico = @med_cod_medico
+		end
+
+		
+GO
 -- [EOF]

@@ -276,5 +276,34 @@ namespace ClinicaFrba
 
         }
 
+      
+        public DataTable especialidadesNombreCodigo()
+        {
+
+            da = new SqlDataAdapter("Execute SOLARIS.especialidadesNombreCodigo ", cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
+        public DataTable nombreMedicoPorCodigoEspecialidad(String codigoEspecialidad)
+        {
+
+            da = new SqlDataAdapter("Execute SOLARIS.nombreMedicoPorCodigoEspecialidad " + Convert.ToInt32(codigoEspecialidad), cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
+
+        public DataTable datosTurnoPorCodigoMedico(int codigoMedico)
+        {
+
+            da = new SqlDataAdapter("Execute SOLARIS.datosTurnoPorCodigoMedico " + codigoMedico, cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
     }
 }
