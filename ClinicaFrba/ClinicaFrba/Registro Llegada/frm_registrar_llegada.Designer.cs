@@ -182,6 +182,8 @@
             // 
             // dtp_hora_llegada
             // 
+            this.dtp_hora_llegada.CustomFormat = "\"dd/MM/yyyy hh:mm:ss\"";
+            this.dtp_hora_llegada.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp_hora_llegada.Location = new System.Drawing.Point(166, 222);
             this.dtp_hora_llegada.Name = "dtp_hora_llegada";
             this.dtp_hora_llegada.Size = new System.Drawing.Size(174, 20);
