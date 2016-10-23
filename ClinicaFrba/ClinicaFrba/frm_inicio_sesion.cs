@@ -57,7 +57,7 @@ namespace ClinicaFrba
 
         private void frm_inicio_sesion_Load(object sender, EventArgs e)
         {
-
+            
         }
     }
 }

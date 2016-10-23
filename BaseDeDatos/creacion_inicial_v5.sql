@@ -206,6 +206,7 @@ PRINT 'Tablas eliminadas ...';
 PRINT 'Creando tablas ...';
 
 
+
 -- Tabla "Estado Usuario"
 CREATE TABLE SOLARIS.Usuario_Estado (
 	ues_codigo		TINYINT	NOT NULL,
@@ -513,10 +514,11 @@ ALTER TABLE SOLARIS.Estado_Turno ADD CONSTRAINT PK_Estado_Turno PRIMARY KEY(etu_
 
 /*
 	0 = RESERVADO
-	1 = FINALIZADO
-	2 = CANCELADO POR PACIENTE
-	3 = CANCELADO POR MEDICO
-	4 = CANCELADO POR BAJA DEL AFILIADO
+	1 = FINALIZADO PARCIALMENTE (esto ocurre cuando se registra la llegada)
+	2 = FINALIZADO (esto ocurre cuando el medico sube su resultado de la atencion)
+	3 = CANCELADO POR PACIENTE
+	4 = CANCELADO POR MEDICO
+	5 = CANCELADO POR BAJA DEL AFILIADO
 */
 
 -- Tabla "Turno"
@@ -727,10 +729,11 @@ INSERT INTO SOLARIS.Estado_Turno
 		(etu_codigo, etu_nombre)
 	VALUES
 		(0, 'RESERVADO'),
-		(1, 'FINALIZADO'),
-		(2, 'CANCELADO POR PACIENTE'),
-		(3, 'CANCELADO POR MEDICO'),
-		(4, 'CANCELADO POR BAJA AFILIADO');
+		(1, 'FINALIZADO PARCIALMENTE'),
+		(2, 'FINALIZADO'),
+		(3, 'CANCELADO POR PACIENTE'),
+		(4, 'CANCELADO POR MEDICO'),
+		(5, 'CANCELADO POR BAJA AFILIADO');
 		
 
 -- Tabla "Usuario" 
@@ -976,7 +979,7 @@ INSERT INTO SOLARIS.Turno
 					p.pac_nro_afiliado,
 					mm.med_cod_medico,
 					NULL,
-					NULL,
+					0,
 					NULL
 	from gd_esquema.Maestra m
 		JOIN SOLARIS.Paciente p ON m.Paciente_Dni = p.pac_nro_doc
@@ -1326,14 +1329,22 @@ GO
 
 GO
 CREATE PROCEDURE SOLARIS.datosTurnoPorCodigoMedico
-@med_cod_medico		int
+@med_cod_medico		int,
+@tur_fecha_turno_dia	int,
+@tur_fecha_turno_mes	int,
+@tur_fecha_turno_anio	int
 	as
 		
 				
 		begin
 			select tur_numero as Codigo, tur_afiliado as 'Codigo Afiliado', tur_medico as 'Codigo Medico', tur_fecha_turno as 'Fecha del Turno'
 			from SOLARIS.Turno 
-			where tur_medico = @med_cod_medico
+			where tur_medico = @med_cod_medico and 
+			@tur_fecha_turno_dia = DAY(tur_fecha_turno) and
+			@tur_fecha_turno_mes = MONTH(tur_fecha_turno) and
+			@tur_fecha_turno_anio = YEAR(tur_fecha_turno) and
+			tur_estado = 0
+
 		end
 
 		
@@ -1359,6 +1370,100 @@ CREATE PROCEDURE SOLARIS.bonosDisponiblesPorAfiliado
 			where bon_afiliado_compra/ 100 = @codigoAfiliado / 100 and
 			bon_plan_afiliado = (select pac_plan_medico from SOLARIS.Paciente where pac_nro_afiliado = @codigoAfiliado) and
 			bon_fue_utilizado = 0
+		end
+
+		
+GO
+
+IF OBJECT_ID('SOLARIS.registrarConsulta') IS NOT NULL
+	DROP PROCEDURE SOLARIS.registrarConsulta;
+GO
+
+GO
+--insert la consulta (esto activara los triggers correspondientes)
+CREATE PROCEDURE SOLARIS.registrarConsulta
+@codigoTurno	int,
+@codigoBono	    int,
+@fechaSistema	        datetime
+	as
+		
+		
+				
+		begin
+		    declare @con_fecha datetime
+			set @con_fecha= (select tur_fecha_turno from SOLARIS.Turno where tur_numero = @codigoTurno)
+
+			declare @con_afiliado int
+			set @con_afiliado= (select tur_afiliado from SOLARIS.Turno where tur_numero = @codigoTurno)
+
+			declare @con_cod_medico int
+			set @con_cod_medico= (select tur_medico from SOLARIS.Turno where tur_numero = @codigoTurno)
+
+			insert into SOLARIS.Consulta (con_fecha,con_turno,con_afiliado,con_cod_medico,con_hora_llegada)
+			values (@con_fecha,@codigoTurno,@con_afiliado,@con_cod_medico,@fechaSistema)
+		end
+
+		
+GO
+
+
+GO
+
+--TRIGGER QUE CAMBIA EL ESTADO DE UN TURNO
+IF OBJECT_ID('SOLARIS.cambioEstadoTurnoPorUnaConsulta') IS NOT NULL
+	DROP TRIGGER SOLARIS.cambioEstadoTurnoPorUnaConsulta;
+GO
+
+GO
+CREATE TRIGGER SOLARIS.cambioEstadoTurnoPorUnaConsulta
+ON SOLARIS.Consulta
+AFTER INSERT
+	as
+	 begin
+		declare cursorConsulta cursor
+		for select con_turno from inserted
+
+		declare @con_turno int
+		
+		open cursorConsulta
+		fetch next from cursorConsulta
+		into @con_turno
+		while @@FETCH_STATUS = 0
+		 begin
+			UPDATE SOLARIS.Turno set tur_estado = 1 where tur_numero = @con_turno
+			fetch next from cursorConsulta
+			into @con_turno
+
+		 end
+		close cursorConsulta
+		deallocate cursorConsulta
+	end
+GO
+
+
+GO
+
+IF OBJECT_ID('SOLARIS.completarCamposEnBonoPorUnaConsulta') IS NOT NULL
+	DROP PROCEDURE SOLARIS.completarCamposEnBonoPorUnaConsulta;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.completarCamposEnBonoPorUnaConsulta
+@codigoTurno	int,
+@codigoBono	    int
+	as
+		
+				
+		begin
+			declare @bon_nro_consulta int
+			set @bon_nro_consulta= (select con_numero from SOLARIS.Consulta where con_turno = @codigoTurno)
+
+			declare @bon_afiliado_uso int
+			set @bon_afiliado_uso= (select con_afiliado from SOLARIS.Consulta where con_turno = @codigoTurno)
+
+			UPDATE  SOLARIS.Bono_Consulta set  bon_nro_consulta_med = @bon_nro_consulta, bon_fue_utilizado = 1,
+			bon_afiliado_uso = @bon_afiliado_uso where bon_numero =  @codigoBono
+			
 		end
 
 		

@@ -39,8 +39,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.but_Buscar_bono = new System.Windows.Forms.Button();
             this.dgv_bono_consulta_disponibles = new System.Windows.Forms.DataGridView();
-            this.dtp_hora_llegada = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.dgv_turnos_del_dia = new System.Windows.Forms.DataGridView();
@@ -54,12 +52,13 @@
             // 
             // but_registrar
             // 
-            this.but_registrar.Location = new System.Drawing.Point(154, 264);
+            this.but_registrar.Location = new System.Drawing.Point(354, 245);
             this.but_registrar.Name = "but_registrar";
-            this.but_registrar.Size = new System.Drawing.Size(116, 28);
+            this.but_registrar.Size = new System.Drawing.Size(127, 28);
             this.but_registrar.TabIndex = 4;
             this.but_registrar.Text = "Crear consulta";
             this.but_registrar.UseVisualStyleBackColor = true;
+            this.but_registrar.Click += new System.EventHandler(this.but_registrar_Click);
             // 
             // groupBox1
             // 
@@ -148,8 +147,6 @@
             // 
             this.groupBox2.Controls.Add(this.but_Buscar_bono);
             this.groupBox2.Controls.Add(this.dgv_bono_consulta_disponibles);
-            this.groupBox2.Controls.Add(this.dtp_hora_llegada);
-            this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.but_registrar);
             this.groupBox2.Controls.Add(this.label3);
@@ -175,28 +172,10 @@
             // 
             this.dgv_bono_consulta_disponibles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgv_bono_consulta_disponibles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_bono_consulta_disponibles.Location = new System.Drawing.Point(18, 163);
+            this.dgv_bono_consulta_disponibles.Location = new System.Drawing.Point(162, 144);
             this.dgv_bono_consulta_disponibles.Name = "dgv_bono_consulta_disponibles";
-            this.dgv_bono_consulta_disponibles.Size = new System.Drawing.Size(364, 52);
+            this.dgv_bono_consulta_disponibles.Size = new System.Drawing.Size(113, 129);
             this.dgv_bono_consulta_disponibles.TabIndex = 21;
-            // 
-            // dtp_hora_llegada
-            // 
-            this.dtp_hora_llegada.CustomFormat = "\"dd/MM/yyyy hh:mm:ss\"";
-            this.dtp_hora_llegada.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp_hora_llegada.Location = new System.Drawing.Point(166, 222);
-            this.dtp_hora_llegada.Name = "dtp_hora_llegada";
-            this.dtp_hora_llegada.Size = new System.Drawing.Size(174, 20);
-            this.dtp_hora_llegada.TabIndex = 20;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(15, 228);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(85, 13);
-            this.label5.TabIndex = 19;
-            this.label5.Text = "Hora de llegada:";
             // 
             // label4
             // 
@@ -261,8 +240,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dgv_turnos_del_dia;
-        private System.Windows.Forms.DateTimePicker dtp_hora_llegada;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dgv_bono_consulta_disponibles;
         private System.Windows.Forms.DataGridView dgv_especialidades;
         private System.Windows.Forms.Button but_Buscar_turnos;

@@ -24,9 +24,11 @@ namespace ClinicaFrba
           para solo leer filas = cm +  dr*/
         public void conectar()
         {
+            //creo el objeto de la clase appconfig para poder obtenere el host
+            AppConfig archivoConfig = new AppConfig();
             try
             {
-                cn = new SqlConnection("Data Source=RICARDO-PC\\SQLSERVER2012;Initial Catalog=GD2C2016;Persist Security Info=True;User ID=gd;Password=gd2016");
+                cn = new SqlConnection(archivoConfig.obtenerHost());
                 cn.Open();
                 
             }
@@ -332,10 +334,10 @@ namespace ClinicaFrba
 
         }
 
-        public DataTable datosTurnoPorCodigoMedico(int codigoMedico)
+        public DataTable datosTurnoPorCodigoMedico(int codigoMedico, int dia, int mes, int anio)
         {
 
-            da = new SqlDataAdapter("Execute SOLARIS.datosTurnoPorCodigoMedico " + codigoMedico, cn);
+            da = new SqlDataAdapter("Execute SOLARIS.datosTurnoPorCodigoMedico " + codigoMedico + "," + dia + "," + mes + "," + anio, cn);
             dt = new DataTable();
             da.Fill(dt);
             return dt;
@@ -351,5 +353,20 @@ namespace ClinicaFrba
             return dt;
 
         }
+
+        public void registrarConsulta(int codigoTurno, int codigoBono, DateTime dt)
+        {
+            cm = new SqlCommand("Execute SOLARIS.registrarConsulta " + codigoTurno + " , " + codigoBono + ", '"+ dt +"'", cn);
+            cm.ExecuteNonQuery();
+
+        }
+
+        public void completarCamposEnBonoPorUnaConsulta(int codigoTurno, int codigoBono)
+        {
+            cm = new SqlCommand("Execute SOLARIS.completarCamposEnBonoPorUnaConsulta " + codigoTurno + " , " + codigoBono , cn);
+            cm.ExecuteNonQuery();
+
+        }
+
     }
 }

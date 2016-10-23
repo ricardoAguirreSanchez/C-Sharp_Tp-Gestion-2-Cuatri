@@ -94,9 +94,17 @@ namespace ClinicaFrba.AbmRol
             conexion.conectar();
 
             int codigoMedico = Convert.ToInt32(dgv_listado_medicos.CurrentRow.Cells[0].Value.ToString());
+            
+            //obtengo de la fecha del sistema, luego el dia,mes y anio para filtrar los turnos
+            AppConfig ac = new AppConfig();
+            String fecha = ac.obtenerFecha();
+            DateTime dt = Convert.ToDateTime(fecha);
+            int dia = dt.Day;
+            int mes = dt.Month;
+            int anio = dt.Year;
 
             //el dgv tendra fecha,numero, afliado, medico del turno
-            dgv_turnos_del_dia.DataSource = conexion.datosTurnoPorCodigoMedico(codigoMedico);
+            dgv_turnos_del_dia.DataSource = conexion.datosTurnoPorCodigoMedico(codigoMedico,dia,mes,anio);
             this.dgv_listado_medicos.Columns["Codigo"].Visible = false;
         }
 
@@ -108,6 +116,40 @@ namespace ClinicaFrba.AbmRol
 
             int codigoAfiliado =Convert.ToInt32( dgv_turnos_del_dia.CurrentRow.Cells[1].Value.ToString());
             dgv_bono_consulta_disponibles.DataSource = conexion.bonosDisponiblesPorAfiliado(codigoAfiliado);
+        }
+
+        private void but_registrar_Click(object sender, EventArgs e)
+        {
+            /*ESTE BOTON HARA LOS SIGUIENTES CAMBIOS:
+             * 1.- En "bono" : bon_nro_consulta, bon_fue_utilizado y bon_afiliado_uso
+             * 2.- En "consulta" :
+             * con_numero, con_fecha (fecha del turno),con_turno(saco del dgv_turnos_del_dia) ,con_afiliado(saco del dgv_turnos_del_dia),
+             * con_cod_medico(saco del dgv_turnos_del_dia),con_hora_llegada(fecha del sistema, dado q es la fecha actual)
+             * 3.- En "turno" : tur_estado (sera "FINALIZADO PARCIALMENTE 1")
+            */
+            try
+            {
+                Conexion conexion = new Conexion();
+                conexion.conectar();
+                int codigoTurno = Convert.ToInt32(dgv_turnos_del_dia.CurrentRow.Cells[0].Value.ToString());
+                int codigoBono = Convert.ToInt32(dgv_bono_consulta_disponibles.CurrentRow.Cells[0].Value.ToString());
+
+                //fecha del sistema
+                AppConfig ac = new AppConfig();
+                String fechaSistema = ac.obtenerFecha();
+                DateTime dt1 = Convert.ToDateTime(fechaSistema);
+
+                //esto registra la consulta (y activa el trigger para la tabla turno)
+                conexion.registrarConsulta(codigoTurno, codigoBono,dt1);
+                //esto completa los campos para la tabla bono
+                conexion.completarCamposEnBonoPorUnaConsulta(codigoTurno,codigoBono);
+                MessageBox.Show("Agregado correctamente");
+                this.Close();
+            }
+            catch (Exception ERROR)
+            {
+                MessageBox.Show("No se pudo registrar la CONSULTA por: " + ERROR);
+            }
         }
 
         
