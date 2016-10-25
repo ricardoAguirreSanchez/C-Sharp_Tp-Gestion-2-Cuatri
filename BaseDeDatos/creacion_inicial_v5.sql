@@ -514,8 +514,8 @@ ALTER TABLE SOLARIS.Estado_Turno ADD CONSTRAINT PK_Estado_Turno PRIMARY KEY(etu_
 
 /*
 	0 = RESERVADO
-	1 = FINALIZADO PARCIALMENTE (esto ocurre cuando se registra la llegada)
-	2 = FINALIZADO (esto ocurre cuando el medico sube su resultado de la atencion)
+	1 = FINALIZADO PARCIALMENTE (esto ocurre cuando se registra la llegada y el medico aun no aseguro q se realizo la consulta correctamente)
+	2 = FINALIZADO (esto ocurre cuando el medico sube su resultado de la atencion e informa que la consulta ya se realizo correctamente)
 	3 = CANCELADO POR PACIENTE
 	4 = CANCELADO POR MEDICO
 	5 = CANCELADO POR BAJA DEL AFILIADO
@@ -555,6 +555,7 @@ CREATE TABLE SOLARIS.Consulta (
 	con_hora_llegada		datetime,
 	--esto lo completa el medico
 	con_hora_medico			datetime,
+	con_sintoma			VARCHAR(255),
 	con_diagnostico			VARCHAR(1022)
 );
 
@@ -754,7 +755,9 @@ INSERT INTO SOLARIS.Rol_x_Usuario
 		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'ariel'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'ADMIN')),
 		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'jose'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'ADMIN')),
 		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'matias'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'ADMIN')),
-		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'ricardo'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'ADMIN'))
+		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'ricardo'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'ADMIN')),
+		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'ricardo'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'PACIENTE')),
+		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'ricardo'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'MEDICO'))
 	;
 
 
@@ -1470,4 +1473,82 @@ CREATE PROCEDURE SOLARIS.completarCamposEnBonoPorUnaConsulta
 GO
 
 
+GO
+
+IF OBJECT_ID('SOLARIS.buscarConsultasPorID') IS NOT NULL
+	DROP PROCEDURE SOLARIS.buscarConsultasPorID;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.buscarConsultasPorID
+@med_cod_medico		int,
+@dia	int,
+@mes	int,
+@anio	int
+	as
+		
+				
+		begin
+			select con_numero as 'Codigo Consulta', con_afiliado as 'Codigo Afiliado', con_cod_medico as 'Codigo Medico', con_fecha as 'Fecha del Turno'
+			from SOLARIS.Consulta join SOLARIS.Turno on (con_turno = tur_numero)
+			where con_cod_medico = @med_cod_medico and 
+			@dia = DAY(con_fecha) and
+			@mes = MONTH(con_fecha) and
+			@anio = YEAR(con_fecha) and
+			--esto para saber q el turno de esa consulta sigue como finalizado parcialmente--
+			tur_estado = 1
+			
+
+		end
+
+		
+GO
+
+
+GO
+
+--esto completa lo q faltaba en consulta
+IF OBJECT_ID('SOLARIS.completarCamposEnConsultaPorRegistroResultado') IS NOT NULL
+	DROP PROCEDURE SOLARIS.completarCamposEnConsultaPorRegistroResultado;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.completarCamposEnConsultaPorRegistroResultado
+@consulta	int,
+@sintoma varchar(255),
+@diagnostico varchar(1022),
+@fecha datetime
+	as
+		
+				
+		begin
+			UPDATE SOLARIS.Consulta set con_hora_medico=@fecha, con_sintoma=@sintoma, con_diagnostico=@diagnostico 
+			where con_numero=@consulta
+		end
+
+		
+GO
+
+
+
+--esto cambia de estado el turno
+IF OBJECT_ID('SOLARIS.cambioEstadoTurnoPorUnaConsultaFinalizada') IS NOT NULL
+	DROP PROCEDURE SOLARIS.cambioEstadoTurnoPorUnaConsultaFinalizada;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.cambioEstadoTurnoPorUnaConsultaFinalizada
+@codigoConsulta	int
+	as
+		
+				
+		begin
+			UPDATE SOLARIS.Turno set tur_estado = 2
+			where tur_numero = (select con_turno from SOLARIS.Consulta WHERE con_numero = @codigoConsulta )
+		end
+
+		
+GO
 -- [EOF]

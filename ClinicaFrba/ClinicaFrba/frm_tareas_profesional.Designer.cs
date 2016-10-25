@@ -28,47 +28,63 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.but_registro_resultado = new System.Windows.Forms.Button();
-            this.but_cancelar_atencion = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.but_ir = new System.Windows.Forms.Button();
+            this.dgv_listadoFuncionalidades = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_listadoFuncionalidades)).BeginInit();
             this.SuspendLayout();
             // 
-            // but_registro_resultado
+            // label1
             // 
-            this.but_registro_resultado.Location = new System.Drawing.Point(82, 94);
-            this.but_registro_resultado.Name = "but_registro_resultado";
-            this.but_registro_resultado.Size = new System.Drawing.Size(121, 23);
-            this.but_registro_resultado.TabIndex = 5;
-            this.but_registro_resultado.Text = "Registro de Resultado";
-            this.but_registro_resultado.UseVisualStyleBackColor = true;
-            this.but_registro_resultado.Click += new System.EventHandler(this.but_registro_resultado_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(9, 10);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(196, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Listado de Funcionalidades Disponibles:";
             // 
-            // but_cancelar_atencion
+            // but_ir
             // 
-            this.but_cancelar_atencion.Location = new System.Drawing.Point(82, 41);
-            this.but_cancelar_atencion.Name = "but_cancelar_atencion";
-            this.but_cancelar_atencion.Size = new System.Drawing.Size(121, 23);
-            this.but_cancelar_atencion.TabIndex = 4;
-            this.but_cancelar_atencion.Text = "Cancelar Atencion ";
-            this.but_cancelar_atencion.UseVisualStyleBackColor = true;
-            this.but_cancelar_atencion.Click += new System.EventHandler(this.but_cancelar_atencion_Click);
+            this.but_ir.Location = new System.Drawing.Point(130, 200);
+            this.but_ir.Name = "but_ir";
+            this.but_ir.Size = new System.Drawing.Size(75, 23);
+            this.but_ir.TabIndex = 14;
+            this.but_ir.Text = "IR";
+            this.but_ir.UseVisualStyleBackColor = true;
+            this.but_ir.Click += new System.EventHandler(this.but_ir_Click);
+            // 
+            // dgv_listadoFuncionalidades
+            // 
+            this.dgv_listadoFuncionalidades.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_listadoFuncionalidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_listadoFuncionalidades.Location = new System.Drawing.Point(12, 26);
+            this.dgv_listadoFuncionalidades.Name = "dgv_listadoFuncionalidades";
+            this.dgv_listadoFuncionalidades.Size = new System.Drawing.Size(193, 154);
+            this.dgv_listadoFuncionalidades.TabIndex = 13;
+            this.dgv_listadoFuncionalidades.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_listadoFuncionalidades_CellContentClick);
             // 
             // frm_tareas_profesional
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 177);
-            this.Controls.Add(this.but_registro_resultado);
-            this.Controls.Add(this.but_cancelar_atencion);
+            this.ClientSize = new System.Drawing.Size(260, 301);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.but_ir);
+            this.Controls.Add(this.dgv_listadoFuncionalidades);
             this.Name = "frm_tareas_profesional";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tareas Profesional";
+            this.Load += new System.EventHandler(this.frm_tareas_profesional_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_listadoFuncionalidades)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button but_registro_resultado;
-        private System.Windows.Forms.Button but_cancelar_atencion;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button but_ir;
+        private System.Windows.Forms.DataGridView dgv_listadoFuncionalidades;
     }
 }

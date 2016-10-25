@@ -31,5 +31,31 @@ namespace ClinicaFrba
             frm_registro_resultado registro = new frm_registro_resultado();
             registro.Show();
         }
+
+        private void dgv_listadoFuncionalidades_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void frm_tareas_profesional_Load(object sender, EventArgs e)
+        {
+            Conexion cn = new Conexion();
+            cn.conectar();
+            dgv_listadoFuncionalidades.DataSource = cn.funcionalidadesTotalesPorRol("MEDICO");
+        }
+
+        private void but_ir_Click(object sender, EventArgs e)
+        {
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Cancelar Atencion")
+            {
+                frm_cancelar_atencion_medico cam = new frm_cancelar_atencion_medico();
+                cam.Show();
+            }
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Registrar Resultados")
+            {
+                frm_registro_resultado rr = new frm_registro_resultado();
+                rr.Show();
+            }
+        }
     }
 }

@@ -368,5 +368,29 @@ namespace ClinicaFrba
 
         }
 
+         //esto completa lo q faltaba en consulta
+        public void completarCamposEnConsultaPorRegistroResultado(int codigoConsulta,String sintomas, String diagnostico, DateTime dtSistema)
+        {
+            cm = new SqlCommand("Execute SOLARIS.completarCamposEnConsultaPorRegistroResultado " + codigoConsulta + ",'" + sintomas + "','" + diagnostico + "','" + dtSistema+"'", cn);
+            cm.ExecuteNonQuery();
+
+        }
+        //esto cambia de estado el turno
+        public void cambioEstadoTurnoPorUnaConsultaFinalizada(int codigoConsulta)
+        {
+            cm = new SqlCommand("Execute SOLARIS.cambioEstadoTurnoPorUnaConsultaFinalizada "+codigoConsulta, cn);
+            cm.ExecuteNonQuery();
+
+        }
+
+        //trae el  numero,afiliado,medico y fecha de consulta 
+        public DataTable buscarConsultasPorID(int codigoMedico, int dia, int mes, int anio)
+        {
+            da = new SqlDataAdapter("Execute SOLARIS.buscarConsultasPorID " + codigoMedico + "," + dia + "," + mes + "," + anio, cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
     }
 }

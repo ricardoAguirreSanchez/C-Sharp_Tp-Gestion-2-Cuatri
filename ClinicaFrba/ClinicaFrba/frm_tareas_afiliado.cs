@@ -43,5 +43,36 @@ namespace ClinicaFrba
             cancelarAtencion.Show();
 
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frm_tareas_afiliado_Load(object sender, EventArgs e)
+        {
+            Conexion cn = new Conexion();
+            cn.conectar();
+            dgv_listadoFuncionalidades.DataSource = cn.funcionalidadesTotalesPorRol("PACIENTE");
+        }
+
+        private void but_ir_Click(object sender, EventArgs e)
+        {
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Comprar Bonos")
+            {
+                frm_comprar_bono cb = new frm_comprar_bono();
+                cb.Show();
+            }
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Pedir Turno")
+            {
+                frm_pedir_turno pt = new frm_pedir_turno();
+                pt.Show();
+            }
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Cancelar Atencion")
+            {
+                frm_cancelar_atencion_afiliado caa = new frm_cancelar_atencion_afiliado();
+                caa.Show();
+            }
+        }
     }
 }

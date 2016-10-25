@@ -56,5 +56,46 @@ namespace ClinicaFrba
             frm_pedir_turno pedirTurno = new frm_pedir_turno();
             pedirTurno.Show();
         }
+
+        private void frm_tareas_administrativo_Load(object sender, EventArgs e)
+        {
+            Conexion cn = new Conexion();
+            cn.conectar();
+            dgv_listadoFuncionalidades.DataSource = cn.funcionalidadesTotalesPorRol("ADMIN");
+        }
+
+        private void but_ir_Click(object sender, EventArgs e)
+        {
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Administrar Roles")
+            {
+                frm_administrar_roles cb = new frm_administrar_roles();
+                cb.Show();
+            }
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Administrar Afiliados")
+            {
+                frm_administrar_afiliados pt = new frm_administrar_afiliados();
+                pt.Show();
+            }
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Consultar Estadisticas")
+            {
+                frm_consultar_estadisticas caa = new frm_consultar_estadisticas();
+                caa.Show();
+            }
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Registrar Llegada")
+            {
+                frm_registrar_llegada cb = new frm_registrar_llegada();
+                cb.Show();
+            }
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Comprar Bonos")
+            {
+                frm_comprar_bono pt = new frm_comprar_bono();
+                pt.Show();
+            }
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Pedir Turno")
+            {
+                frm_pedir_turno caa = new frm_pedir_turno();
+                caa.Show();
+            }
+        }
     }
 }

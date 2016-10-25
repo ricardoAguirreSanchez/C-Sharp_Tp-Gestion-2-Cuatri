@@ -28,113 +28,62 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.but_registrar_llegada = new System.Windows.Forms.Button();
-            this.but_consultar_estadisticas = new System.Windows.Forms.Button();
-            this.but_administrar_afiliado = new System.Windows.Forms.Button();
-            this.but_administrar_rol = new System.Windows.Forms.Button();
-            this.group_por_afiliado = new System.Windows.Forms.GroupBox();
-            this.but_pedir_turno = new System.Windows.Forms.Button();
-            this.but_comprar_bonos = new System.Windows.Forms.Button();
-            this.group_por_afiliado.SuspendLayout();
+            this.label1 = new System.Windows.Forms.Label();
+            this.but_ir = new System.Windows.Forms.Button();
+            this.dgv_listadoFuncionalidades = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_listadoFuncionalidades)).BeginInit();
             this.SuspendLayout();
             // 
-            // but_registrar_llegada
+            // label1
             // 
-            this.but_registrar_llegada.Location = new System.Drawing.Point(82, 188);
-            this.but_registrar_llegada.Name = "but_registrar_llegada";
-            this.but_registrar_llegada.Size = new System.Drawing.Size(121, 23);
-            this.but_registrar_llegada.TabIndex = 7;
-            this.but_registrar_llegada.Text = "Registrar Llegada";
-            this.but_registrar_llegada.UseVisualStyleBackColor = true;
-            this.but_registrar_llegada.Click += new System.EventHandler(this.but_registrar_llegada_Click);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(196, 13);
+            this.label1.TabIndex = 15;
+            this.label1.Text = "Listado de Funcionalidades Disponibles:";
             // 
-            // but_consultar_estadisticas
+            // but_ir
             // 
-            this.but_consultar_estadisticas.Location = new System.Drawing.Point(82, 143);
-            this.but_consultar_estadisticas.Name = "but_consultar_estadisticas";
-            this.but_consultar_estadisticas.Size = new System.Drawing.Size(121, 23);
-            this.but_consultar_estadisticas.TabIndex = 6;
-            this.but_consultar_estadisticas.Text = "Consultar Estadisticas";
-            this.but_consultar_estadisticas.UseVisualStyleBackColor = true;
-            this.but_consultar_estadisticas.Click += new System.EventHandler(this.but_consultar_estadisticas_Click);
+            this.but_ir.Location = new System.Drawing.Point(133, 199);
+            this.but_ir.Name = "but_ir";
+            this.but_ir.Size = new System.Drawing.Size(75, 23);
+            this.but_ir.TabIndex = 14;
+            this.but_ir.Text = "IR";
+            this.but_ir.UseVisualStyleBackColor = true;
+            this.but_ir.Click += new System.EventHandler(this.but_ir_Click);
             // 
-            // but_administrar_afiliado
+            // dgv_listadoFuncionalidades
             // 
-            this.but_administrar_afiliado.Location = new System.Drawing.Point(82, 90);
-            this.but_administrar_afiliado.Name = "but_administrar_afiliado";
-            this.but_administrar_afiliado.Size = new System.Drawing.Size(121, 27);
-            this.but_administrar_afiliado.TabIndex = 5;
-            this.but_administrar_afiliado.Text = "Administrar Afiliados";
-            this.but_administrar_afiliado.UseVisualStyleBackColor = true;
-            this.but_administrar_afiliado.Click += new System.EventHandler(this.but_administrar_afiliado_Click);
-            // 
-            // but_administrar_rol
-            // 
-            this.but_administrar_rol.Location = new System.Drawing.Point(82, 37);
-            this.but_administrar_rol.Name = "but_administrar_rol";
-            this.but_administrar_rol.Size = new System.Drawing.Size(121, 27);
-            this.but_administrar_rol.TabIndex = 4;
-            this.but_administrar_rol.Text = "Administrar Roles";
-            this.but_administrar_rol.UseVisualStyleBackColor = true;
-            this.but_administrar_rol.Click += new System.EventHandler(this.but_administrar_rol_Click);
-            // 
-            // group_por_afiliado
-            // 
-            this.group_por_afiliado.Controls.Add(this.but_pedir_turno);
-            this.group_por_afiliado.Controls.Add(this.but_comprar_bonos);
-            this.group_por_afiliado.Location = new System.Drawing.Point(23, 229);
-            this.group_por_afiliado.Name = "group_por_afiliado";
-            this.group_por_afiliado.Size = new System.Drawing.Size(247, 98);
-            this.group_por_afiliado.TabIndex = 8;
-            this.group_por_afiliado.TabStop = false;
-            this.group_por_afiliado.Text = "Por el afiliado";
-            // 
-            // but_pedir_turno
-            // 
-            this.but_pedir_turno.Location = new System.Drawing.Point(65, 52);
-            this.but_pedir_turno.Name = "but_pedir_turno";
-            this.but_pedir_turno.Size = new System.Drawing.Size(121, 27);
-            this.but_pedir_turno.TabIndex = 6;
-            this.but_pedir_turno.Text = "Pedir Turno";
-            this.but_pedir_turno.UseVisualStyleBackColor = true;
-            this.but_pedir_turno.Click += new System.EventHandler(this.but_pedir_turno_Click);
-            // 
-            // but_comprar_bonos
-            // 
-            this.but_comprar_bonos.Location = new System.Drawing.Point(65, 19);
-            this.but_comprar_bonos.Name = "but_comprar_bonos";
-            this.but_comprar_bonos.Size = new System.Drawing.Size(121, 27);
-            this.but_comprar_bonos.TabIndex = 5;
-            this.but_comprar_bonos.Text = "Comprar Bonos";
-            this.but_comprar_bonos.UseVisualStyleBackColor = true;
-            this.but_comprar_bonos.Click += new System.EventHandler(this.but_comprar_bonos_Click);
+            this.dgv_listadoFuncionalidades.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgv_listadoFuncionalidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_listadoFuncionalidades.Location = new System.Drawing.Point(15, 25);
+            this.dgv_listadoFuncionalidades.Name = "dgv_listadoFuncionalidades";
+            this.dgv_listadoFuncionalidades.Size = new System.Drawing.Size(193, 154);
+            this.dgv_listadoFuncionalidades.TabIndex = 13;
             // 
             // frm_tareas_administrativo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(294, 354);
-            this.Controls.Add(this.group_por_afiliado);
-            this.Controls.Add(this.but_registrar_llegada);
-            this.Controls.Add(this.but_consultar_estadisticas);
-            this.Controls.Add(this.but_administrar_afiliado);
-            this.Controls.Add(this.but_administrar_rol);
+            this.ClientSize = new System.Drawing.Size(238, 248);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.but_ir);
+            this.Controls.Add(this.dgv_listadoFuncionalidades);
             this.Name = "frm_tareas_administrativo";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tareas Administrativo";
-            this.group_por_afiliado.ResumeLayout(false);
+            this.Load += new System.EventHandler(this.frm_tareas_administrativo_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_listadoFuncionalidades)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button but_registrar_llegada;
-        private System.Windows.Forms.Button but_consultar_estadisticas;
-        private System.Windows.Forms.Button but_administrar_afiliado;
-        private System.Windows.Forms.Button but_administrar_rol;
-        private System.Windows.Forms.GroupBox group_por_afiliado;
-        private System.Windows.Forms.Button but_pedir_turno;
-        private System.Windows.Forms.Button but_comprar_bonos;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button but_ir;
+        private System.Windows.Forms.DataGridView dgv_listadoFuncionalidades;
     }
 }
