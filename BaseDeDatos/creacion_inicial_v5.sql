@@ -1191,7 +1191,7 @@ CREATE PROCEDURE [SOLARIS].[buscarPacientePorID]
 	 ,p.pac_nro_doc
 	FROM [SOLARIS].[Paciente] p
 	
-	WHERE p.pac_nro_afiliado = @ID_Paciente
+	WHERE p.pac_nro_afiliado = @ID_Paciente and p.pac_esta_activo = 1
 
 GO
 
@@ -1570,6 +1570,18 @@ CREATE PROCEDURE SOLARIS.traigoDescripcionPlan
 	as
 		select @plm_descripcion = plm_descripcion from SOLARIS.Plan_Medico where plm_codigo = @plm_codigo
 		
+GO
+
+IF OBJECT_ID('SOLARIS.bajarPacientes') IS NOT NULL
+	DROP PROCEDURE SOLARIS.bajarPacientes;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.bajarPacientes
+@plm_codigo int
+	as
+		update SOLARIS.Paciente set pac_esta_activo = 0 where pac_nro_afiliado = @plm_codigo
 GO
 
 -- [EOF]

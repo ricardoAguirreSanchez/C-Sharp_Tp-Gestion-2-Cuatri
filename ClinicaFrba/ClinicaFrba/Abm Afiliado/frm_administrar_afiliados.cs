@@ -79,7 +79,8 @@ namespace ClinicaFrba.AbmRol
             tex_dni_asociado_principal.Enabled = true;
             but_modificar.Visible = true;
             but_eliminar.Visible = true;
-
+            
+            try {
             //Conecto a BD
             Conexion conexion = new Conexion();
             conexion.conectar();
@@ -102,8 +103,12 @@ namespace ClinicaFrba.AbmRol
             else if (filaPaciente["pac_sexo"].ToString() == "M")
             {rdb_femenino.Checked = false; rdb_masculino.Checked = true; }
             com_plan_medico.SelectedItem = conexion.traigoNombrePlan(Convert.ToInt64(filaPaciente["pac_plan_medico"].ToString()));
-
             tex_dni_asociado_principal.Text = filaPaciente["pac_nro_doc"].ToString();	 
+        }
+            catch (Exception er1)
+            {
+                MessageBox.Show("Afiliado no encontrado");
+            }
         }
 
         private void rdb_femenino_CheckedChanged(object sender, EventArgs e)
@@ -185,6 +190,25 @@ namespace ClinicaFrba.AbmRol
             catch (Exception er1)
             {
                 MessageBox.Show("Error al actualizar el afiliado:" + er1);
+            }
+
+            this.Close();
+        }
+
+        private void but_eliminar_Click(object sender, EventArgs e)
+        {
+            //modifico el nombre y estado
+            try
+            {
+                Conexion conexion = new Conexion();
+                conexion.conectar();
+
+                conexion.bajarAfiliado(int.Parse(tex_numero_afiliado.Text));
+                MessageBox.Show("Eliminado!");
+            }
+            catch (Exception er1)
+            {
+                MessageBox.Show("Error eliminando el afiliado:" + er1);
             }
 
             this.Close();

@@ -102,6 +102,7 @@
             this.but_eliminar.TabIndex = 4;
             this.but_eliminar.Text = "Eliminar";
             this.but_eliminar.UseVisualStyleBackColor = true;
+            this.but_eliminar.Click += new System.EventHandler(this.but_eliminar_Click);
             // 
             // tex_numero_afiliado
             // 
@@ -338,7 +339,7 @@
             // 
             // but_descartarNuevo
             // 
-            this.but_descartarNuevo.Location = new System.Drawing.Point(198, 376);
+            this.but_descartarNuevo.Location = new System.Drawing.Point(196, 376);
             this.but_descartarNuevo.Name = "but_descartarNuevo";
             this.but_descartarNuevo.Size = new System.Drawing.Size(131, 48);
             this.but_descartarNuevo.TabIndex = 32;

@@ -345,5 +345,13 @@ namespace ClinicaFrba
             return dt;
 
         }
+
+        internal void bajarAfiliado(int codigo)
+        {
+            SqlCommand command = new SqlCommand("SOLARIS.bajarPacientes", cn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@plm_codigo",codigo);
+            command.ExecuteNonQuery();
+        }
     }
 }
