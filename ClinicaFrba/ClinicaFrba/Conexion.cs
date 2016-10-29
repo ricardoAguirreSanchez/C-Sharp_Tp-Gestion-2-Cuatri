@@ -154,77 +154,30 @@ namespace ClinicaFrba
         }
 
         //Traigo Pacientes por ID
-        public Array buscarPacientePorID(string ID)
+        public DataTable buscarPacientePorID(string ID)
         {
-
-            //Defino el Store Procedure
-            SqlCommand command = new SqlCommand("SOLARIS.buscarPacientePorID", cn);
-            command.CommandType = CommandType.StoredProcedure;
-
-            //Defino los parametros que deseo traer
-            SqlParameter Nombre = new SqlParameter("Nombre", SqlDbType.VarChar,255);
-            Nombre.Direction = ParameterDirection.Output;
-            command.Parameters.Add(Nombre);
-
-            SqlParameter Apellido = new SqlParameter("Apellido", SqlDbType.VarChar,255);
-            Apellido.Direction = ParameterDirection.Output;
-            command.Parameters.Add(Apellido);
-
-            SqlParameter DNI = new SqlParameter("DNI", SqlDbType.VarChar, 255);
-            DNI.Direction = ParameterDirection.Output;
-            command.Parameters.Add(DNI);
-
-            //SqlParameter Fecha_Nacimiento = new SqlParameter("Fecha_Nacimiento", SqlDbType.Text);
-            //Fecha_Nacimiento.Direction = ParameterDirection.Output;
-            //command.Parameters.Add(Fecha_Nacimiento);
-
-            SqlParameter Direccion = new SqlParameter("Direccion", SqlDbType.VarChar, 255);
-            Direccion.Direction = ParameterDirection.Output;
-            command.Parameters.Add(Direccion);
-
-            SqlParameter Telefono = new SqlParameter("Telefono", SqlDbType.VarChar, 255);
-            Telefono.Direction = ParameterDirection.Output;
-            command.Parameters.Add(Telefono);
-
-            SqlParameter Email = new SqlParameter("Email", SqlDbType.VarChar, 255);
-            Email.Direction = ParameterDirection.Output;
-            command.Parameters.Add(Email);
-
-            //SqlParameter Sexo = new SqlParameter("Sexo", SqlDbType.Text);
-            //Sexo.Direction = ParameterDirection.Output;
-            //command.Parameters.Add(Sexo);
-
-            //SqlParameter Plan = new SqlParameter("Plan", SqlDbType.Text);
-            //Plan.Direction = ParameterDirection.Output;
-            //command.Parameters.Add(Plan);
-
-            SqlParameter DNI_Principal = new SqlParameter("DNI_Principal", SqlDbType.VarChar, 255);
-            DNI_Principal.Direction = ParameterDirection.Output;
-            command.Parameters.Add(DNI_Principal);
-
-            //Defino los parametros con los que voy a buscar en la base de datos
-            command.Parameters.AddWithValue("ID_Paciente", ID);
-
-            command.ExecuteScalar();
-            
-            string[] resultado = new string[9];
-
-            resultado.SetValue(command.Parameters["Nombre"].Value.ToString(), 0);
-            resultado.SetValue(command.Parameters["Apellido"].Value.ToString(), 1);
-            resultado.SetValue(command.Parameters["DNI"].Value, 2);
-            resultado.SetValue(command.Parameters["Direccion"].Value, 3);
-            resultado.SetValue(command.Parameters["Telefono"].Value, 4);
-            resultado.SetValue(command.Parameters["Email"].Value, 5);
-            resultado.SetValue(command.Parameters["DNI_Principal"].Value, 6);
-
-            //resultado.SetValue(command.Parameters["Fecha_Nacimiento"].Value, 3);
-            //resultado.SetValue(command.Parameters["Sexo"].Value, 7);
-            //resultado.SetValue(command.Parameters["Plan"].Value, 8);
-            
-            return resultado;
-
+            DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter("SOLARIS.buscarPacientePorID", cn);
+            da.SelectCommand.CommandType = CommandType.StoredProcedure;
+            da.SelectCommand.Parameters.Add("@ID_Paciente", ID);
+            da.Fill(dt);
+            return dt;
         }
 
+        //del github
+        public string traigoNombrePlan(Int64 idPlan)
+        {
+            SqlCommand command = new SqlCommand("SOLARIS.traigoDescripcionPlan", cn);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlParameter descripcion = new SqlParameter("@plm_descripcion", SqlDbType.VarChar, 255);
+            descripcion.Direction = ParameterDirection.Output;
+            command.Parameters.Add(descripcion);
+
+            command.Parameters.AddWithValue("@plm_codigo", idPlan);
+            command.ExecuteScalar();
+            return command.Parameters["@plm_descripcion"].Value.ToString();
+
+        }
 
         //del github
         public int traigoIDPlan(string nombrePlan)

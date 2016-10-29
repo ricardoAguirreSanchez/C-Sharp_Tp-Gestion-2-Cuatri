@@ -1175,29 +1175,20 @@ IF OBJECT_ID('[SOLARIS].[buscarPacientePorID]') IS NOT NULL
 GO
 GO
 CREATE PROCEDURE [SOLARIS].[buscarPacientePorID]
-	@ID_Paciente varchar(255),
-	@Nombre varchar(255) OUTPUT
-	,@Apellido varchar(255) OUTPUT
-	,@DNI varchar(255) OUTPUT
-	,@Direccion varchar(255) OUTPUT
-	,@Telefono varchar(255) OUTPUT
-	,@Email varchar(255) OUTPUT
-	,@DNI_Principal varchar(255) OUTPUT
-	
+	@ID_Paciente varchar(255)
 	as
 	
 	 SELECT
-	 @Nombre = p.pac_nombre 
-	 , @Apellido = p.pac_apellido
-	 --, p.pac_fecha_nac AS 'Fecha_Nacimiento'
-	 ,@DNI = p.pac_nro_doc
-	 , @Direccion = p.pac_direccion
-	 , @Telefono = p.pac_telefono
-	 , @Email = p.pac_mail
-	 --, p.pac_sexo AS 'Sexo'
-	 --, p.pac_plan_medico AS 'Plan'
-	 , @DNI_Principal = p.pac_nro_doc
-	
+	  p.pac_nombre 
+	 ,p.pac_apellido
+	 ,p.pac_fecha_nac
+	 ,p.pac_nro_doc
+	 ,p.pac_direccion
+	 ,p.pac_telefono
+	 ,p.pac_mail
+	 ,p.pac_sexo
+	 ,p.pac_plan_medico
+	 ,p.pac_nro_doc
 	FROM [SOLARIS].[Paciente] p
 	
 	WHERE p.pac_nro_afiliado = @ID_Paciente
@@ -1551,4 +1542,34 @@ CREATE PROCEDURE SOLARIS.cambioEstadoTurnoPorUnaConsultaFinalizada
 
 		
 GO
+
+
+IF OBJECT_ID('SOLARIS.traigoIDPlan') IS NOT NULL
+	DROP PROCEDURE SOLARIS.traigoIDPlan;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.traigoIDPlan
+@plm_descripcion varchar(255),
+@plm_codigo int OUTPUT
+	as
+		select @plm_codigo = plm_codigo from SOLARIS.Plan_Medico where plm_descripcion = @plm_descripcion
+		
+GO
+
+IF OBJECT_ID('SOLARIS.traigoDescripcionPlan') IS NOT NULL
+	DROP PROCEDURE SOLARIS.traigoDescripcionPlan;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.traigoDescripcionPlan
+@plm_descripcion varchar(255) OUTPUT,
+@plm_codigo int
+	as
+		select @plm_descripcion = plm_descripcion from SOLARIS.Plan_Medico where plm_codigo = @plm_codigo
+		
+GO
+
 -- [EOF]

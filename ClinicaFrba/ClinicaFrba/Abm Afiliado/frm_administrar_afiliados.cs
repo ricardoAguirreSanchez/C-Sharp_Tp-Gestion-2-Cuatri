@@ -86,17 +86,24 @@ namespace ClinicaFrba.AbmRol
 
             string ID_Afiliado = tex_numero_afiliado.Text;
 
-            Array paciente = conexion.buscarPacientePorID(ID_Afiliado);
+            DataTable paciente = conexion.buscarPacientePorID(ID_Afiliado);
+            DataRow filaPaciente = paciente.Rows[0];
 
             //Completo los campos
-            tex_nombre.Text = paciente.GetValue(0).ToString();
-            tex_apellido.Text = paciente.GetValue(1).ToString();
-            tex_dni.Text = paciente.GetValue(2).ToString();
-            tex_direccion.Text = paciente.GetValue(3).ToString();
-            tex_telefono.Text = paciente.GetValue(4).ToString();
-            tex_mail.Text = paciente.GetValue(5).ToString();
-            tex_dni_asociado_principal.Text = paciente.GetValue(6).ToString();
-            //tex_fecha.Text = paciente.GetValue(3).ToString();
+            tex_nombre.Text = filaPaciente["pac_nombre"].ToString();
+            tex_apellido.Text = filaPaciente["pac_apellido"].ToString();
+            tex_dni.Text = filaPaciente["pac_nro_doc"].ToString();
+            tex_direccion.Text = filaPaciente["pac_direccion"].ToString();      
+	        tex_telefono.Text = filaPaciente["pac_telefono"].ToString();
+            tex_mail.Text = filaPaciente["pac_mail"].ToString();
+            dtp_fecha_nacimiento.Value = Convert.ToDateTime(filaPaciente["pac_fecha_nac"]);
+            if(filaPaciente["pac_sexo"].ToString() == "F")
+            { rdb_femenino.Checked = true; rdb_masculino.Checked = false;}
+            else if (filaPaciente["pac_sexo"].ToString() == "M")
+            {rdb_femenino.Checked = false; rdb_masculino.Checked = true; }
+            com_plan_medico.SelectedItem = conexion.traigoNombrePlan(Convert.ToInt64(filaPaciente["pac_plan_medico"].ToString()));
+
+            tex_dni_asociado_principal.Text = filaPaciente["pac_nro_doc"].ToString();	 
         }
 
         private void rdb_femenino_CheckedChanged(object sender, EventArgs e)
