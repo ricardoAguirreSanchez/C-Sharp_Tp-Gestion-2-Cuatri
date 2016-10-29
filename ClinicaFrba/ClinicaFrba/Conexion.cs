@@ -194,7 +194,7 @@ namespace ClinicaFrba
             
         }
 
-             public void modificarAfiliado(int tex_numero_afiliado, String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, String rdb_masculino, int com_plan_medico)
+        public void modificarAfiliado(int tex_numero_afiliado, String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico)
         {
             SqlCommand command = new SqlCommand("SOLARIS.modificarPaciente", cn);
             command.CommandType = CommandType.StoredProcedure;
@@ -207,7 +207,7 @@ namespace ClinicaFrba
             command.Parameters.AddWithValue("@pac_direccion", tex_direccion);
             command.Parameters.AddWithValue("@pac_telefono", tex_telefono);
             command.Parameters.AddWithValue("@pac_mail", tex_mail);
-            command.Parameters.AddWithValue("@pac_sexo", rdb_masculino);
+            command.Parameters.AddWithValue("@pac_sexo", sexo);
             command.Parameters.AddWithValue("@pac_plan_medico", com_plan_medico);
 
             command.ExecuteNonQuery();

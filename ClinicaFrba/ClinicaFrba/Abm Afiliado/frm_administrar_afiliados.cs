@@ -171,7 +171,12 @@ namespace ClinicaFrba.AbmRol
                 conexion.conectar();
 
                 DateTime fecha_nac = dtp_fecha_nacimiento.Value;
-                String sexo = rdb_masculino.Checked.ToString();
+                Char sexo;
+
+                if (rdb_masculino.Checked)
+                { sexo = 'M'; }
+                else { sexo = 'F'; };
+
                 int plan_medico = conexion.traigoIDPlan(com_plan_medico.SelectedItem.ToString());    //ANCLADO PARA CORREGIR!!
                 //paso todos los valores para actualizar
                 conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico);
@@ -179,7 +184,7 @@ namespace ClinicaFrba.AbmRol
             }
             catch (Exception er1)
             {
-                MessageBox.Show("Error al actualizar el paciente:" + er1);
+                MessageBox.Show("Error al actualizar el afiliado:" + er1);
             }
 
             this.Close();
