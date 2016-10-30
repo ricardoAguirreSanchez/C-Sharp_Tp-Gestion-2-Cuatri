@@ -123,6 +123,30 @@ namespace ClinicaFrba.AbmRol
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //modifico el nombre y estado
+            try
+            {
+                Conexion conexion = new Conexion();
+                conexion.conectar();
+
+                DateTime fecha_nac = dtp_fecha_nacimiento.Value;
+                Char sexo;
+
+                if (rdb_masculino.Checked)
+                { sexo = 'M'; }
+                else { sexo = 'F'; };
+
+                int plan_medico = conexion.traigoIDPlan(com_plan_medico.SelectedItem.ToString());
+                //paso todos los valores para actualizar
+                conexion.insertarAfiliado(tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico);
+                MessageBox.Show("Agregado!");
+            }
+            catch (Exception er1)
+            {
+                MessageBox.Show("Error al insertar el afiliado:" + er1);
+            }
+
+            this.Close();
 
         }
 
@@ -130,13 +154,16 @@ namespace ClinicaFrba.AbmRol
         {
             but_buscar.Enabled = false;
             tex_numero_afiliado.Text = "";
-            tex_nombre.Text = "";
-            tex_apellido.Text = "";
-            tex_dni.Text = "";
-            tex_telefono.Text = "";
-            tex_mail.Text = "";
-            tex_dni_asociado_principal.Text = "";
-            tex_direccion.Text = "";
+            tex_nombre.Text = ""; tex_nombre.Enabled = true;
+            tex_apellido.Text = ""; tex_apellido.Enabled = true;
+            tex_dni.Text = ""; tex_dni.Enabled = true;
+            tex_telefono.Text = ""; tex_telefono.Enabled = true;
+            tex_mail.Text = ""; tex_mail.Enabled = true;
+            dtp_fecha_nacimiento.Enabled = true;
+            rdb_femenino.Enabled = true; rdb_masculino.Enabled = true; rdb_masculino.Checked = true;
+            com_plan_medico.Enabled = true; com_plan_medico.SelectedIndex = 1;
+            tex_dni_asociado_principal.Text = ""; tex_dni_asociado_principal.Enabled = true;
+            tex_direccion.Text = ""; tex_direccion.Enabled = true;
 
             tex_numero_afiliado.Enabled = false;
             but_modificar.Visible = false;

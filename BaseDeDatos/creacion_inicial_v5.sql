@@ -1584,4 +1584,69 @@ CREATE PROCEDURE SOLARIS.bajarPacientes
 		update SOLARIS.Paciente set pac_esta_activo = 0 where pac_nro_afiliado = @plm_codigo
 GO
 
+GO
+IF OBJECT_ID('SOLARIS.insertarUsuario') IS NOT NULL
+	DROP PROCEDURE SOLARIS.insertarUsuario;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.insertarUsuario
+@usu_usuario VARCHAR(8)
+	as
+		INSERT INTO SOLARIS.Usuario (usu_usuario, usu_passwd, usu_fecha_creacion, usu_estado)
+		VALUES (@usu_usuario, HASHBYTES('SHA2_256',@usu_usuario), NULL, 0)
+	
+GO
+
+
+GO
+IF OBJECT_ID('SOLARIS.insertaPaciente') IS NOT NULL
+	DROP PROCEDURE SOLARIS.insertaPaciente;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.insertaPaciente
+@pac_apellido VARCHAR(255),
+@pac_nombre VARCHAR(255),
+@pac_nro_doc numeric(18,0),
+@pac_direccion VARCHAR(255),
+@pac_telefono numeric(18,0),
+@pac_mail VARCHAR(255),
+@pac_fecha_nac datetime,
+@pac_sexo char(1),
+@pac_plan_medico numeric(18,0)
+As
+
+BEGIN TRANSACTION
+		DECLARE @pac_usuario int
+		--Creo el usuario para el nuevo paciente
+		EXEC SOLARIS.insertarUsuario @pac_nombre
+		--Busco el ID que le toco como usuario
+		SELECT @pac_usuario = max(usu_codigo) from SOLARIS.Usuario
+		--Inserto paciente
+		INSERT INTO SOLARIS.Paciente
+		(pac_nro_afiliado,
+		pac_usuario,
+		pac_apellido,
+		pac_nombre,
+		pac_tipo_doc,
+		pac_nro_doc,
+		pac_direccion,
+		pac_telefono,
+		pac_mail,
+		pac_fecha_nac,
+		pac_sexo,
+		pac_estado_civil,
+		pac_cant_familiares,
+		pac_plan_medico,
+		pac_tit_relacion,
+		pac_esta_activo,
+		pac_fecha_baja)
+	VALUES 
+		((SELECT (MAX(pac_nro_afiliado) + 100) from SOLARIS.Paciente),@pac_usuario,@pac_apellido,@pac_nombre,1,@pac_nro_doc,@pac_direccion,@pac_telefono,@pac_mail,@pac_fecha_nac,@pac_sexo,NULL,0,
+		@pac_plan_medico, NULL, 1, NULL)
+
+COMMIT TRANSACTION
+GO
+
 -- [EOF]
