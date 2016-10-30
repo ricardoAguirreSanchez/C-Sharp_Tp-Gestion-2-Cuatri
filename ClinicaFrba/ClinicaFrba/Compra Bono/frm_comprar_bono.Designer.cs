@@ -59,10 +59,11 @@
             this.but_comprar.TabIndex = 1;
             this.but_comprar.Text = "Comprar";
             this.but_comprar.UseVisualStyleBackColor = true;
+            this.but_comprar.Click += new System.EventHandler(this.but_comprar_Click);
             // 
             // tex_numero_afiliado
             // 
-            this.tex_numero_afiliado.Location = new System.Drawing.Point(108, 16);
+            this.tex_numero_afiliado.Location = new System.Drawing.Point(149, 16);
             this.tex_numero_afiliado.Name = "tex_numero_afiliado";
             this.tex_numero_afiliado.Size = new System.Drawing.Size(100, 20);
             this.tex_numero_afiliado.TabIndex = 2;
@@ -71,7 +72,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 194);
+            this.label2.Location = new System.Drawing.Point(82, 197);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 3;
@@ -79,7 +80,7 @@
             // 
             // tex_total
             // 
-            this.tex_total.Location = new System.Drawing.Point(85, 194);
+            this.tex_total.Location = new System.Drawing.Point(149, 194);
             this.tex_total.Name = "tex_total";
             this.tex_total.Size = new System.Drawing.Size(100, 20);
             this.tex_total.TabIndex = 4;
@@ -89,11 +90,12 @@
             this.rbn_bono_consulta.AutoSize = true;
             this.rbn_bono_consulta.Location = new System.Drawing.Point(13, 61);
             this.rbn_bono_consulta.Name = "rbn_bono_consulta";
-            this.rbn_bono_consulta.Size = new System.Drawing.Size(93, 17);
+            this.rbn_bono_consulta.Size = new System.Drawing.Size(130, 17);
             this.rbn_bono_consulta.TabIndex = 5;
             this.rbn_bono_consulta.TabStop = true;
-            this.rbn_bono_consulta.Text = "Bono consulta";
+            this.rbn_bono_consulta.Text = "Bono consulta medica";
             this.rbn_bono_consulta.UseVisualStyleBackColor = true;
+            this.rbn_bono_consulta.CheckedChanged += new System.EventHandler(this.rbn_bono_consulta_CheckedChanged);
             // 
             // rbn_bono_farmacia
             // 
@@ -105,11 +107,12 @@
             this.rbn_bono_farmacia.TabStop = true;
             this.rbn_bono_farmacia.Text = "Bono farmacia";
             this.rbn_bono_farmacia.UseVisualStyleBackColor = true;
+            this.rbn_bono_farmacia.CheckedChanged += new System.EventHandler(this.rbn_bono_farmacia_CheckedChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(119, 61);
+            this.label3.Location = new System.Drawing.Point(160, 61);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(31, 13);
             this.label3.TabIndex = 7;
@@ -118,7 +121,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(119, 110);
+            this.label4.Location = new System.Drawing.Point(160, 110);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(31, 13);
             this.label4.TabIndex = 8;
@@ -126,16 +129,16 @@
             // 
             // tex_cant_bono_consulta
             // 
-            this.tex_cant_bono_consulta.Location = new System.Drawing.Point(160, 58);
+            this.tex_cant_bono_consulta.Location = new System.Drawing.Point(201, 58);
             this.tex_cant_bono_consulta.Name = "tex_cant_bono_consulta";
-            this.tex_cant_bono_consulta.Size = new System.Drawing.Size(33, 20);
+            this.tex_cant_bono_consulta.Size = new System.Drawing.Size(48, 20);
             this.tex_cant_bono_consulta.TabIndex = 9;
             // 
             // tex_cant_bono_farmacia
             // 
-            this.tex_cant_bono_farmacia.Location = new System.Drawing.Point(160, 107);
+            this.tex_cant_bono_farmacia.Location = new System.Drawing.Point(201, 107);
             this.tex_cant_bono_farmacia.Name = "tex_cant_bono_farmacia";
-            this.tex_cant_bono_farmacia.Size = new System.Drawing.Size(33, 20);
+            this.tex_cant_bono_farmacia.Size = new System.Drawing.Size(48, 20);
             this.tex_cant_bono_farmacia.TabIndex = 10;
             // 
             // but_calcular
@@ -146,12 +149,13 @@
             this.but_calcular.TabIndex = 11;
             this.but_calcular.Text = "Calcular";
             this.but_calcular.UseVisualStyleBackColor = true;
+            this.but_calcular.Click += new System.EventHandler(this.but_calcular_Click);
             // 
             // frm_comprar_bono
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(236, 265);
+            this.ClientSize = new System.Drawing.Size(264, 265);
             this.Controls.Add(this.but_calcular);
             this.Controls.Add(this.tex_cant_bono_farmacia);
             this.Controls.Add(this.tex_cant_bono_consulta);
@@ -166,6 +170,7 @@
             this.Controls.Add(this.label1);
             this.Name = "frm_comprar_bono";
             this.Text = "Comprar bono";
+            this.Load += new System.EventHandler(this.frm_comprar_bono_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

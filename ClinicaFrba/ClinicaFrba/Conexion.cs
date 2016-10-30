@@ -191,7 +191,6 @@ namespace ClinicaFrba
             command.Parameters.AddWithValue("@plm_descripcion", nombrePlan);
             command.ExecuteScalar();
             return int.Parse(command.Parameters["@plm_codigo"].Value.ToString());
-            
         }
         
         public void modificarAfiliado(int tex_numero_afiliado, String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico)
@@ -370,6 +369,57 @@ namespace ClinicaFrba
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@plm_codigo",codigo);
             command.ExecuteNonQuery();
+        }
+        public int consultarPrecioBono(Int64 codigo)
+        {
+            SqlCommand command = new SqlCommand("SOLARIS.calcularPrecioCompraBono", cn);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlParameter precio = new SqlParameter("@pac_precio_bono_consulta",SqlDbType.Int);
+            precio.Direction = ParameterDirection.Output;
+            command.Parameters.Add(precio);
+            command.Parameters.AddWithValue("@pac_nro_afiliado", codigo);
+            
+            command.ExecuteScalar();
+            return int.Parse(command.Parameters["@pac_precio_bono_consulta"].Value.ToString());
+
+        }
+        public int consultarPrecioFarmacia(Int64 codigo)
+        {
+            SqlCommand command = new SqlCommand("SOLARIS.calcularPrecioCompraFarmacia", cn);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlParameter precio = new SqlParameter("@pac_precio_bono_farmacia", SqlDbType.Int);
+            precio.Direction = ParameterDirection.Output;
+            command.Parameters.Add(precio);
+            command.Parameters.AddWithValue("@pac_nro_afiliado", codigo);
+
+            command.ExecuteScalar();
+            return int.Parse(command.Parameters["@pac_precio_bono_farmacia"].Value.ToString());
+        }
+        public void comprarBono(Int64 codigo)
+        {
+            try
+            {
+                SqlCommand command = new SqlCommand("SOLARIS.insertarUnBonoConsulta", cn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@bon_afiliado_compra", codigo);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception error)
+            {
+            }
+        }
+        public void comprarBonoFarmacia(Int64 codigo)
+        {
+            try
+            {
+                SqlCommand command = new SqlCommand("SOLARIS.insertarUnBonoFarmacia", cn);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@bfm_afiliado_compra", codigo);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception error)
+            {
+            }
         }
     }
 }

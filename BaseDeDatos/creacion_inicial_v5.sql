@@ -1649,4 +1649,101 @@ BEGIN TRANSACTION
 COMMIT TRANSACTION
 GO
 
+-------------
+GO
+IF OBJECT_ID('SOLARIS.calcularPrecioCompraBono') IS NOT NULL
+	DROP PROCEDURE SOLARIS.calcularPrecioCompraBono;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.calcularPrecioCompraBono
+@pac_nro_afiliado int,
+@pac_precio_bono_consulta int OUTPUT
+	as
+	SELECT @pac_precio_bono_consulta = pl.plm_precio_bono_consulta FROM SOLARIS.Plan_Medico pl inner join SOLARIS.Paciente pa ON pl.plm_codigo = pa.pac_plan_medico 
+	WHERE pa.pac_nro_afiliado = @pac_nro_afiliado
+GO
+-------------
+-------------
+GO
+IF OBJECT_ID('SOLARIS.calcularPrecioCompraFarmacia') IS NOT NULL
+	DROP PROCEDURE SOLARIS.calcularPrecioCompraFarmacia;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.calcularPrecioCompraFarmacia
+@pac_nro_afiliado int,
+@pac_precio_bono_farmacia int OUTPUT
+	as
+	SELECT @pac_precio_bono_farmacia = pl.plm_precio_bono_farmacia FROM SOLARIS.Plan_Medico pl inner join SOLARIS.Paciente pa ON pl.plm_codigo = pa.pac_plan_medico 
+	WHERE pa.pac_nro_afiliado = @pac_nro_afiliado
+GO
+
+
+GO
+IF OBJECT_ID('SOLARIS.insertarUnBonoConsulta') IS NOT NULL
+	DROP PROCEDURE SOLARIS.insertarUnBonoConsulta;
+GO
+GO
+CREATE PROCEDURE SOLARIS.insertarUnBonoConsulta
+@bon_afiliado_compra int
+
+	as
+
+	DECLARE @bon_precio int
+	DECLARE @bon_plan_afiliado int
+	DECLARE @bon_numero int
+	SELECT @bon_precio = pl.plm_precio_bono_farmacia, @bon_plan_afiliado = pl.plm_codigo FROM solaris.plan_medico pl 
+	INNER JOIN SOLARIS.Paciente p ON pl.plm_codigo = p.pac_plan_medico 
+	WHERE p.pac_nro_afiliado = @bon_afiliado_compra
+	SELECT @bon_numero = (MAX(bon_numero) + 1) from SOLARIS.Bono_Consulta
+	INSERT INTO [SOLARIS].[Bono_Consulta]
+           ([bon_numero]
+		   ,[bon_precio]
+           ,[bon_fecha_compra]
+           ,[bon_fecha_impresion]
+           ,[bon_afiliado_compra]
+           ,[bon_plan_afiliado]
+           ,[bon_nro_consulta_med]
+           ,[bon_fue_utilizado]
+           ,[bon_afiliado_uso])
+     VALUES
+           (@bon_numero
+		   ,@bon_precio
+           ,GETDATE()
+           ,GETDATE()
+           ,@bon_afiliado_compra
+           ,@bon_plan_afiliado
+           ,NULL
+           ,0
+           ,NULL)
+GO
+GO
+IF OBJECT_ID('SOLARIS.insertarUnBonoFarmacia') IS NOT NULL
+	DROP PROCEDURE SOLARIS.insertarUnBonoFarmacia;
+GO
+GO
+CREATE PROCEDURE SOLARIS.insertarUnBonoFarmacia
+@bfm_afiliado_compra int
+
+	as
+
+	DECLARE @bfm_precio int
+	DECLARE @bfm_plan_afiliado int
+	DECLARE @bfm_numero int
+	SELECT @bfm_precio = pl.plm_precio_bono_farmacia, @bfm_plan_afiliado = pl.plm_codigo FROM solaris.plan_medico pl 
+	INNER JOIN SOLARIS.Paciente p ON pl.plm_codigo = p.pac_plan_medico 
+	WHERE p.pac_nro_afiliado = @bfm_afiliado_compra
+	SELECT @bfm_numero = (MAX(bfm_numero) + 1) from SOLARIS.Bono_Farmacia
+INSERT INTO [SOLARIS].[Bono_Farmacia]
+           ([bfm_precio]
+           ,[bfm_fecha_compra]
+           ,[bfm_afiliado_compra]
+           ,[bfm_plan_afiliado])
+     VALUES
+           (@bfm_precio
+           ,GETDATE()
+           ,@bfm_afiliado_compra
+		   ,@bfm_plan_afiliado)
+GO
 -- [EOF]
