@@ -140,6 +140,9 @@ IF OBJECT_ID('SOLARIS.Turno') IS NOT NULL
 -- Tabla "Estado Turno"
 IF OBJECT_ID('SOLARIS.Estado_Turno') IS NOT NULL
 	DROP TABLE SOLARIS.Estado_Turno;
+-- Tabla "Tipo Cancelacion"
+IF OBJECT_ID('SOLARIS.Tipo_Cancelacion') IS NOT NULL
+	DROP TABLE SOLARIS.Tipo_Cancelacion;
 
 -- Tabla "Medico"
 -- Precede a: "Usuario", "Tipo de Documento"
@@ -504,13 +507,23 @@ ALTER TABLE SOLARIS.Bono_Farmacia
 	ADD CONSTRAINT FK_Bono_Farmacia_02 FOREIGN KEY (bfm_afiliado_compra) REFERENCES SOLARIS.Paciente(pac_nro_afiliado);
 
 
+-- Tabla "Tipo Cancelacion"
+CREATE TABLE SOLARIS.Tipo_Cancelacion (
+	tca_codigo	TINYINT NOT NULL,
+	tca_nombre	VARCHAR(37)
+);
+
+ALTER TABLE SOLARIS.Tipo_Cancelacion ADD CONSTRAINT PK_Tipo_Cancelacion PRIMARY KEY(tca_codigo);
+
 -- Tabla "Estado Turno"
 CREATE TABLE SOLARIS.Estado_Turno (
 	etu_codigo	TINYINT NOT NULL,
-	etu_nombre	VARCHAR(37)
+	etu_nombre	VARCHAR(37),
+	etu_tipo_cancelacion TINYINT 
 );
 
 ALTER TABLE SOLARIS.Estado_Turno ADD CONSTRAINT PK_Estado_Turno PRIMARY KEY(etu_codigo);
+ALTER TABLE SOLARIS.Estado_Turno ADD CONSTRAINT FK_Tipo_Turno FOREIGN KEY (etu_tipo_cancelacion) REFERENCES SOLARIS.Tipo_Cancelacion(tca_codigo);
 
 /*
 	0 = RESERVADO
@@ -722,6 +735,16 @@ INSERT INTO SOLARIS.Horario
 		(5, '07:00:00', '20:00:00'),
 		(6, '07:00:00', '20:00:00'),
 		(7, '10:00:00', '15:00:00');	-- Día Sábado.
+
+
+-- Tabla "Tipo Cancelacion"
+
+INSERT INTO SOLARIS.Tipo_Cancelacion
+		(tca_codigo, tca_nombre)
+	VALUES
+		(1, 'Enfermedad'),
+		(2, 'Accidente'),
+		(3, 'Trajedia personal');
 
 
 -- Tabla "Estado_Turno"
