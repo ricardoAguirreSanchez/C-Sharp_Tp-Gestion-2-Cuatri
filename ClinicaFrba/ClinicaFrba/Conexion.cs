@@ -421,5 +421,58 @@ namespace ClinicaFrba
             {
             }
         }
+
+        //trae el  codigo y tipo de cancelacion 
+        public DataTable tiposCancelacion()
+        {
+            da = new SqlDataAdapter("Execute SOLARIS.tiposCancelacion ", cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
+        
+        //trae los dias de la agenda del medico posteriores a la fecha del sistema
+        public DataTable diasDeAgendaParaCancelar(int codigoMedico, DateTime dtSistema)
+        {
+            da = new SqlDataAdapter("Execute SOLARIS.diasDeAgendaParaCancelar " + codigoMedico + ",'" + dtSistema + "'", cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
+        //cancela todos los turnos del medico y de ese dia
+        public void cancelarTurnos(DateTime  dt, int codigoMedico, string detalle, int codigoTipoTurno)
+        {
+            cm = new SqlCommand("Execute SOLARIS.cancelarTurnos '" + dt + "', " + codigoMedico+",'"+detalle+"',"+codigoTipoTurno, cn);
+            cm.ExecuteNonQuery();
+
+        }
+
+        //borra los horarios del medico de su agenda respecto a la fecha pedida
+        public void borrarDiaDeAgenda(DateTime dt, int codigoMedico)
+        {
+            cm = new SqlCommand("Execute SOLARIS.borrarDiaDeAgenda '" + dt + "', " + codigoMedico, cn);
+            cm.ExecuteNonQuery();
+
+        }
+
+        
+         //cancela todos los turnos del medico y de ese dia en el horario indicado
+        public void cancelarTurnosHorarios(DateTime dt, int codigoMedico, string detalle, int codigoTipoTurno, DateTime desde, DateTime hasta)
+        {
+            cm = new SqlCommand("Execute SOLARIS.cancelarTurnosHorarios '" + dt + "', " + codigoMedico + ",'" + detalle + "'," + codigoTipoTurno+",'"+desde+"','"+hasta+"'", cn);
+            cm.ExecuteNonQuery();
+
+        }
+
+        //borra los horarios del medico de su agenda respecto a la fecha pedida en el horario pedido
+        public void borrarDiaDeAgendaHorarios(DateTime dt, int codigoMedico, DateTime desde, DateTime hasta)
+        {
+            cm = new SqlCommand("Execute SOLARIS.borrarDiaDeAgendaHorarios '" + dt + "', " + codigoMedico+",'"+desde+"','"+hasta+"'", cn);
+            cm.ExecuteNonQuery();
+
+        }
+
     }
 }

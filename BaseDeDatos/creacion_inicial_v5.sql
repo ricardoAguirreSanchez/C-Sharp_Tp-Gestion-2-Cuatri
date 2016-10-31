@@ -456,23 +456,20 @@ ALTER TABLE SOLARIS.Dia ADD CONSTRAINT PK_Dia PRIMARY KEY(dia_numero);
 
 -- Tabla "Agenda"
 CREATE TABLE SOLARIS.Agenda (
-	age_cod_entrada			INT IDENTITY(1,1),
+	age_cod_entrada			INT IDENTITY(1,1) primary key,
 	age_cod_medico			INT,			-- [FK]
 	age_med_especialidad	NUMERIC(18,0),	-- [FK]
-	age_dia					INT NOT NULL,
-	age_hora_desde			TIME NOT NULL,
-	age_hora_hasta			TIME NOT NULL,
-	age_fecha_desde			DATE,
-	age_fecha_hasta			DATE
+	age_fecha_desde			datetime,
+	age_fecha_hasta			datetime
 );
 
-ALTER TABLE SOLARIS.Agenda ADD CONSTRAINT PK_Agenda PRIMARY KEY(age_cod_entrada);
+--ALTER TABLE SOLARIS.Agenda ADD CONSTRAINT PK_Agenda PRIMARY KEY(age_cod_entrada);
 
-ALTER TABLE SOLARIS.Agenda ADD CONSTRAINT FK_Agenda_01 FOREIGN KEY (age_cod_medico) REFERENCES SOLARIS.Medico(med_cod_medico);
-ALTER TABLE SOLARIS.Agenda ADD CONSTRAINT FK_Agenda_02 FOREIGN KEY (age_med_especialidad) REFERENCES SOLARIS.Especialidad(esp_codigo);
+ALTER TABLE SOLARIS.Agenda ADD CONSTRAINT FK_Agenda_00 FOREIGN KEY (age_cod_medico) REFERENCES SOLARIS.Medico(med_cod_medico);
+ALTER TABLE SOLARIS.Agenda ADD CONSTRAINT FK_Agenda_01 FOREIGN KEY (age_med_especialidad) REFERENCES SOLARIS.Especialidad(esp_codigo);
 --ALTER TABLE SOLARIS.Agenda ADD CONSTRAINT FK_Agenda_03 FOREIGN KEY (age_dia) REFERENCES SOLARIS.Dia(dia_numero);
 
-ALTER TABLE SOLARIS.Agenda ADD CONSTRAINT CK_age_dia CHECK (age_dia >= 1 AND age_dia <= 7);
+
 
 
 -- Tabla "Horario" (Para los horarios de la clínica)
@@ -518,12 +515,11 @@ ALTER TABLE SOLARIS.Tipo_Cancelacion ADD CONSTRAINT PK_Tipo_Cancelacion PRIMARY 
 -- Tabla "Estado Turno"
 CREATE TABLE SOLARIS.Estado_Turno (
 	etu_codigo	TINYINT NOT NULL,
-	etu_nombre	VARCHAR(37),
-	etu_tipo_cancelacion TINYINT 
+	etu_nombre	VARCHAR(37)
 );
 
 ALTER TABLE SOLARIS.Estado_Turno ADD CONSTRAINT PK_Estado_Turno PRIMARY KEY(etu_codigo);
-ALTER TABLE SOLARIS.Estado_Turno ADD CONSTRAINT FK_Tipo_Turno FOREIGN KEY (etu_tipo_cancelacion) REFERENCES SOLARIS.Tipo_Cancelacion(tca_codigo);
+
 
 /*
 	0 = RESERVADO
@@ -542,17 +538,17 @@ CREATE TABLE SOLARIS.Turno (
 	tur_fecha_solicitud	datetime,
 	tur_fecha_turno		datetime,
 	tur_estado			TINYINT,	-- [FK]
+	tur_tipo_cancelacion TINYINT,
 	tur_motivo_cancel	VARCHAR(255)	-- Si se cancela, se carga el motivo en este campo.
 );
 
 ALTER TABLE SOLARIS.Turno ADD CONSTRAINT PK_Turno PRIMARY KEY(tur_numero);
-
+ALTER TABLE SOLARIS.Turno ADD CONSTRAINT FK_Tipo_Cancelacion FOREIGN KEY (tur_tipo_cancelacion) REFERENCES SOLARIS.Tipo_Cancelacion(tca_codigo);
 ALTER TABLE SOLARIS.Turno 
 	ADD CONSTRAINT FK_Turno_01 FOREIGN KEY (tur_afiliado) REFERENCES SOLARIS.Paciente(pac_nro_afiliado);
 
 ALTER TABLE SOLARIS.Turno ADD CONSTRAINT FK_Turno_02 FOREIGN KEY (tur_medico) REFERENCES SOLARIS.Medico(med_cod_medico);
 ALTER TABLE SOLARIS.Turno ADD CONSTRAINT FK_Turno_03 FOREIGN KEY (tur_estado) REFERENCES SOLARIS.Estado_Turno(etu_codigo);
-
 ALTER TABLE SOLARIS.Turno ADD CONSTRAINT DF_Cancelacion_en_null DEFAULT NULL FOR tur_motivo_cancel;
 ALTER TABLE SOLARIS.Turno ADD CONSTRAINT CK_Nro_Turno CHECK (tur_numero > 0);
 
@@ -623,6 +619,7 @@ PRINT 'Tablas creadas ...';
 /* ****************************************************************************
 * SECCION_4 : DEFINICION DE ROLES Y USUARIOS
 **************************************************************************** */
+
 
 -- Tabla "Usuario_Estado"
 
@@ -760,6 +757,7 @@ INSERT INTO SOLARIS.Estado_Turno
 		(5, 'CANCELADO POR BAJA AFILIADO');
 		
 
+
 -- Tabla "Usuario" 
 
 INSERT INTO SOLARIS.Usuario
@@ -782,6 +780,8 @@ INSERT INTO SOLARIS.Rol_x_Usuario
 		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'ricardo'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'PACIENTE')),
 		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'ricardo'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'MEDICO'))
 	;
+
+
 
 
 
@@ -1040,6 +1040,21 @@ INSERT INTO SOLARIS.Bono_Consulta
 	where Bono_Consulta_Numero IS NOT NULL
 		AND Compra_Bono_Fecha IS NOT NULL
 	;
+	
+-- Tabla "Agenda"
+--anio,dia,mes
+INSERT INTO SOLARIS.Agenda
+		(age_cod_medico, age_med_especialidad, age_fecha_desde,age_fecha_hasta)
+	VALUES
+		(2,10047,'2015-01-01 08:00:00.000', '2015-01-01 08:30:00.000'),
+		(2,10047,'2015-01-01 08:30:00.000', '2015-01-01 09:00:00.000'),
+		(2,10047,'2015-01-01 09:00:00.000', '2015-01-01 09:30:00.000'),
+		(2,10047,'2015-01-01 09:30:00.000', '2015-01-01 10:00:00.000'),
+
+		(2,10047,'2015-02-01 08:00:00.000', '2015-02-01 08:30:00.000'),
+		(2,10047,'2015-02-01 08:30:00.000', '2015-02-01 09:00:00.000'),
+		(2,10047,'2015-04-01 08:30:00.000', '2015-02-01 09:00:00.000'),
+		(2,10047,'2015-03-01 08:30:00.000', '2015-03-01 09:00:00.000');
 
 /* ****************************************************************************
 * SECCION_7 : CREACIÓN DE FUNCTIONS, PROCEDURES, TRIGGERS
@@ -1769,4 +1784,124 @@ INSERT INTO [SOLARIS].[Bono_Farmacia]
            ,@bfm_afiliado_compra
 		   ,@bfm_plan_afiliado)
 GO
+
+--trae los tipos de cancelacion y codigo
+GO
+IF OBJECT_ID('SOLARIS.tiposCancelacion') IS NOT NULL
+	DROP PROCEDURE SOLARIS.tiposCancelacion;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.tiposCancelacion
+
+	as
+	SELECT tca_codigo as 'Codigo', tca_nombre as 'Tipo' FROM SOLARIS.Tipo_Cancelacion 
+GO
+
+
+
+--trae los dias de la agenda del medico posteriores a la fecha recibida (falta)
+GO
+IF OBJECT_ID('SOLARIS.diasDeAgendaParaCancelar') IS NOT NULL
+	DROP PROCEDURE SOLARIS.diasDeAgendaParaCancelar;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.diasDeAgendaParaCancelar
+@age_cod_med int,
+@fecha_sistema datetime
+ as
+
+ SELECT DISTINCT convert(date ,age_fecha_desde) as 'DIA-MES-ANIO'
+ FROM SOLARIS.Agenda 
+ WHERE age_cod_medico = @age_cod_med and age_fecha_desde > @fecha_sistema
+  
+GO
+
+--cancela todos los turnos de ese dia
+GO
+IF OBJECT_ID('SOLARIS.cancelarTurnos') IS NOT NULL
+	DROP PROCEDURE SOLARIS.cancelarTurnos;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.cancelarTurnos
+@fecha datetime,
+@codigoMedico int,
+@motivo_cancel varchar(255),
+@tipo_turno int
+ as
+	update SOLARIS.Turno set tur_estado = 4,tur_tipo_cancelacion=@tipo_turno, tur_motivo_cancel = @motivo_cancel
+	where tur_medico = @codigoMedico and 
+	convert(date,tur_fecha_turno) = convert(date ,@fecha) 
+	
+
+ 
+GO
+
+
+--borra los horarios del medico de su agenda
+GO
+IF OBJECT_ID('SOLARIS.borrarDiaDeAgenda') IS NOT NULL
+	DROP PROCEDURE SOLARIS.borrarDiaDeAgenda;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.borrarDiaDeAgenda
+@fecha datetime,
+@codigoMedico int
+ as
+	delete from SOLARIS.Agenda where age_cod_medico = @codigoMedico and 
+	convert(date,age_fecha_desde) = convert(date ,@fecha)
+ 
+GO
+
+--HORARIO
+
+--cancela todos los turnos de ese dia en el horario indicado
+GO
+IF OBJECT_ID('SOLARIS.cancelarTurnosHorarios') IS NOT NULL
+	DROP PROCEDURE SOLARIS.cancelarTurnosHorarios;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.cancelarTurnosHorarios
+@fecha datetime,
+@codigoMedico int,
+@motivo_cancel varchar(255),
+@tipo_turno int,
+@desde datetime,
+@hasta datetime
+ as
+	update SOLARIS.Turno set tur_estado = 4,tur_tipo_cancelacion=@tipo_turno, tur_motivo_cancel = @motivo_cancel
+	where tur_medico = @codigoMedico and 
+	convert(date,tur_fecha_turno) = convert(date ,@fecha) and
+	convert(time,tur_fecha_turno) >= convert(time ,@desde) and
+	convert(time,tur_fecha_turno) <= convert(time ,@hasta)
+	
+
+ 
+GO
+
+
+--borra los horarios del medico de su agenda en el horario indicado
+GO
+IF OBJECT_ID('SOLARIS.borrarDiaDeAgendaHorarios') IS NOT NULL
+	DROP PROCEDURE SOLARIS.borrarDiaDeAgendaHorarios;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.borrarDiaDeAgendaHorarios
+@fecha datetime,
+@codigoMedico int,
+@desde datetime,
+@hasta datetime
+ as
+	delete from SOLARIS.Agenda where age_cod_medico = @codigoMedico and 
+	convert(date,age_fecha_desde) = convert(date ,@fecha) 
+	and convert(time,age_fecha_desde) >= convert(time ,@desde)
+	and convert(time,age_fecha_hasta) <= convert(time ,@hasta)
+ 
+GO
+
 -- [EOF]

@@ -30,7 +30,7 @@
         {
             this.tex_codigo_medico = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.but_cancelar_periodo = new System.Windows.Forms.Button();
+            this.but_cancelar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dtp_desde = new System.Windows.Forms.DateTimePicker();
@@ -43,12 +43,13 @@
             this.label3 = new System.Windows.Forms.Label();
             this.rb_cancelar_periodo = new System.Windows.Forms.RadioButton();
             this.rb_cancelar_dia = new System.Windows.Forms.RadioButton();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.dgv_cancelar_dia = new System.Windows.Forms.DataGridView();
             this.dgv_tipo_cancelacion = new System.Windows.Forms.DataGridView();
+            this.but_Buscar_dias = new System.Windows.Forms.Button();
             this.gb_cancelar_periodo.SuspendLayout();
             this.gb_cancelar_dia.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_cancelar_dia)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_tipo_cancelacion)).BeginInit();
             this.SuspendLayout();
             // 
@@ -69,14 +70,15 @@
             this.label2.Text = "Codigo:";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
-            // but_cancelar_periodo
+            // but_cancelar
             // 
-            this.but_cancelar_periodo.Location = new System.Drawing.Point(519, 300);
-            this.but_cancelar_periodo.Name = "but_cancelar_periodo";
-            this.but_cancelar_periodo.Size = new System.Drawing.Size(75, 23);
-            this.but_cancelar_periodo.TabIndex = 7;
-            this.but_cancelar_periodo.Text = "Cancelar";
-            this.but_cancelar_periodo.UseVisualStyleBackColor = true;
+            this.but_cancelar.Location = new System.Drawing.Point(519, 300);
+            this.but_cancelar.Name = "but_cancelar";
+            this.but_cancelar.Size = new System.Drawing.Size(75, 23);
+            this.but_cancelar.TabIndex = 7;
+            this.but_cancelar.Text = "Cancelar";
+            this.but_cancelar.UseVisualStyleBackColor = true;
+            this.but_cancelar.Click += new System.EventHandler(this.but_cancelar_periodo_Click);
             // 
             // label4
             // 
@@ -98,17 +100,19 @@
             // 
             // dtp_desde
             // 
-            this.dtp_desde.CustomFormat = "\"hh:mm tt\"";
-            this.dtp_desde.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp_desde.Checked = false;
+            this.dtp_desde.CustomFormat = "\"hh:mm t\"";
+            this.dtp_desde.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtp_desde.Location = new System.Drawing.Point(104, 31);
             this.dtp_desde.Name = "dtp_desde";
             this.dtp_desde.Size = new System.Drawing.Size(200, 20);
             this.dtp_desde.TabIndex = 13;
+            this.dtp_desde.Value = new System.DateTime(2016, 11, 5, 0, 0, 0, 0);
             // 
             // dtp_hasta
             // 
-            this.dtp_hasta.CustomFormat = "\"hh:mm tt\"";
-            this.dtp_hasta.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp_hasta.CustomFormat = "\"hh:mm t\"";
+            this.dtp_hasta.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtp_hasta.Location = new System.Drawing.Point(106, 57);
             this.dtp_hasta.Name = "dtp_hasta";
             this.dtp_hasta.Size = new System.Drawing.Size(200, 20);
@@ -117,24 +121,27 @@
             // gb_cancelar_periodo
             // 
             this.gb_cancelar_periodo.Controls.Add(this.dtp_hasta);
+            this.gb_cancelar_periodo.Controls.Add(this.rb_cancelar_periodo);
             this.gb_cancelar_periodo.Controls.Add(this.label4);
             this.gb_cancelar_periodo.Controls.Add(this.dtp_desde);
             this.gb_cancelar_periodo.Controls.Add(this.label5);
-            this.gb_cancelar_periodo.Location = new System.Drawing.Point(12, 83);
+            this.gb_cancelar_periodo.Location = new System.Drawing.Point(12, 253);
             this.gb_cancelar_periodo.Name = "gb_cancelar_periodo";
-            this.gb_cancelar_periodo.Size = new System.Drawing.Size(362, 90);
+            this.gb_cancelar_periodo.Size = new System.Drawing.Size(362, 104);
             this.gb_cancelar_periodo.TabIndex = 16;
             this.gb_cancelar_periodo.TabStop = false;
             // 
             // gb_cancelar_dia
             // 
-            this.gb_cancelar_dia.Controls.Add(this.dataGridView2);
+            this.gb_cancelar_dia.Controls.Add(this.dgv_cancelar_dia);
+            this.gb_cancelar_dia.Controls.Add(this.rb_cancelar_dia);
             this.gb_cancelar_dia.Controls.Add(this.dataGridView1);
-            this.gb_cancelar_dia.Location = new System.Drawing.Point(12, 213);
+            this.gb_cancelar_dia.Location = new System.Drawing.Point(12, 45);
             this.gb_cancelar_dia.Name = "gb_cancelar_dia";
-            this.gb_cancelar_dia.Size = new System.Drawing.Size(362, 168);
+            this.gb_cancelar_dia.Size = new System.Drawing.Size(362, 192);
             this.gb_cancelar_dia.TabIndex = 17;
             this.gb_cancelar_dia.TabStop = false;
+            this.gb_cancelar_dia.Text = "Elija un dia:";
             // 
             // dataGridView1
             // 
@@ -173,32 +180,34 @@
             // rb_cancelar_periodo
             // 
             this.rb_cancelar_periodo.AutoSize = true;
-            this.rb_cancelar_periodo.Location = new System.Drawing.Point(13, 45);
+            this.rb_cancelar_periodo.Location = new System.Drawing.Point(28, 81);
             this.rb_cancelar_periodo.Name = "rb_cancelar_periodo";
             this.rb_cancelar_periodo.Size = new System.Drawing.Size(124, 17);
             this.rb_cancelar_periodo.TabIndex = 22;
             this.rb_cancelar_periodo.TabStop = true;
             this.rb_cancelar_periodo.Text = "Cancelar por Periodo";
             this.rb_cancelar_periodo.UseVisualStyleBackColor = true;
+            this.rb_cancelar_periodo.CheckedChanged += new System.EventHandler(this.rb_cancelar_periodo_CheckedChanged);
             // 
             // rb_cancelar_dia
             // 
             this.rb_cancelar_dia.AutoSize = true;
-            this.rb_cancelar_dia.Location = new System.Drawing.Point(13, 190);
+            this.rb_cancelar_dia.Location = new System.Drawing.Point(28, 155);
             this.rb_cancelar_dia.Name = "rb_cancelar_dia";
             this.rb_cancelar_dia.Size = new System.Drawing.Size(102, 17);
             this.rb_cancelar_dia.TabIndex = 23;
             this.rb_cancelar_dia.TabStop = true;
             this.rb_cancelar_dia.Text = "Cancelar por dia";
             this.rb_cancelar_dia.UseVisualStyleBackColor = true;
+            this.rb_cancelar_dia.CheckedChanged += new System.EventHandler(this.rb_cancelar_dia_CheckedChanged);
             // 
-            // dataGridView2
+            // dgv_cancelar_dia
             // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(29, 19);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(305, 130);
-            this.dataGridView2.TabIndex = 16;
+            this.dgv_cancelar_dia.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_cancelar_dia.Location = new System.Drawing.Point(28, 19);
+            this.dgv_cancelar_dia.Name = "dgv_cancelar_dia";
+            this.dgv_cancelar_dia.Size = new System.Drawing.Size(305, 130);
+            this.dgv_cancelar_dia.TabIndex = 16;
             // 
             // dgv_tipo_cancelacion
             // 
@@ -208,15 +217,24 @@
             this.dgv_tipo_cancelacion.Size = new System.Drawing.Size(116, 130);
             this.dgv_tipo_cancelacion.TabIndex = 24;
             // 
+            // but_Buscar_dias
+            // 
+            this.but_Buscar_dias.Location = new System.Drawing.Point(176, 12);
+            this.but_Buscar_dias.Name = "but_Buscar_dias";
+            this.but_Buscar_dias.Size = new System.Drawing.Size(88, 25);
+            this.but_Buscar_dias.TabIndex = 25;
+            this.but_Buscar_dias.Text = "Buscar Dias";
+            this.but_Buscar_dias.UseVisualStyleBackColor = true;
+            this.but_Buscar_dias.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frm_cancelar_atencion_medico
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(820, 429);
+            this.Controls.Add(this.but_Buscar_dias);
             this.Controls.Add(this.dgv_tipo_cancelacion);
-            this.Controls.Add(this.rb_cancelar_dia);
-            this.Controls.Add(this.rb_cancelar_periodo);
-            this.Controls.Add(this.but_cancelar_periodo);
+            this.Controls.Add(this.but_cancelar);
             this.Controls.Add(this.tex_detalle_cancelacion);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
@@ -230,8 +248,9 @@
             this.gb_cancelar_periodo.ResumeLayout(false);
             this.gb_cancelar_periodo.PerformLayout();
             this.gb_cancelar_dia.ResumeLayout(false);
+            this.gb_cancelar_dia.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_cancelar_dia)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_tipo_cancelacion)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -242,7 +261,7 @@
 
         private System.Windows.Forms.TextBox tex_codigo_medico;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button but_cancelar_periodo;
+        private System.Windows.Forms.Button but_cancelar;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker dtp_desde;
@@ -255,7 +274,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RadioButton rb_cancelar_periodo;
         private System.Windows.Forms.RadioButton rb_cancelar_dia;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dgv_cancelar_dia;
         private System.Windows.Forms.DataGridView dgv_tipo_cancelacion;
+        private System.Windows.Forms.Button but_Buscar_dias;
     }
 }
