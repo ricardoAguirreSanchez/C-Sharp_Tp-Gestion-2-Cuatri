@@ -1904,4 +1904,16 @@ CREATE PROCEDURE SOLARIS.borrarDiaDeAgendaHorarios
  
 GO
 
+--traigo el listado de especialidades
+GO
+IF OBJECT_ID('SOLARIS.traigoEspecialidad') IS NOT NULL
+	DROP PROCEDURE SOLARIS.traigoEspecialidad;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.traigoEspecialidad
+ as
+	select distinct esp_descripcion from [SOLARIS].[Especialidad]
+GO
+
 -- [EOF]

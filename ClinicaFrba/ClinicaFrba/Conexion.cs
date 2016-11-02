@@ -56,6 +56,15 @@ namespace ClinicaFrba
             dr.Close();
             return result;
         }
+        public DataTable traigoEspecialidades()
+        {
+
+            da = new SqlDataAdapter("SOLARIS.traigoEspecialidad", cn);
+            
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
 
         //trae todos los roles de un usuario especifico
         public DataTable roles(String usuario)
