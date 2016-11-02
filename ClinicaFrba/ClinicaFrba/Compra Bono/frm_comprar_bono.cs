@@ -61,7 +61,7 @@ namespace ClinicaFrba.Compra_Bono
                     int cantidadDeBonos = Convert.ToInt32(tex_cant_bono_consulta.Text);
                     for (int i = 1; i <= cantidadDeBonos; i++)
                     {
-                        conexion.comprarBono(Convert.ToInt32(tex_numero_afiliado.Text));
+                        conexion.comprarBono(Convert.ToInt32(tex_numero_afiliado.Text),'C');
                     }
                     MessageBox.Show(tex_cant_bono_consulta.Text + " bonos de consulta comprados!");
                 }
@@ -69,12 +69,10 @@ namespace ClinicaFrba.Compra_Bono
                     int cantidadDeBonos = Convert.ToInt32(tex_cant_bono_farmacia.Text);
                     for (int i = 1; i <= cantidadDeBonos; i++)
                     {
-                        conexion.comprarBonoFarmacia(Convert.ToInt32(tex_numero_afiliado.Text));
+                        conexion.comprarBono(Convert.ToInt32(tex_numero_afiliado.Text),'F');
                     }
                     MessageBox.Show(tex_cant_bono_farmacia.Text + " bonos de farmacia comprados!"); 
                 }
-
-                
             }
             catch (Exception error)
             {MessageBox.Show("No se pudo procesar la compra por: " + error.ToString());}

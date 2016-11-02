@@ -395,30 +395,20 @@ namespace ClinicaFrba
             command.ExecuteScalar();
             return int.Parse(command.Parameters["@pac_precio_bono_farmacia"].Value.ToString());
         }
-        public void comprarBono(Int64 codigo)
+
+        public void comprarBono(Int64 codigo, Char tipoBono)
         {
             try
             {
-                SqlCommand command = new SqlCommand("SOLARIS.insertarUnBonoConsulta", cn);
+                SqlCommand command = new SqlCommand("SOLARIS.insertarUnBono", cn);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@bon_afiliado_compra", codigo);
+                command.Parameters.AddWithValue("@tipo_bono", tipoBono);
                 command.ExecuteNonQuery();
             }
             catch (Exception error)
             {
-            }
-        }
-        public void comprarBonoFarmacia(Int64 codigo)
-        {
-            try
-            {
-                SqlCommand command = new SqlCommand("SOLARIS.insertarUnBonoFarmacia", cn);
-                command.CommandType = CommandType.StoredProcedure;
-                command.Parameters.AddWithValue("@bfm_afiliado_compra", codigo);
-                command.ExecuteNonQuery();
-            }
-            catch (Exception error)
-            {
+                MessageBox.Show(error.ToString());
             }
         }
 
