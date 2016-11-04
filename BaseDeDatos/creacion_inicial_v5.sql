@@ -2057,13 +2057,17 @@ CREATE PROCEDURE SOLARIS.cancelarTurnos
 @motivo_cancel varchar(255),
 @tipo_turno int
  as
-	update SOLARIS.Turno set tur_estado = 4
-	where tur_medico = @codigoMedico and 
-	convert(date,tur_fecha_turno) = convert(date ,@fecha) 
+	update SOLARIS.Turno set tur_estado = 4 
+	where tur_numero in (select tur_numero from SOLARIS.Turno t join SOLARIS.Agenda a on (t.tur_agenda_cod=a.age_cod_entrada) where
+						   --cancelo todo el DIA ---
+	                      convert(date,a.age_fecha_desde) = convert(date ,@fecha) and
+						  a.age_cod_medico = @codigoMedico)
 	
-	declare @turno_numero int
-	set @turno_numero = (select )
-
+	insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel)
+	select tur_numero,@tipo_turno,@motivo_cancel from SOLARIS.Turno t1 join SOLARIS.Agenda a1 on (t1.tur_agenda_cod=a1.age_cod_entrada) where
+						   --cancelo todo el DIA ---
+	                      convert(date,a1.age_fecha_desde) = convert(date ,@fecha) and
+						  a1.age_cod_medico = @codigoMedico
  
 GO
 
@@ -2079,8 +2083,12 @@ CREATE PROCEDURE SOLARIS.borrarDiaDeAgenda
 @fecha datetime,
 @codigoMedico int
  as
-	delete from SOLARIS.Agenda where age_cod_medico = @codigoMedico and 
-	convert(date,age_fecha_desde) = convert(date ,@fecha)
+	
+	--UNA MANERA DE DESABIHILITAR LA AGENDA ES DEJANDO EN NULL LA FECHA DESDE - HASTA
+	update SOLARIS.Agenda set age_fecha_desde = NULL, age_fecha_hasta = NULL
+	where age_cod_medico = @codigoMedico and 
+	      convert(date,age_fecha_desde) = convert(date ,@fecha)
+
  
 GO
 
@@ -2101,13 +2109,22 @@ CREATE PROCEDURE SOLARIS.cancelarTurnosHorarios
 @desde datetime,
 @hasta datetime
  as
-	update SOLARIS.Turno set tur_estado = 4,tur_tipo_cancelacion=@tipo_turno, tur_motivo_cancel = @motivo_cancel
-	where tur_medico = @codigoMedico and 
-	convert(date,tur_fecha_turno) = convert(date ,@fecha) and
-	convert(time,tur_fecha_turno) >= convert(time ,@desde) and
-	convert(time,tur_fecha_turno) <= convert(time ,@hasta)
-	
+	update SOLARIS.Turno set tur_estado = 4 
+	where tur_numero in (select tur_numero from SOLARIS.Turno t join SOLARIS.Agenda a on (t.tur_agenda_cod=a.age_cod_entrada) where
+						   --cancelo rango del DIA ---
+						  a.age_cod_medico = @codigoMedico and
+						  convert(date,a.age_fecha_desde) = convert(date ,@fecha) and
+	                      convert(time,a.age_fecha_desde) >= convert(time ,@desde) and
+	                      convert(time,a.age_fecha_desde) <= convert(time ,@hasta) )
 
+	
+	insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel)
+	select tur_numero,@tipo_turno,@motivo_cancel from SOLARIS.Turno t1 join SOLARIS.Agenda a1 on (t1.tur_agenda_cod=a1.age_cod_entrada) where
+						   --cancelo  rango del DIA  ---
+	                      convert(date,a1.age_fecha_desde) = convert(date ,@fecha) and
+	                      convert(time,a1.age_fecha_desde) >= convert(time ,@desde) and
+	                      convert(time,a1.age_fecha_desde) <= convert(time ,@hasta) and
+						  a1.age_cod_medico = @codigoMedico
  
 GO
 
@@ -2125,10 +2142,13 @@ CREATE PROCEDURE SOLARIS.borrarDiaDeAgendaHorarios
 @desde datetime,
 @hasta datetime
  as
-	delete from SOLARIS.Agenda where age_cod_medico = @codigoMedico and 
-	convert(date,age_fecha_desde) = convert(date ,@fecha) 
-	and convert(time,age_fecha_desde) >= convert(time ,@desde)
-	and convert(time,age_fecha_hasta) <= convert(time ,@hasta)
+	
+	--UNA MANERA DE DESABIHILITAR LA AGENDA ES DEJANDO EN NULL LA FECHA DESDE - HASTA
+	update SOLARIS.Agenda set age_fecha_desde = NULL, age_fecha_hasta = NULL
+	where age_cod_medico = @codigoMedico and  
+	convert(date,age_fecha_desde) = convert(date ,@fecha) and  
+    convert(time,age_fecha_desde) >= convert(time ,@desde) and 
+	convert(time,age_fecha_desde) <= convert(time ,@hasta)
  
 GO
 
