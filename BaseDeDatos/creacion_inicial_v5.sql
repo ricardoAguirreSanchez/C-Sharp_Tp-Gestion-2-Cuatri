@@ -109,6 +109,14 @@ IF OBJECT_ID('SOLARIS.Funcionalidad') IS NOT NULL
 IF OBJECT_ID('SOLARIS.Especialidad_x_Medico') IS NOT NULL
 	DROP TABLE SOLARIS.Especialidad_x_Medico;
 
+-- Tabla "Item_Factura"
+IF OBJECT_ID('SOLARIS.Item_Factura') IS NOT NULL
+	DROP TABLE SOLARIS.Item_Factura;
+
+-- Tabla "Factura"
+IF OBJECT_ID('SOLARIS.Factura') IS NOT NULL
+	DROP TABLE SOLARIS.Factura;
+	
 -- Tabla "Bono"
 -- Precede a: "Paciente"
 IF OBJECT_ID('SOLARIS.Bono') IS NOT NULL
@@ -126,14 +134,15 @@ IF OBJECT_ID('SOLARIS.Consulta_Sintoma_Diagnostico') IS NOT NULL
 IF OBJECT_ID('SOLARIS.Consulta') IS NOT NULL
 	DROP TABLE SOLARIS.Consulta;
 
--- Tabla "Tipo Cancelacion"
-IF OBJECT_ID('SOLARIS.Tipo_Cancelacion') IS NOT NULL
-	DROP TABLE SOLARIS.Tipo_Cancelacion;
 
 -- Tabla "Turno_Cancelado"
 IF OBJECT_ID('SOLARIS.Turno_Cancelado') IS NOT NULL
 	DROP TABLE SOLARIS.Turno_Cancelado;
-	
+
+-- Tabla "Tipo Cancelacion"
+IF OBJECT_ID('SOLARIS.Tipo_Cancelacion') IS NOT NULL
+	DROP TABLE SOLARIS.Tipo_Cancelacion;
+
 -- Tabla "Turno"
 IF OBJECT_ID('SOLARIS.Turno') IS NOT NULL
 	DROP TABLE SOLARIS.Turno;
@@ -155,14 +164,7 @@ IF OBJECT_ID('SOLARIS.Especialidad') IS NOT NULL
 -- Tabla "Tipo Especialidad"
 IF OBJECT_ID('SOLARIS.Tipo_Especialidad') IS NOT NULL
 	DROP TABLE SOLARIS.Tipo_Especialidad;
-
--- Tabla "Factura"
-IF OBJECT_ID('SOLARIS.Factura') IS NOT NULL
-	DROP TABLE SOLARIS.Factura;
-
--- Tabla "Item_Factura"
-IF OBJECT_ID('SOLARIS.Item_Factura') IS NOT NULL
-	DROP TABLE SOLARIS.Item_Factura;
+	
 
 -- Tabla "Medico"
 -- Precede a: "Usuario", "Tipo de Documento"
@@ -174,16 +176,6 @@ IF OBJECT_ID('SOLARIS.Medico') IS NOT NULL
 IF OBJECT_ID('SOLARIS.Horario') IS NOT NULL
 	DROP TABLE SOLARIS.Horario;
 	
--- Tabla "Dia"
-/*
-IF OBJECT_ID('SOLARIS.Dia') IS NOT NULL
-	DROP TABLE SOLARIS.Dia;
-*/
-
--- Tabla "Bono_Bono_Farmacia"
-/*IF OBJECT_ID('SOLARIS.Bono_Farmacia') IS NOT NULL
-	DROP TABLE SOLARIS.Bono_Farmacia;*/
-
 -- Tabla "Hist_Plan_Afiliado"
 IF OBJECT_ID('SOLARIS.Hist_Plan_Afiliado') IS NOT NULL
 	DROP TABLE SOLARIS.Hist_Plan_Afiliado;
@@ -208,8 +200,7 @@ IF OBJECT_ID('SOLARIS.Tipo_Documento') IS NOT NULL
 -- Tabla "Plan_Medico"
 IF OBJECT_ID('SOLARIS.Plan_Medico') IS NOT NULL
 	DROP TABLE SOLARIS.Plan_Medico;
-
-
+	
 -- Tabla "Usuario"
 IF OBJECT_ID('SOLARIS.Usuario') IS NOT NULL
 	DROP TABLE SOLARIS.Usuario;
@@ -580,7 +571,7 @@ CREATE TABLE SOLARIS.Consulta (
 	con_fecha				datetime,
 	con_turno				INT,			-- [FK]
 	--con_afiliado			INT,			-- [FK] [ELIMINADA POR PEDIDO EN CORRECCION DER]
-	con_cod_medico			INT,			-- [FK]
+	--con_cod_medico		INT,			-- [FK]
 	con_hora_llegada		datetime,
 	--esto lo completa el medico
 	con_hora_medico			datetime
@@ -595,9 +586,8 @@ ALTER TABLE SOLARIS.Consulta
 	ADD CONSTRAINT FK_Consulta_02 FOREIGN KEY (con_afiliado) REFERENCES SOLARIS.Paciente(pac_nro_afiliado);*/
 /*ALTER TABLE SOLARIS.Consulta 
 	ADD CONSTRAINT FK_Consulta_03 FOREIGN KEY (con_bono_relacionado) REFERENCES SOLARIS.Bono_Consulta(bon_numero);*/
-
-ALTER TABLE SOLARIS.Consulta 
-	ADD CONSTRAINT FK_Consulta_04 FOREIGN KEY (con_cod_medico) REFERENCES SOLARIS.Medico(med_cod_medico);
+/*ALTER TABLE SOLARIS.Consulta 
+	ADD CONSTRAINT FK_Consulta_04 FOREIGN KEY (con_cod_medico) REFERENCES SOLARIS.Medico(med_cod_medico);*/
 
 
 -- Tabla "Consulta_Sintoma_Diagnostico"
@@ -605,14 +595,13 @@ CREATE TABLE SOLARIS.Consulta_Sintoma_Diagnostico (
 	csd_consulta			INT NOT NULL,
 	csd_item				TINYINT NOT NULL,
 	csd_sintoma				VARCHAR(255),
-	csd_diagnostico			VARCHAR(1022)
+	csd_diagnostico			VARCHAR(255)
 );
 
 ALTER TABLE SOLARIS.Consulta_Sintoma_Diagnostico ADD CONSTRAINT PK_CSD PRIMARY KEY(csd_consulta, csd_item);
 
 ALTER TABLE SOLARIS.Consulta_Sintoma_Diagnostico 
 	ADD CONSTRAINT FK_CSD_01 FOREIGN KEY (csd_consulta) REFERENCES SOLARIS.Consulta(con_numero);
-
 
 -- Tabla "Tipo_Bono"
 
@@ -660,7 +649,7 @@ ALTER TABLE SOLARIS.Bono ADD CONSTRAINT CK_bon_fue_utilizado CHECK (bon_fue_util
 -- Tabla "Factura"
 
 CREATE TABLE SOLARIS.Factura (
-	fac_numero				INT NOT NULL,
+	fac_numero				INT IDENTITY(1,1) NOT NULL,
 	fac_nro_afiliado		INT,			-- [FK]
 	fac_fecha				DATETIME,
 	fac_total				NUMERIC(18,0)
@@ -685,7 +674,8 @@ ALTER TABLE SOLARIS.Item_Factura ADD CONSTRAINT PK_ItemFactura PRIMARY KEY(itf_n
 ALTER TABLE SOLARIS.Item_Factura 
 	ADD CONSTRAINT FK_Item_Factura_01 FOREIGN KEY (itf_nro_bono) REFERENCES SOLARIS.Bono(bon_numero);
 
-
+ALTER TABLE SOLARIS.Item_Factura 
+	ADD CONSTRAINT FK_Item_Factura_02 FOREIGN KEY (itf_numero) REFERENCES SOLARIS.Factura(fac_numero);
 
 
 PRINT 'Tablas creadas ...';
@@ -902,6 +892,9 @@ GO
 CREATE PROCEDURE SOLARIS.usp_MigrarAfiliados
 AS
 BEGIN
+
+	SET NOCOUNT ON;
+
 	-- Declaración de variables
 	declare @nro_afiliado		INT;
 	declare @cur_apellido		VARCHAR(255);
@@ -997,8 +990,57 @@ BEGIN
 	DEALLOCATE cur_Afiliados_tmp;
 
 END;
-
 GO
+
+
+
+IF OBJECT_ID('SOLARIS.usp_actzBono') IS NOT NULL
+	DROP PROCEDURE SOLARIS.usp_actzBono;
+GO
+CREATE PROCEDURE SOLARIS.usp_actzBono
+AS
+BEGIN
+	SET NOCOUNT ON;
+
+	-- Declaracion de variables
+	DECLARE @nroAfiliado	INT;
+	DECLARE @nroBono		INT;
+	DECLARE @nroConsulta	INT;
+
+	DECLARE cur_Bono_tmp CURSOR FOR
+		select pac_nro_afiliado,m.Bono_Consulta_Numero, (select c.con_numero from SOLARIS.Consulta c where c.con_turno = Turno_Numero)
+		from gd_esquema.Maestra m
+			JOIN SOLARIS.Paciente ON Paciente_Dni = pac_nro_doc
+		where Turno_Numero IS NOT NULL and Bono_Consulta_Numero IS NOT NULL;
+				
+	OPEN cur_Bono_tmp;
+	FETCH NEXT FROM cur_Bono_tmp INTO
+		@nroAfiliado,
+		@nroBono,
+		@nroConsulta;
+
+	WHILE (@@FETCH_STATUS = 0)
+	BEGIN	
+	
+		UPDATE SOLARIS.Bono
+			SET	bon_fue_utilizado = 1,
+				bon_afiliado_uso = @nroAfiliado,
+				bon_nro_consulta_med = @nroConsulta
+			WHERE bon_numero = @nroBono;
+
+		FETCH NEXT FROM cur_Bono_tmp INTO
+			@nroAfiliado,
+			@nroBono,
+			@nroConsulta;
+	END;
+
+	CLOSE cur_Bono_tmp;
+	DEALLOCATE cur_Bono_tmp;
+
+END;
+GO
+
+
 
 /* ****************************************************************************
 * SECCION_5 : MIGRACION DE DATOS DE TABLA MAESTRA
@@ -1157,22 +1199,22 @@ INSERT INTO SOLARIS.Bono
 		(	bon_numero, 
 			bon_fecha_compra, 
 			bon_fecha_impresion, 
-			--bon_precio, 
 			bon_afiliado_compra, 
 			bon_plan_afiliado, 
 			bon_nro_consulta_med, 
 			bon_fue_utilizado,
-			bon_afiliado_uso
+			bon_afiliado_uso,
+			bon_tipo_bono
 		)
 	select distinct Bono_Consulta_Numero, 
 					Compra_Bono_Fecha, 
 					Bono_Consulta_Fecha_Impresion,
-					--Plan_Med_Precio_Bono_Consulta,
 					p.pac_nro_afiliado,
 					Plan_Med_Codigo,
 					NULL,
 					0,
-					NULL
+					NULL,
+					'C'
 	from gd_esquema.Maestra m
 		JOIN SOLARIS.Paciente p ON m.Paciente_Dni = p.pac_nro_doc
 	where Bono_Consulta_Numero IS NOT NULL
@@ -1180,6 +1222,47 @@ INSERT INTO SOLARIS.Bono
 	;
 	
 
+
+-- Carga de las Consultas ...
+--EXEC SOLARIS.usp_MigrarConsultas;
+
+INSERT INTO SOLARIS.Consulta
+		(con_turno, con_fecha, con_hora_llegada, con_hora_medico)
+	select Turno_Numero, Turno_Fecha, Turno_Fecha, Turno_Fecha
+	from gd_esquema.Maestra 
+	where Turno_Numero IS NOT NULL and Bono_Consulta_Numero IS NOT NULL
+	;
+
+-- Carga de Sintomas & Diagnosticos ...
+INSERT INTO SOLARIS.Consulta_Sintoma_Diagnostico
+		(csd_consulta, csd_item, csd_sintoma, csd_diagnostico)
+	SELECT	con_numero,
+			1,  
+			(select distinct Consulta_Sintomas from gd_esquema.Maestra where Consulta_Sintomas IS NOT NULL),
+			(select distinct Consulta_Enfermedades from gd_esquema.Maestra where Consulta_Sintomas IS NOT NULL)
+	FROM SOLARIS.Consulta;
+
+
+-- Actualizar Bono (Se setean como utilizados y se vincula al paciente que lo utilizó)
+EXEC SOLARIS.usp_actzBono;
+
+
+-- Carga de Tabla "Factura" ...
+INSERT INTO SOLARIS.Factura
+		(fac_nro_afiliado, fac_fecha, fac_total)
+	select b.bon_afiliado_compra, b.bon_fecha_compra, count(*) * (select pm.plm_precio_bono_consulta from SOLARIS.Paciente p JOIN SOLARIS.Plan_Medico pm ON p.pac_plan_medico = pm.plm_codigo WHERE p.pac_nro_afiliado = b.bon_afiliado_compra)
+	from SOLARIS.Bono b
+	group by b.bon_afiliado_compra, b.bon_fecha_compra;
+
+
+-- Carga de Tabla "Item_Factura" ...
+INSERT INTO SOLARIS.Item_Factura
+		(itf_numero, itf_nro_bono, itf_precio)
+	SELECT f.fac_numero, b.bon_numero, (select pm.plm_precio_bono_consulta from SOLARIS.Paciente p JOIN SOLARIS.Plan_Medico pm ON p.pac_plan_medico = pm.plm_codigo WHERE p.pac_nro_afiliado = b.bon_afiliado_compra)
+	FROM SOLARIS.Factura f
+		JOIN SOLARIS.Bono b ON f.fac_nro_afiliado = b.bon_afiliado_compra
+			AND f.fac_fecha = b.bon_fecha_compra;
+	
 
 
 
