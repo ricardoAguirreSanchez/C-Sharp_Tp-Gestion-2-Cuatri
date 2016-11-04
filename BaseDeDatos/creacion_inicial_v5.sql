@@ -593,7 +593,7 @@ ALTER TABLE SOLARIS.Consulta
 -- Tabla "Consulta_Sintoma_Diagnostico"
 CREATE TABLE SOLARIS.Consulta_Sintoma_Diagnostico (
 	csd_consulta			INT NOT NULL,
-	csd_item				TINYINT NOT NULL,
+	csd_item				INT IDENTITY(1,1) NOT NULL,
 	csd_sintoma				VARCHAR(255),
 	csd_diagnostico			VARCHAR(255)
 );
@@ -1740,9 +1740,10 @@ CREATE PROCEDURE SOLARIS.buscarConsultasPorID
 		
 				
 		begin
-			select con_numero as 'Codigo Consulta', con_afiliado as 'Codigo Afiliado', con_cod_medico as 'Codigo Medico', con_fecha as 'Fecha del Turno'
+			select con_numero as 'Codigo Consulta', tur_afiliado as 'Codigo Afiliado', con_fecha as 'Fecha del Turno'
 			from SOLARIS.Consulta join SOLARIS.Turno on (con_turno = tur_numero)
-			where con_cod_medico = @med_cod_medico and 
+			join SOLARIS.Agenda on (tur_agenda_cod = age_cod_entrada)
+			where age_cod_medico = @med_cod_medico and 
 			@dia = DAY(con_fecha) and
 			@mes = MONTH(con_fecha) and
 			@anio = YEAR(con_fecha) and
@@ -1768,14 +1769,17 @@ GO
 CREATE PROCEDURE SOLARIS.completarCamposEnConsultaPorRegistroResultado
 @consulta	int,
 @sintoma varchar(255),
-@diagnostico varchar(1022),
+@diagnostico varchar(255),
 @fecha datetime
 	as
 		
 				
 		begin
-			UPDATE SOLARIS.Consulta set con_hora_medico=@fecha, con_sintoma=@sintoma, con_diagnostico=@diagnostico 
+			UPDATE SOLARIS.Consulta set con_hora_medico=@fecha
 			where con_numero=@consulta
+
+			insert into SOLARIS.Consulta_Sintoma_Diagnostico (csd_consulta,csd_sintoma,csd_diagnostico)
+			values(@consulta,@sintoma,@diagnostico)
 		end
 
 		
@@ -2053,10 +2057,12 @@ CREATE PROCEDURE SOLARIS.cancelarTurnos
 @motivo_cancel varchar(255),
 @tipo_turno int
  as
-	update SOLARIS.Turno set tur_estado = 4,tur_tipo_cancelacion=@tipo_turno, tur_motivo_cancel = @motivo_cancel
+	update SOLARIS.Turno set tur_estado = 4
 	where tur_medico = @codigoMedico and 
 	convert(date,tur_fecha_turno) = convert(date ,@fecha) 
 	
+	declare @turno_numero int
+	set @turno_numero = (select )
 
  
 GO

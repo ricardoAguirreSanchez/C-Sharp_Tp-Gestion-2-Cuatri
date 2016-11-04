@@ -62,8 +62,7 @@ namespace ClinicaFrba.Registro_Resultado
                 AppConfig ac = new AppConfig();
                 DateTime fechaSistema = Convert.ToDateTime(ac.obtenerFecha());
 
-                //esto completa lo q faltaba en consulta
-                cn.completarCamposEnConsultaPorRegistroResultado(codigoConsulta, sintomas, diagnostico, fechaSistema);
+                
                 //esto cambia de estado el turno
                 cn.cambioEstadoTurnoPorUnaConsultaFinalizada(codigoConsulta);
 
@@ -101,6 +100,28 @@ namespace ClinicaFrba.Registro_Resultado
 
             //muestro  numero, fecha, afiliado y medico de consulta, 
             dgv_listado_consultas.DataSource = cn1.buscarConsultasPorID(codigoMedico,dia,mes,anio);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //abro conexion
+            Conexion cn1 = new Conexion();
+            cn1.conectar();
+
+            //traigo el codigo de la consulta, los sintomas y diagnosticos
+            int codigoConsulta = Convert.ToInt32(dgv_listado_consultas.CurrentRow.Cells[0].Value.ToString());
+            String sintomas = tex_sintomas.Text;
+            String diagnostico = tex_diagnostico.Text;
+
+
+            //obtengo de la fecha del sistema
+            AppConfig ac = new AppConfig();
+            DateTime fechaSistema = Convert.ToDateTime(ac.obtenerFecha());
+            //esto completa lo q faltaba en consulta
+            cn1.completarCamposEnConsultaPorRegistroResultado(codigoConsulta, sintomas, diagnostico, fechaSistema);
+            MessageBox.Show("Diagnostico y sintoma guardado");
+            tex_diagnostico.Clear();
+            tex_sintomas.Clear();
         }
     }
 }

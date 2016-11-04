@@ -41,12 +41,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tex_codigo_medico = new System.Windows.Forms.TextBox();
             this.but_buscar_consultas = new System.Windows.Forms.Button();
+            this.but_guardar_sd = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_listado_consultas)).BeginInit();
             this.SuspendLayout();
             // 
             // but_registrar
             // 
-            this.but_registrar.Location = new System.Drawing.Point(444, 232);
+            this.but_registrar.Location = new System.Drawing.Point(433, 269);
             this.but_registrar.Name = "but_registrar";
             this.but_registrar.Size = new System.Drawing.Size(75, 23);
             this.but_registrar.TabIndex = 0;
@@ -164,11 +165,22 @@
             this.but_buscar_consultas.UseVisualStyleBackColor = true;
             this.but_buscar_consultas.Click += new System.EventHandler(this.but_buscar_consultas_Click);
             // 
+            // but_guardar_sd
+            // 
+            this.but_guardar_sd.Location = new System.Drawing.Point(379, 215);
+            this.but_guardar_sd.Name = "but_guardar_sd";
+            this.but_guardar_sd.Size = new System.Drawing.Size(171, 23);
+            this.but_guardar_sd.TabIndex = 25;
+            this.but_guardar_sd.Text = "Guardar sintoma y diagnostico";
+            this.but_guardar_sd.UseVisualStyleBackColor = true;
+            this.but_guardar_sd.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frm_registro_resultado
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(640, 304);
+            this.Controls.Add(this.but_guardar_sd);
             this.Controls.Add(this.but_buscar_consultas);
             this.Controls.Add(this.tex_codigo_medico);
             this.Controls.Add(this.label5);
@@ -206,5 +218,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tex_codigo_medico;
         private System.Windows.Forms.Button but_buscar_consultas;
+        private System.Windows.Forms.Button but_guardar_sd;
     }
 }
