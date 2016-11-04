@@ -313,10 +313,10 @@ namespace ClinicaFrba
 
         }
 
-        public DataTable datosTurnoPorCodigoMedico(int codigoMedico, int dia, int mes, int anio)
+        public DataTable datosTurnoPorCodigoMedico(int codigoMedico, int dia, int mes, int anio, int codigoEspecialidad)
         {
 
-            da = new SqlDataAdapter("Execute SOLARIS.datosTurnoPorCodigoMedico " + codigoMedico + "," + dia + "," + mes + "," + anio, cn);
+            da = new SqlDataAdapter("Execute SOLARIS.datosTurnoPorCodigoMedico " + codigoMedico + "," + dia + "," + mes + "," + anio + "," + codigoEspecialidad, cn);
             dt = new DataTable();
             da.Fill(dt);
             return dt;

@@ -1226,12 +1226,15 @@ INSERT INTO SOLARIS.Bono
 -- Carga de las Consultas ...
 --EXEC SOLARIS.usp_MigrarConsultas;
 
-INSERT INTO SOLARIS.Consulta
+--ESTE INSERT GENERA PARA 3 NUMEROS DE CONULTA DISTINTA, LA MISMA FECHA Y MISMO TURNO
+--ej: select * from SOLARIS.Consulta where con_turno = 186576 and con_fecha='2015-01-01 13:30:00.000' 
+
+/*INSERT INTO SOLARIS.Consulta
 		(con_turno, con_fecha, con_hora_llegada, con_hora_medico)
 	select Turno_Numero, Turno_Fecha, Turno_Fecha, Turno_Fecha
 	from gd_esquema.Maestra 
 	where Turno_Numero IS NOT NULL and Bono_Consulta_Numero IS NOT NULL
-	;
+	;*/
 
 -- Carga de Sintomas & Diagnosticos ...
 INSERT INTO SOLARIS.Consulta_Sintoma_Diagnostico
@@ -1574,17 +1577,20 @@ CREATE PROCEDURE SOLARIS.datosTurnoPorCodigoMedico
 @med_cod_medico		int,
 @tur_fecha_turno_dia	int,
 @tur_fecha_turno_mes	int,
-@tur_fecha_turno_anio	int
+@tur_fecha_turno_anio	int,
+@esp_cod_medico		int
 	as
 		
 				
 		begin
-			select tur_numero as Codigo, tur_afiliado as 'Codigo Afiliado', tur_medico as 'Codigo Medico', tur_fecha_turno as 'Fecha del Turno'
-			from SOLARIS.Turno 
-			where tur_medico = @med_cod_medico and 
-			@tur_fecha_turno_dia = DAY(tur_fecha_turno) and
-			@tur_fecha_turno_mes = MONTH(tur_fecha_turno) and
-			@tur_fecha_turno_anio = YEAR(tur_fecha_turno) and
+			select tur.tur_numero as Codigo, ag.age_fecha_desde as Fecha, tur.tur_afiliado as 'Codigo afiliado'
+			from SOLARIS.Turno tur join SOLARIS.Agenda ag
+			on (tur.tur_agenda_cod = ag.age_cod_entrada)
+			where ag.age_cod_medico = @med_cod_medico and
+			@esp_cod_medico = ag.age_med_especialidad and
+			@tur_fecha_turno_dia = DAY(ag.age_fecha_desde) and
+			@tur_fecha_turno_mes = MONTH(ag.age_fecha_desde) and
+			@tur_fecha_turno_anio = YEAR(ag.age_fecha_desde) and
 			tur_estado = 0
 
 		end
@@ -1607,8 +1613,8 @@ CREATE PROCEDURE SOLARIS.bonosDisponiblesPorAfiliado
 		
 				
 		begin
-			select bon_numero as 'Codigo  de bonos disponibles' 
-			from SOLARIS.Bono_Consulta
+			select bon_numero as 'Codigo de Bono Disponible' 
+			from SOLARIS.Bono
 			where bon_afiliado_compra/ 100 = @codigoAfiliado / 100 and
 			bon_plan_afiliado = (select pac_plan_medico from SOLARIS.Paciente where pac_nro_afiliado = @codigoAfiliado) and
 			bon_fue_utilizado = 0
@@ -1626,23 +1632,22 @@ GO
 CREATE PROCEDURE SOLARIS.registrarConsulta
 @codigoTurno	int,
 @codigoBono	    int,
-@fechaSistema	        datetime
+@fechaSistema	datetime
 	as
 		
 		
 				
 		begin
-		    declare @con_fecha datetime
-			set @con_fecha= (select tur_fecha_turno from SOLARIS.Turno where tur_numero = @codigoTurno)
 
-			declare @con_afiliado int
-			set @con_afiliado= (select tur_afiliado from SOLARIS.Turno where tur_numero = @codigoTurno)
-
-			declare @con_cod_medico int
-			set @con_cod_medico= (select tur_medico from SOLARIS.Turno where tur_numero = @codigoTurno)
-
-			insert into SOLARIS.Consulta (con_fecha,con_turno,con_afiliado,con_cod_medico,con_hora_llegada)
-			values (@con_fecha,@codigoTurno,@con_afiliado,@con_cod_medico,@fechaSistema)
+			declare @fechaDeConsulta datetime
+			
+			set @fechaDeConsulta = (select age_fecha_desde from SOLARIS.Agenda join SOLARIS.Turno
+			                        on (SOLARIS.Agenda.age_cod_entrada = SOLARIS.Turno.tur_agenda_cod)
+									where tur_numero = @codigoTurno)
+		    
+									
+			insert into SOLARIS.Consulta (con_fecha,con_turno,con_hora_llegada,con_hora_medico)
+			values (@fechaDeConsulta,@codigoTurno,@fechaSistema,NULL)
 		end
 
 		
@@ -1697,13 +1702,20 @@ CREATE PROCEDURE SOLARIS.completarCamposEnBonoPorUnaConsulta
 		
 				
 		begin
+			declare @fechaDeConsulta datetime
+			
+			set @fechaDeConsulta = (select age_fecha_desde from SOLARIS.Agenda join SOLARIS.Turno
+			                        on (SOLARIS.Agenda.age_cod_entrada = SOLARIS.Turno.tur_agenda_cod)
+									where tur_numero = @codigoTurno)
+			
+
 			declare @bon_nro_consulta int
-			set @bon_nro_consulta= (select con_numero from SOLARIS.Consulta where con_turno = @codigoTurno)
+			set @bon_nro_consulta= (select con_numero from SOLARIS.Consulta where con_turno = @codigoTurno and con_fecha = @fechaDeConsulta)
 
 			declare @bon_afiliado_uso int
-			set @bon_afiliado_uso= (select con_afiliado from SOLARIS.Consulta where con_turno = @codigoTurno)
+			set @bon_afiliado_uso= (select tur_afiliado from SOLARIS.Turno where tur_numero= @codigoTurno)
 
-			UPDATE  SOLARIS.Bono_Consulta set  bon_nro_consulta_med = @bon_nro_consulta, bon_fue_utilizado = 1,
+			UPDATE  SOLARIS.Bono set  bon_nro_consulta_med = @bon_nro_consulta, bon_fue_utilizado = 1,
 			bon_afiliado_uso = @bon_afiliado_uso where bon_numero =  @codigoBono
 			
 		end
