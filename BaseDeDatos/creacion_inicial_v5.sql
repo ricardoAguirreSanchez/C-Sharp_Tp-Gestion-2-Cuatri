@@ -1229,18 +1229,17 @@ INSERT INTO SOLARIS.Bono
 --ESTE INSERT GENERA PARA 3 NUMEROS DE CONULTA DISTINTA, LA MISMA FECHA Y MISMO TURNO
 --ej: select * from SOLARIS.Consulta where con_turno = 186576 and con_fecha='2015-01-01 13:30:00.000' 
 
-/*INSERT INTO SOLARIS.Consulta
+INSERT INTO SOLARIS.Consulta
 		(con_turno, con_fecha, con_hora_llegada, con_hora_medico)
-	select Turno_Numero, Turno_Fecha, Turno_Fecha, Turno_Fecha
+	select distinct Turno_Numero, Turno_Fecha, Turno_Fecha, Turno_Fecha
 	from gd_esquema.Maestra 
 	where Turno_Numero IS NOT NULL and Bono_Consulta_Numero IS NOT NULL
-	;*/
+	;
 
 -- Carga de Sintomas & Diagnosticos ...
 INSERT INTO SOLARIS.Consulta_Sintoma_Diagnostico
-		(csd_consulta, csd_item, csd_sintoma, csd_diagnostico)
-	SELECT	con_numero,
-			1,  
+		(csd_consulta, csd_sintoma, csd_diagnostico)
+	SELECT	con_numero,			  
 			(select distinct Consulta_Sintomas from gd_esquema.Maestra where Consulta_Sintomas IS NOT NULL),
 			(select distinct Consulta_Enfermedades from gd_esquema.Maestra where Consulta_Sintomas IS NOT NULL)
 	FROM SOLARIS.Consulta;
