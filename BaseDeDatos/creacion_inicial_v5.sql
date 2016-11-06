@@ -62,6 +62,7 @@ xx/SEP/2016		(v3).
 07/OCT/2016		Se agrega el campo 'hpa_plan_nuevo' en tabla Hist_Plan_Afiliado.
 07/OCT/2016		En 'Estado_Turno' se agraga el estado = 4 & se modifica el tamaño del campo descripcion del estado.
 09/OCT/2016		Se agregan los primeros procedimientos en el apartado 7, los mismos son usados en la app.
+06/NOV/2016		Se agrega usuario: admin y se agrega como ID de medico y paciente : nombre+dni (idem para contraseña)
 */
 
 
@@ -233,7 +234,7 @@ ALTER TABLE SOLARIS.Usuario_Estado ADD CONSTRAINT PK_Estado_Usuario PRIMARY KEY(
 -- Tabla "Usuario"
 CREATE TABLE SOLARIS.Usuario (
 	usu_codigo			INT IDENTITY(1,1),
-	usu_usuario			VARCHAR(8)	NOT NULL,
+	usu_usuario			VARCHAR(255)	NOT NULL,
 	usu_passwd			VARBINARY(255)  	NOT NULL,
 	usu_fecha_creacion	DATETIME,
 	usu_estado			TINYINT,		-- [FK] Ref 'Estado Usuarios'
@@ -839,7 +840,9 @@ INSERT INTO SOLARIS.Usuario
 		('ariel', HASHBYTES('SHA2_256','ariel'), NULL, 0),
 		('jose', HASHBYTES('SHA2_256','jose'), NULL, 0),
 		('matias', HASHBYTES('SHA2_256','matias'), NULL, 0),
-		('ricardo',HASHBYTES('SHA2_256','ricardo'), NULL, 0);
+		('ricardo',HASHBYTES('SHA2_256','ricardo'), NULL, 0),
+		('admin', HASHBYTES('SHA2_256','w23e'), NULL, 0);
+
 
 -- Tabla "Roles x Usuario"
 
@@ -851,6 +854,7 @@ INSERT INTO SOLARIS.Rol_x_Usuario
 		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'matias'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'ADMIN')),
 		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'ricardo'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'ADMIN')),
 		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'ricardo'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'PACIENTE')),
+		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'admin'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'ADMIN')),
 		((SELECT u.usu_codigo FROM SOLARIS.Usuario u WHERE u.usu_usuario = 'ricardo'), (SELECT r.rol_codigo FROM SOLARIS.Rol r WHERE r.rol_nombre = 'MEDICO'))
 	;
 
@@ -1023,7 +1027,7 @@ BEGIN
 	BEGIN	
 	
 		UPDATE SOLARIS.Bono
-			SET	bon_fue_utilizado = 1,
+			SET	bon_fue_utilizado = 0,
 				bon_afiliado_uso = @nroAfiliado,
 				bon_nro_consulta_med = @nroConsulta
 			WHERE bon_numero = @nroBono;
@@ -1265,8 +1269,23 @@ INSERT INTO SOLARIS.Item_Factura
 		JOIN SOLARIS.Bono b ON f.fac_nro_afiliado = b.bon_afiliado_compra
 			AND f.fac_fecha = b.bon_fecha_compra;
 	
+-- PARA AFILIAFO!!
+-- Carga de Tabla "usuario"..
+INSERT INTO SOLARIS.Usuario(usu_usuario,usu_passwd,usu_estado) SELECT  p.pac_nombre + CONVERT(varchar(125),p.pac_nro_doc), HASHBYTES('SHA2_256',(p.pac_nombre + CONVERT(varchar(125),p.pac_nro_doc))) , 0 FROM SOLARIS.Paciente p
+-- Cargo campo usuario..
+UPDATE SOLARIS.Paciente  set pac_usuario = (select usu_codigo from SOLARIS.Usuario  
+where pac_nombre + CONVERT(varchar(125),pac_nro_doc) = usu_usuario)
+-- Cargo Tabla "rol x usuario"
+INSERT INTO SOLARIS.Rol_x_Usuario (rxu_usuario,rxu_rol) SELECT pac_usuario,2 FROM SOLARIS.Paciente
 
 
+-- PARA MEDICO!!
+INSERT INTO SOLARIS.Usuario(usu_usuario,usu_passwd,usu_estado) SELECT  m.med_nombre + CONVERT(varchar(125),m.med_nro_doc), HASHBYTES('SHA2_256',(m.med_nombre + CONVERT(varchar(125),m.med_nro_doc))) , 0 FROM SOLARIS.Medico m
+-- Cargo campo usuario..
+UPDATE SOLARIS.Medico  set med_cod_usuario = (select usu_codigo from SOLARIS.Usuario  
+where med_nombre + CONVERT(varchar(125),med_nro_doc) = usu_usuario)
+-- Cargo Tabla "rol x usuario"
+INSERT INTO SOLARIS.Rol_x_Usuario (rxu_usuario,rxu_rol) SELECT med_cod_usuario,3 FROM SOLARIS.Medico
 
 /* ****************************************************************************
 * SECCION_7 : CREACIÓN DE FUNCTIONS, PROCEDURES, TRIGGERS
@@ -1280,9 +1299,41 @@ GO
 
 GO
 CREATE PROCEDURE SOLARIS.buscarUsuario
-	@usu_passwd varchar(255)
+	@usu_passwd varchar(255),
+	@usu_usuario varchar(255)
 	as
-		select usu_usuario from SOLARIS.Usuario where HASHBYTES('SHA2_256',@usu_passwd) = usu_passwd
+		select usu_usuario from SOLARIS.Usuario where HASHBYTES('SHA2_256',@usu_passwd) = usu_passwd and
+		usu_estado = 0 and @usu_usuario = usu_usuario
+GO
+
+--verificarLogeoInhabilitado
+GO
+
+IF OBJECT_ID('SOLARIS.verificarLogeoInhabilitado') IS NOT NULL
+	DROP PROCEDURE SOLARIS.verificarLogeoInhabilitado;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.verificarLogeoInhabilitado
+	@usu_usuario varchar(255)
+	as
+		select usu_usuario from SOLARIS.Usuario where @usu_usuario = usu_usuario and
+		usu_estado = 1
+GO
+
+--inhabilitoUsuario
+GO
+
+IF OBJECT_ID('SOLARIS.inhabilitoUsuario') IS NOT NULL
+	DROP PROCEDURE SOLARIS.inhabilitoUsuario;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.inhabilitoUsuario
+	@usu_usuario varchar(255)
+	as
+		update  SOLARIS.Usuario set usu_estado=1 where @usu_usuario = usu_usuario
+		
 GO
 -- procedimiento de buscar roles de un usuario especifico
 GO
@@ -2163,4 +2214,48 @@ CREATE PROCEDURE SOLARIS.traigoEspecialidad
 	select distinct esp_descripcion from [SOLARIS].[Especialidad]
 GO
 
+
+--traigo el listado de turnos disponibles para el afiliado (codigo turno y fecha)
+GO
+IF OBJECT_ID('SOLARIS.datosTurnoPorNumeroAfiliado') IS NOT NULL
+	DROP PROCEDURE SOLARIS.datosTurnoPorNumeroAfiliado;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.datosTurnoPorNumeroAfiliado
+@numeroAfiliado	int,
+@fecha datetime
+ as
+			select tur.tur_numero as Codigo, ag.age_fecha_desde as Fecha, age_cod_medico as 'Codigo Medico'
+			from SOLARIS.Turno tur join SOLARIS.Agenda ag
+			on (tur.tur_agenda_cod = ag.age_cod_entrada)
+			where tur_afiliado = @numeroAfiliado and
+			--solo puedo cancelar dias posteriores al dia actual
+			convert(date,age_fecha_desde) > convert(date ,@fecha) and
+			tur_estado = 0
+GO
+
+
+/*Cancela el turno elegido 
+    cancelarTurnoElegido(codigoTurno, numeroAfiliado, detalle, codigoTipoTurno);
+        public void cancelarTurnoElegido(int codigoTurno, int numeroAfiliado, String detalle, int codigoTipoTurno)
+*/        
+GO
+IF OBJECT_ID('SOLARIS.cancelarTurnoElegido') IS NOT NULL
+	DROP PROCEDURE SOLARIS.cancelarTurnoElegido;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.cancelarTurnoElegido
+@codigoTurno	int,
+@numeroAfiliado	int,
+@detalle varchar(255),
+@codigoTipoTurno int
+ as
+	update SOLARIS.Turno set tur_estado = 3 
+	where tur_numero = @codigoTurno
+	
+	insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel)
+	values(@codigoTurno,@codigoTipoTurno,@detalle)
+ 
 -- [EOF]

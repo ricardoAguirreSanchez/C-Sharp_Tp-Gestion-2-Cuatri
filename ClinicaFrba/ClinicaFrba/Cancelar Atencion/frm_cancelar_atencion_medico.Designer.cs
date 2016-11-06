@@ -36,20 +36,20 @@
             this.dtp_desde = new System.Windows.Forms.DateTimePicker();
             this.dtp_hasta = new System.Windows.Forms.DateTimePicker();
             this.gb_cancelar_periodo = new System.Windows.Forms.GroupBox();
+            this.rb_cancelar_periodo = new System.Windows.Forms.RadioButton();
             this.gb_cancelar_dia = new System.Windows.Forms.GroupBox();
+            this.dgv_cancelar_dia = new System.Windows.Forms.DataGridView();
+            this.rb_cancelar_dia = new System.Windows.Forms.RadioButton();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tex_detalle_cancelacion = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.rb_cancelar_periodo = new System.Windows.Forms.RadioButton();
-            this.rb_cancelar_dia = new System.Windows.Forms.RadioButton();
-            this.dgv_cancelar_dia = new System.Windows.Forms.DataGridView();
             this.dgv_tipo_cancelacion = new System.Windows.Forms.DataGridView();
             this.but_Buscar_dias = new System.Windows.Forms.Button();
             this.gb_cancelar_periodo.SuspendLayout();
             this.gb_cancelar_dia.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_cancelar_dia)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_tipo_cancelacion)).BeginInit();
             this.SuspendLayout();
             // 
@@ -131,6 +131,18 @@
             this.gb_cancelar_periodo.TabIndex = 16;
             this.gb_cancelar_periodo.TabStop = false;
             // 
+            // rb_cancelar_periodo
+            // 
+            this.rb_cancelar_periodo.AutoSize = true;
+            this.rb_cancelar_periodo.Location = new System.Drawing.Point(28, 81);
+            this.rb_cancelar_periodo.Name = "rb_cancelar_periodo";
+            this.rb_cancelar_periodo.Size = new System.Drawing.Size(124, 17);
+            this.rb_cancelar_periodo.TabIndex = 22;
+            this.rb_cancelar_periodo.TabStop = true;
+            this.rb_cancelar_periodo.Text = "Cancelar por Periodo";
+            this.rb_cancelar_periodo.UseVisualStyleBackColor = true;
+            this.rb_cancelar_periodo.CheckedChanged += new System.EventHandler(this.rb_cancelar_periodo_CheckedChanged);
+            // 
             // gb_cancelar_dia
             // 
             this.gb_cancelar_dia.Controls.Add(this.dgv_cancelar_dia);
@@ -142,6 +154,27 @@
             this.gb_cancelar_dia.TabIndex = 17;
             this.gb_cancelar_dia.TabStop = false;
             this.gb_cancelar_dia.Text = "Elija un dia:";
+            // 
+            // dgv_cancelar_dia
+            // 
+            this.dgv_cancelar_dia.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_cancelar_dia.Location = new System.Drawing.Point(28, 19);
+            this.dgv_cancelar_dia.Name = "dgv_cancelar_dia";
+            this.dgv_cancelar_dia.Size = new System.Drawing.Size(305, 130);
+            this.dgv_cancelar_dia.TabIndex = 16;
+            this.dgv_cancelar_dia.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_cancelar_dia_CellContentClick);
+            // 
+            // rb_cancelar_dia
+            // 
+            this.rb_cancelar_dia.AutoSize = true;
+            this.rb_cancelar_dia.Location = new System.Drawing.Point(28, 155);
+            this.rb_cancelar_dia.Name = "rb_cancelar_dia";
+            this.rb_cancelar_dia.Size = new System.Drawing.Size(102, 17);
+            this.rb_cancelar_dia.TabIndex = 23;
+            this.rb_cancelar_dia.TabStop = true;
+            this.rb_cancelar_dia.Text = "Cancelar por dia";
+            this.rb_cancelar_dia.UseVisualStyleBackColor = true;
+            this.rb_cancelar_dia.CheckedChanged += new System.EventHandler(this.rb_cancelar_dia_CheckedChanged);
             // 
             // dataGridView1
             // 
@@ -176,38 +209,6 @@
             this.label3.Size = new System.Drawing.Size(130, 13);
             this.label3.TabIndex = 18;
             this.label3.Text = "Detalle de la cancelacion:";
-            // 
-            // rb_cancelar_periodo
-            // 
-            this.rb_cancelar_periodo.AutoSize = true;
-            this.rb_cancelar_periodo.Location = new System.Drawing.Point(28, 81);
-            this.rb_cancelar_periodo.Name = "rb_cancelar_periodo";
-            this.rb_cancelar_periodo.Size = new System.Drawing.Size(124, 17);
-            this.rb_cancelar_periodo.TabIndex = 22;
-            this.rb_cancelar_periodo.TabStop = true;
-            this.rb_cancelar_periodo.Text = "Cancelar por Periodo";
-            this.rb_cancelar_periodo.UseVisualStyleBackColor = true;
-            this.rb_cancelar_periodo.CheckedChanged += new System.EventHandler(this.rb_cancelar_periodo_CheckedChanged);
-            // 
-            // rb_cancelar_dia
-            // 
-            this.rb_cancelar_dia.AutoSize = true;
-            this.rb_cancelar_dia.Location = new System.Drawing.Point(28, 155);
-            this.rb_cancelar_dia.Name = "rb_cancelar_dia";
-            this.rb_cancelar_dia.Size = new System.Drawing.Size(102, 17);
-            this.rb_cancelar_dia.TabIndex = 23;
-            this.rb_cancelar_dia.TabStop = true;
-            this.rb_cancelar_dia.Text = "Cancelar por dia";
-            this.rb_cancelar_dia.UseVisualStyleBackColor = true;
-            this.rb_cancelar_dia.CheckedChanged += new System.EventHandler(this.rb_cancelar_dia_CheckedChanged);
-            // 
-            // dgv_cancelar_dia
-            // 
-            this.dgv_cancelar_dia.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_cancelar_dia.Location = new System.Drawing.Point(28, 19);
-            this.dgv_cancelar_dia.Name = "dgv_cancelar_dia";
-            this.dgv_cancelar_dia.Size = new System.Drawing.Size(305, 130);
-            this.dgv_cancelar_dia.TabIndex = 16;
             // 
             // dgv_tipo_cancelacion
             // 
@@ -249,8 +250,8 @@
             this.gb_cancelar_periodo.PerformLayout();
             this.gb_cancelar_dia.ResumeLayout(false);
             this.gb_cancelar_dia.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_cancelar_dia)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_tipo_cancelacion)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

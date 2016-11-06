@@ -125,5 +125,10 @@ namespace ClinicaFrba.Cancelar_Atencion
             dgv_cancelar_dia.DataSource = cn.diasDeAgendaParaCancelar(codigoMedico, fechaSistema);
 
         }
+
+        private void dgv_cancelar_dia_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

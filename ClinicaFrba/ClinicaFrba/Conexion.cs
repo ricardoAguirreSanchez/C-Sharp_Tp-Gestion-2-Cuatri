@@ -45,7 +45,7 @@ namespace ClinicaFrba
             
             Boolean result = false;
             //ejecuta el comando select para buscar si existe 
-            cm = new SqlCommand("Execute SOLARIS.buscarUsuario '" + clave + "'", cn);
+            cm = new SqlCommand("Execute SOLARIS.buscarUsuario '" + clave + "',"+id, cn);
             dr = cm.ExecuteReader();
             
             //se lee, si no hay nada, no entra en el while, si hay algo, entra
@@ -56,6 +56,33 @@ namespace ClinicaFrba
             dr.Close();
             return result;
         }
+
+        
+        public Boolean verificarLogeoInhabilitado(String id, String clave)
+        {
+            
+            Boolean result = false;
+            //ejecuta el comando select para buscar si existe 
+            cm = new SqlCommand("Execute SOLARIS.verificarLogeoInhabilitado " + id + "", cn);
+            dr = cm.ExecuteReader();
+            
+            //se lee, si no hay nada, no entra en el while, si hay algo, entra
+            while (dr.Read())
+            {
+                result = true;
+            }
+            dr.Close();
+            return result;
+        }
+
+        //inhabilitoUsuario FALTA
+        public void inhabilitoUsuario(String id, String clave)
+        {
+            cm = new SqlCommand("Execute SOLARIS.inhabilitoUsuario '" + id + "'", cn);
+            cm.ExecuteNonQuery();
+
+        }
+
         public DataTable traigoEspecialidades()
         {
 
@@ -469,6 +496,25 @@ namespace ClinicaFrba
         public void borrarDiaDeAgendaHorarios(DateTime dt, int codigoMedico, DateTime desde, DateTime hasta)
         {
             cm = new SqlCommand("Execute SOLARIS.borrarDiaDeAgendaHorarios '" + dt + "', " + codigoMedico+",'"+desde+"','"+hasta+"'", cn);
+            cm.ExecuteNonQuery();
+
+        }
+
+        public DataTable datosTurnoPorNumeroAfiliado(int numeroAfiliado, DateTime fecha)
+        {
+
+            da = new SqlDataAdapter("Execute SOLARIS.datosTurnoPorNumeroAfiliado " + numeroAfiliado + ", '" + fecha + "'", cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
+
+        //cancela el turno elegido
+        //cancelarTurnoElegido(codigoTurno, numeroAfiliado, detalle, codigoTipoTurno);
+        public void cancelarTurnoElegido(int codigoTurno, int numeroAfiliado, String detalle, int codigoTipoTurno)
+        {
+            cm = new SqlCommand("Execute SOLARIS.cancelarTurnoElegido " + codigoTurno + "," + numeroAfiliado + ",'" + detalle + "'," + codigoTipoTurno, cn);
             cm.ExecuteNonQuery();
 
         }
