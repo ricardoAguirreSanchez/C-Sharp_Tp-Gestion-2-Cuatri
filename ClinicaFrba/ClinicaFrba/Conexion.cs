@@ -436,10 +436,14 @@ namespace ClinicaFrba
         {
             try
             {
+                AppConfig ac = new AppConfig();
+                DateTime fechaSistema = Convert.ToDateTime(ac.obtenerFecha());
+
                 SqlCommand command = new SqlCommand("SOLARIS.insertarUnBono", cn);
                 command.CommandType = CommandType.StoredProcedure;
                 command.Parameters.AddWithValue("@bon_afiliado_compra", codigo);
-                command.Parameters.AddWithValue("@tipo_bono", tipoBono);
+                command.Parameters.AddWithValue("@bon_tipo_bono", tipoBono);
+                command.Parameters.AddWithValue("@fecha_de_hoy", fechaSistema);
                 command.ExecuteNonQuery();
             }
             catch (Exception error)
