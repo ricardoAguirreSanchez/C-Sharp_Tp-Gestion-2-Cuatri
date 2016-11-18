@@ -75,7 +75,7 @@ namespace ClinicaFrba
             return result;
         }
 
-        //inhabilitoUsuario FALTA
+        //inhabilitoUsuario 
         public void inhabilitoUsuario(String id, String clave)
         {
             cm = new SqlCommand("Execute SOLARIS.inhabilitoUsuario '" + id + "'", cn);
@@ -92,6 +92,17 @@ namespace ClinicaFrba
             da.Fill(dt);
             return dt;
         }
+
+        public DataTable traigoHorario()
+        {
+
+            da = new SqlDataAdapter("SOLARIS.traigoHorario", cn);
+
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+        }
+
 
         //trae todos los roles de un usuario especifico
         public DataTable roles(String usuario)

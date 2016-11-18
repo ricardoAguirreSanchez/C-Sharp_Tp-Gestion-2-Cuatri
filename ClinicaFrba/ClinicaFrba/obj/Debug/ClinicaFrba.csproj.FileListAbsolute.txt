@@ -61,3 +61,4 @@ C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\Cl
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csprojResolveAssemblyReference.cache
 C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csprojResolveAssemblyReference.cache
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Registrar_Agenta_Medico.frm_registrar_agenda.resources

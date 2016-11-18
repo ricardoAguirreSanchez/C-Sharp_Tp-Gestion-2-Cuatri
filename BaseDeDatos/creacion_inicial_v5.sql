@@ -716,7 +716,8 @@ INSERT INTO SOLARIS.Funcionalidad
 		(5,'Comprar Bonos'),
 		(6,'Pedir Turno'),
 		(7,'Registrar Resultados'),
-		(8,'Cancelar Atencion');
+		(8,'Cancelar Atencion'),
+		(9,'Registrar Agenda');
 
 -- Tabla "Roles x Funcionalidades"
 INSERT INTO SOLARIS.Funcionalidad_x_Rol
@@ -732,6 +733,7 @@ INSERT INTO SOLARIS.Funcionalidad_x_Rol
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'PACIENTE'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Pedir Turno')),
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'PACIENTE'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Cancelar Atencion')),
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'MEDICO'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Cancelar Atencion')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'MEDICO'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Registrar Agenda')),
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'MEDICO'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Registrar Resultados'))
 
 	;
@@ -1667,7 +1669,7 @@ CREATE PROCEDURE SOLARIS.bonosDisponiblesPorAfiliado
 			from SOLARIS.Bono
 			where bon_afiliado_compra/ 100 = @codigoAfiliado / 100 and
 			bon_plan_afiliado = (select pac_plan_medico from SOLARIS.Paciente where pac_nro_afiliado = @codigoAfiliado) and
-			bon_fue_utilizado = 0
+			bon_fue_utilizado = 0 and bon_tipo_bono='C'
 		end
 
 		
@@ -2213,6 +2215,19 @@ CREATE PROCEDURE SOLARIS.traigoEspecialidad
  as
 	select distinct esp_descripcion from [SOLARIS].[Especialidad]
 GO
+
+--traigo el horario
+GO
+IF OBJECT_ID('SOLARIS.traigoHorario') IS NOT NULL
+	DROP PROCEDURE SOLARIS.traigoHorario;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.traigoHorario
+ as
+	select hor_codigo as Codigo,hor_dia as Dia from [SOLARIS].[Horario]
+GO
+
 
 
 --traigo el listado de turnos disponibles para el afiliado (codigo turno y fecha)

@@ -1,4 +1,5 @@
 ﻿using ClinicaFrba.Cancelar_Atencion;
+using ClinicaFrba.Registrar_Agenta_Medico;
 using ClinicaFrba.Registro_Resultado;
 using System;
 using System.Collections.Generic;
@@ -46,6 +47,12 @@ namespace ClinicaFrba
 
         private void but_ir_Click(object sender, EventArgs e)
         {
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Registrar Agenda")
+            {
+                frm_registrar_agenda cam = new frm_registrar_agenda();
+                cam.Show();
+            }
+
             if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Cancelar Atencion")
             {
                 frm_cancelar_atencion_medico cam = new frm_cancelar_atencion_medico();
