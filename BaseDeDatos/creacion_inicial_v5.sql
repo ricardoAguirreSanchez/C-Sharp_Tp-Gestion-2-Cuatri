@@ -1568,7 +1568,7 @@ CREATE PROCEDURE SOLARIS.agregoFuncionalidadActual
 				
 		begin
 			declare @rol_nombre VARCHAR(22)
-			set @rol_nombre= (select rol_nombre as Rol from SOLARIS.Rol where rol_codigo = @rol_codigo and rol_esta_activo=1)
+			set @rol_nombre= (select rol_nombre as Rol from SOLARIS.Rol where rol_codigo = @rol_codigo)
 			execute SOLARIS.insertaFuncionalidadARol @rol_nombre ,  @fun_nombre	
 		end
 
