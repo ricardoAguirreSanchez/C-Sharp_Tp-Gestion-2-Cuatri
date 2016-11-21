@@ -341,6 +341,16 @@ namespace ClinicaFrba
             return dt;
 
         }
+        
+        public DataTable especialidadPorCodigoMedico(int codigoMedico)
+        {
+
+            da = new SqlDataAdapter("Execute SOLARIS.especialidadPorCodigoMedico "+ codigoMedico , cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
         public DataTable nombreMedicoPorCodigoEspecialidad(String codigoEspecialidad)
         {
 
@@ -534,5 +544,12 @@ namespace ClinicaFrba
 
         }
 
+        
+        public void insertarAgendaMedico(int codigoMedico, int codigoEspecialidad, DateTime fechafinal )
+        {
+            cm = new SqlCommand("Execute SOLARIS.insertarAgendaMedico " + codigoMedico + "," + codigoEspecialidad + ",'" + fechafinal + "'", cn);
+            cm.ExecuteNonQuery();
+
+        }
     }
 }

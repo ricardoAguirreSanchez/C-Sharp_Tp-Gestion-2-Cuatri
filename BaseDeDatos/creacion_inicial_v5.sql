@@ -1595,6 +1595,28 @@ CREATE PROCEDURE SOLARIS.especialidadesNombreCodigo
 GO
 
 
+GO
+
+IF OBJECT_ID('SOLARIS.especialidadPorCodigoMedico') IS NOT NULL
+	DROP PROCEDURE SOLARIS.especialidadPorCodigoMedico;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.especialidadPorCodigoMedico
+@codigoMedico int
+	as
+		
+				
+		begin
+			select  exm_cod_especialidad as Codigo , esp_descripcion as Especialidad 
+			from SOLARIS.Especialidad_x_Medico JOIN	SOLARIS.Especialidad
+			on (esp_codigo = exm_cod_especialidad)
+			where exm_cod_medico = @codigoMedico 
+		end
+
+		
+GO
+
 
 GO
 
@@ -2272,5 +2294,67 @@ CREATE PROCEDURE SOLARIS.cancelarTurnoElegido
 	
 	insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel)
 	values(@codigoTurno,@codigoTipoTurno,@detalle)
- 
+GO
+-- Execute SOLARIS.insertarAgendaMedico " + codigoMedico + "," + codigoEspecialidad + ",'" + fechafinal + "'", cn);
+-- inserta en la agenda del medico
+GO
+IF OBJECT_ID('SOLARIS.insertarAgendaMedico') IS NOT NULL
+	DROP PROCEDURE SOLARIS.insertarAgendaMedico;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.insertarAgendaMedico
+@codigoMedico int,
+@codigoEspecialidad int,
+@fechafinal datetime
+ as
+	INSERT INTO SOLARIS.Agenda(age_cod_medico,age_med_especialidad,age_fecha_desde,age_fecha_hasta)
+	VALUES (@codigoMedico, @codigoEspecialidad, @fechafinal, DATEADD(minute, 30, @fechafinal))
+GO
+
+--TRIGGER QUE CONTROLA NO SUPERAR LAS 48 LABORALES POR SEMANA
+IF OBJECT_ID('SOLARIS.control48LaboralesPorSemana') IS NOT NULL
+	DROP TRIGGER SOLARIS.control48LaboralesPorSemana;
+GO
+
+GO
+CREATE TRIGGER SOLARIS.control48LaboralesPorSemana
+ON SOLARIS.Agenda
+INSTEAD OF INSERT
+	as
+	 begin
+		declare cursorConsulta cursor
+		for select age_cod_medico,age_med_especialidad,age_fecha_desde,age_fecha_hasta from inserted
+
+		declare @codigoMedico int
+		declare @codigoEspecialidad int
+		declare @fechaDesde datetime
+		declare @fechaHasta datetime
+		
+		open cursorConsulta
+		fetch next from cursorConsulta
+		into @codigoMedico,@codigoEspecialidad,@fechaDesde,@fechaHasta
+		while @@FETCH_STATUS = 0
+		 begin
+			
+			if isnull((select COUNT(*)*0.5 from SOLARIS.Agenda 
+			   where age_cod_medico = @codigoMedico and
+			   age_med_especialidad = @codigoEspecialidad and
+			   DATEPART(week, age_fecha_desde) = DATEPART(week, @fechaDesde) and
+			   YEAR(age_fecha_desde) = YEAR(@fechaDesde)
+			   group by age_cod_medico),0) < 48
+			begin
+				INSERT INTO SOLARIS.Agenda(age_cod_medico,age_med_especialidad,age_fecha_desde,age_fecha_hasta)
+				VALUES (@codigoMedico, @codigoEspecialidad, @fechaDesde, @fechaHasta)
+			end
+			
+			fetch next from cursorConsulta
+		    into @codigoMedico,@codigoEspecialidad,@fechaDesde,@fechaHasta
+
+		 end
+		close cursorConsulta
+		deallocate cursorConsulta
+	end
+GO
+
 -- [EOF]
