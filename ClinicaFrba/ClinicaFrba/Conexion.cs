@@ -551,5 +551,22 @@ namespace ClinicaFrba
             cm.ExecuteNonQuery();
 
         }
+
+          public DataTable datosHorarios(int codigoMedico,int codigoEspecialidad, DateTime fechaDesdeSistema, DateTime fechaHastaIngresada)
+        {
+
+            da = new SqlDataAdapter("Execute SOLARIS.datosHorarios " + codigoMedico+","+codigoEspecialidad + ", '" + fechaDesdeSistema + "'" +" ,'"+fechaHastaIngresada+"'", cn);
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
+
+          public void crearTurno(int codigoPaciente, int codigoAgenda)
+          {
+              cm = new SqlCommand("Execute SOLARIS.crearTurno " + codigoPaciente + "," + codigoAgenda, cn);
+              cm.ExecuteNonQuery();
+
+          }
     }
 }

@@ -2168,7 +2168,7 @@ GO
 
 --HORARIO
 
---cancela todos los turnos de ese dia en el horario indicado
+--cancela todos los turnos de ese dia en el horario indicado, dejando como estado cancelado y sin codigo de agenda asociado
 GO
 IF OBJECT_ID('SOLARIS.cancelarTurnosHorarios') IS NOT NULL
 	DROP PROCEDURE SOLARIS.cancelarTurnosHorarios;
@@ -2183,7 +2183,7 @@ CREATE PROCEDURE SOLARIS.cancelarTurnosHorarios
 @desde datetime,
 @hasta datetime
  as
-	update SOLARIS.Turno set tur_estado = 4 
+	update SOLARIS.Turno set tur_estado = 4, tur_agenda_cod = NULL
 	where tur_numero in (select tur_numero from SOLARIS.Turno t join SOLARIS.Agenda a on (t.tur_agenda_cod=a.age_cod_entrada) where
 						   --cancelo rango del DIA ---
 						  a.age_cod_medico = @codigoMedico and
@@ -2289,13 +2289,12 @@ CREATE PROCEDURE SOLARIS.cancelarTurnoElegido
 @detalle varchar(255),
 @codigoTipoTurno int
  as
-	update SOLARIS.Turno set tur_estado = 3 
+	update SOLARIS.Turno set tur_estado = 3 , tur_agenda_cod = NUll
 	where tur_numero = @codigoTurno
 	
 	insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel)
 	values(@codigoTurno,@codigoTipoTurno,@detalle)
 GO
--- Execute SOLARIS.insertarAgendaMedico " + codigoMedico + "," + codigoEspecialidad + ",'" + fechafinal + "'", cn);
 -- inserta en la agenda del medico
 GO
 IF OBJECT_ID('SOLARIS.insertarAgendaMedico') IS NOT NULL
@@ -2356,5 +2355,50 @@ INSTEAD OF INSERT
 		deallocate cursorConsulta
 	end
 GO
+
+
+-- traigo datos del horario segun la fecha y medico buscado
+GO
+IF OBJECT_ID('SOLARIS.datosHorarios') IS NOT NULL
+	DROP PROCEDURE SOLARIS.datosHorarios;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.datosHorarios
+@codigoMedico int,
+@codigoEspecialidad int,
+@fechaInicial datetime,
+@fechaFinal datetime
+ as
+	SELECT age_cod_entrada as Codigo, age_fecha_desde as 'Horario Desde', age_fecha_hasta as 'Horario Hasta'
+	FROM SOLARIS.Agenda
+	WHERE age_cod_medico = @codigoMedico and
+	age_med_especialidad = @codigoEspecialidad and 
+	convert(date,age_fecha_desde) >= convert(date ,@fechaInicial) and
+	convert(date,age_fecha_hasta) <= convert(date ,@fechaFinal) and
+	age_cod_entrada not in (select tur_agenda_cod from SOLARIS.Turno)
+GO
+
+--SOLARIS.crearTurno " + codigoPaciente + "," + codigoAgenda, cn);
+ GO
+IF OBJECT_ID('SOLARIS.crearTurno') IS NOT NULL
+	DROP PROCEDURE SOLARIS.crearTurno;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.crearTurno
+@codigoPaciente int,
+@codigoAgenda int
+ as
+ begin
+
+    declare @tur_numero int
+	 set @tur_numero = (select max(tur_numero) + 1 from SOLARIS.Turno)
+	INSERT INTO SOLARIS.Turno (tur_numero,tur_agenda_cod,tur_afiliado,tur_estado)
+	VALUES (@tur_numero,@codigoAgenda,@codigoPaciente,0)
+  end
+GO             
+
+
 
 -- [EOF]
