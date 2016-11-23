@@ -2399,6 +2399,181 @@ CREATE PROCEDURE SOLARIS.crearTurno
   end
 GO             
 
+--especialidadesMasCanceladas(int anioConsultado, int semestreConsultado)
+GO
+IF OBJECT_ID('SOLARIS.devuelveNumeroSemestre') IS NOT NULL
+	DROP FUNCTION SOLARIS.devuelveNumeroSemestre;
+GO
 
+GO
+
+CREATE FUNCTION SOLARIS.devuelveNumeroSemestre
+(@numeroMes int)
+returns int
+as
+	begin
+		if ((@numeroMes >= 1) AND (@numeroMes <= 6))
+		begin
+			return 1
+		end
+		if ((@numeroMes >= 7) AND (@numeroMes <= 12))
+		begin
+			return 2		
+		end
+
+	return 0	
+	end
+
+GO
+
+
+GO
+IF OBJECT_ID('SOLARIS.especialidadesMasCanceladas') IS NOT NULL
+	DROP PROCEDURE SOLARIS.especialidadesMasCanceladas;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.especialidadesMasCanceladas
+@anioConsultado int,
+@semestreConsultado int
+ as
+
+ SELECT TOP 5 e.esp_codigo as 'Codigo de especialidad' FROM SOLARIS.Especialidad e 
+ JOIN SOLARIS.Agenda a on (e.esp_codigo=a.age_med_especialidad)
+ JOIN SOLARIS.Turno t on (t.tur_agenda_cod = a.age_cod_entrada)
+ WHERE YEAR(a.age_fecha_desde) = @anioConsultado and 
+       SOLARIS.devuelveNumeroSemestre (MONTH(a.age_fecha_desde)) = @semestreConsultado and
+	   t.tur_estado = 3 or t.tur_estado = 4
+ GROUP BY e.esp_codigo
+ ORDER BY count(t.tur_numero) desc 
+  
+GO
+
+
+GO
+IF OBJECT_ID('SOLARIS.profesionalesMasConsultados') IS NOT NULL
+	DROP PROCEDURE SOLARIS.profesionalesMasConsultados;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.profesionalesMasConsultados
+@anioConsultado int,
+@semestreConsultado int
+ as
+
+ SELECT TOP 5 a.age_cod_medico as 'Codigo de medico', 
+              b.bon_plan_afiliado as 'Codigo de plan',
+			  a.age_med_especialidad as 'Codigo de especialida'
+ FROM SOLARIS.Consulta c JOIN SOLARIS.Bono b 
+ on (c.con_numero = b.bon_nro_consulta_med)
+ JOIN SOLARIS.Turno t 
+ on (t.tur_numero = c.con_turno)
+ JOIN SOLARIS.Agenda a
+ on (a.age_cod_entrada = t.tur_agenda_cod)
+ 
+ WHERE YEAR(c.con_fecha) = @anioConsultado and 
+       SOLARIS.devuelveNumeroSemestre (MONTH(c.con_fecha)) = @semestreConsultado 
+ GROUP BY a.age_cod_medico,b.bon_plan_afiliado,a.age_med_especialidad
+ ORDER BY count(c.con_numero) desc 
+  
+GO
+
+--
+GO
+IF OBJECT_ID('SOLARIS.especialidadesMasBonosConsultaUsados') IS NOT NULL
+	DROP PROCEDURE SOLARIS.especialidadesMasBonosConsultaUsados;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.especialidadesMasBonosConsultaUsados
+@anioConsultado int,
+@semestreConsultado int
+ as
+
+ SELECT TOP 5 a.age_med_especialidad as 'Codigo de especialidad'
+ FROM SOLARIS.Agenda a JOIN SOLARIS.Turno t
+ on (a.age_cod_entrada = t.tur_agenda_cod)
+ JOIN SOLARIS.Consulta c 
+ on (t.tur_numero = c.con_turno)
+ JOIN SOLARIS.Bono b
+ on(c.con_numero = b.bon_nro_consulta_med)
+ 
+ WHERE YEAR(c.con_fecha) = @anioConsultado and 
+       SOLARIS.devuelveNumeroSemestre (MONTH(c.con_fecha)) = @semestreConsultado and
+	   b.bon_tipo_bono = 'C' and
+	   bon_fue_utilizado = 1
+
+ GROUP BY a.age_med_especialidad
+ ORDER BY count(b.bon_numero) desc 
+  
+GO
+---
+GO
+IF OBJECT_ID('SOLARIS.afiliadosMayorCantidadBonoComprado') IS NOT NULL
+	DROP PROCEDURE SOLARIS.afiliadosMayorCantidadBonoComprado;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.afiliadosMayorCantidadBonoComprado
+@anioConsultado int,
+@semestreConsultado int
+ as
+
+ SELECT TOP 5 b.bon_afiliado_compra as 'Codigo de afiliado' FROM SOLARIS.Bono b
+  
+ WHERE YEAR(b.bon_fecha_compra) = @anioConsultado and 
+       SOLARIS.devuelveNumeroSemestre (MONTH(b.bon_fecha_compra)) = @semestreConsultado 
+	   
+
+ GROUP BY b.bon_afiliado_compra
+ ORDER BY count(b.bon_numero) desc 
+  
+GO
+
+--profesionalMenosHorasTrabajadas 
+
+
+GO
+IF OBJECT_ID('SOLARIS.profesionalMenosHorasTrabajadas') IS NOT NULL
+	DROP PROCEDURE SOLARIS.profesionalMenosHorasTrabajadas;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.profesionalMenosHorasTrabajadas
+@anioConsultado int,
+@semestreConsultado int,
+@codigoPlan int,
+@codigoEspecialidad int
+ as
+ begin
+ --usamos tabla temporal
+CREATE TABLE #tablatemporal (
+	codigoMedico int,
+	horasTrabajadas	decimal(10,4)
+);
+
+ INSERT INTO #tablatemporal(codigoMedico,horasTrabajadas) 
+ SELECT a.age_cod_medico,count(a.age_fecha_desde)*0.5    FROM SOLARIS.Agenda a
+  
+ WHERE YEAR(a.age_fecha_desde) = @anioConsultado and 
+       SOLARIS.devuelveNumeroSemestre (MONTH(a.age_fecha_desde)) = @semestreConsultado and
+	   exists(select * from SOLARIS.Turno t where t.tur_agenda_cod = a.age_cod_entrada and
+	           tur_estado = 2) and
+	   a.age_med_especialidad = @codigoEspecialidad and
+	   @codigoPlan = (select b.bon_plan_afiliado FROM SOLARIS.Bono b
+	                  JOIN SOLARIS.Consulta c on (c.con_numero = b.bon_nro_consulta_med)
+					  JOIN SOLARIS.Turno t1 on (t1.tur_numero = c.con_turno)
+					  Where t1.tur_agenda_cod = a.age_cod_entrada )
+  	   
+
+ GROUP BY a.age_cod_medico
+ ORDER BY count(a.age_fecha_desde)*0.5 asc 
+  
+  SELECT TOP 5 codigoMedico
+  FROM #tablatemporal
+  ORDER BY horasTrabajadas desc 
+end
+GO
 
 -- [EOF]

@@ -568,5 +568,54 @@ namespace ClinicaFrba
               cm.ExecuteNonQuery();
 
           }
+          public DataTable especialidadesMasCanceladas(int anioConsultado, int semestreConsultado)
+          {
+
+              da = new SqlDataAdapter("Execute SOLARIS.especialidadesMasCanceladas " + anioConsultado + "," + semestreConsultado, cn);
+              dt = new DataTable();
+              da.Fill(dt);
+              return dt;
+
+          }
+          public DataTable profesionalesMasConsultados(int anioConsultado, int semestreConsultado)
+          {
+
+              da = new SqlDataAdapter("Execute SOLARIS.profesionalesMasConsultados " + anioConsultado + "," + semestreConsultado, cn);
+              dt = new DataTable();
+              da.Fill(dt);
+              return dt;
+
+          }
+        
+        public DataTable especialidadesMasBonosConsultaUsados(int anioConsultado, int semestreConsultado)
+          {
+
+              da = new SqlDataAdapter("Execute SOLARIS.especialidadesMasBonosConsultaUsados " + anioConsultado + "," + semestreConsultado, cn);
+              dt = new DataTable();
+              da.Fill(dt);
+              return dt;
+
+          }
+
+        public DataTable afiliadosMayorCantidadBonoComprado(int anioConsultado, int semestreConsultado)
+          {
+
+              da = new SqlDataAdapter("Execute SOLARIS.afiliadosMayorCantidadBonoComprado " + anioConsultado + "," + semestreConsultado, cn);
+              dt = new DataTable();
+              da.Fill(dt);
+              return dt;
+
+          }
+
+        public DataTable profesionalMenosHorasTrabajadas(int anioConsultado, int semestreConsultado,int codigoPlan,int codigoEspecialidad )
+          {
+
+              da = new SqlDataAdapter("Execute SOLARIS.profesionalMenosHorasTrabajadas " + anioConsultado + "," + semestreConsultado +","+codigoPlan+","+codigoEspecialidad, cn);
+              dt = new DataTable();
+              da.Fill(dt);
+              return dt;
+
+          }    
+
     }
 }
