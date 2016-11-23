@@ -2519,10 +2519,11 @@ CREATE PROCEDURE SOLARIS.afiliadosMayorCantidadBonoComprado
 @semestreConsultado int
  as
 
- SELECT TOP 5 b.bon_afiliado_compra as 'Codigo de afiliado' ,
-  (select p1.pac_cant_familiares 
-   from SOLARIS.Paciente p1 
-   where p1.pac_nro_afiliado = b.bon_afiliado_compra) as 'Cantidad de familiares' FROM SOLARIS.Bono b
+ 
+   SELECT TOP 5 b.bon_afiliado_compra as 'Codigo de afiliado' , 'Pertenece a un grupo familiar' = 
+ case when (select count(*) from SOLARIS.Paciente p1 where p1.pac_nro_afiliado / 100 = b.bon_afiliado_compra / 100) > 1 then 'si pertenece'
+      else 'no pertenece' end
+  FROM SOLARIS.Bono b
   
  WHERE YEAR(b.bon_fecha_compra) = @anioConsultado and 
        SOLARIS.devuelveNumeroSemestre (MONTH(b.bon_fecha_compra)) = @semestreConsultado 
