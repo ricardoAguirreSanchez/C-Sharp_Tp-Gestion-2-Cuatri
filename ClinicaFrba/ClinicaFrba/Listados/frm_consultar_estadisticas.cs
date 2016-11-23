@@ -65,7 +65,7 @@ namespace ClinicaFrba.AbmRol
             }
             if (rb_afiliado_mayor_cantidad_bono_comprados.Checked == true)
             {
-                //dvg tendra: (0) codigo de afiliado
+                //dvg tendra: (0) codigo de afiliado y (1) pertence a un grupo familiar o no
                 dgv_listado_estadistico.DataSource = cn.afiliadosMayorCantidadBonoComprado(anioConsultado, semestreConsultado);
             
 

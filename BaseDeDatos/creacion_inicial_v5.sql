@@ -2519,7 +2519,10 @@ CREATE PROCEDURE SOLARIS.afiliadosMayorCantidadBonoComprado
 @semestreConsultado int
  as
 
- SELECT TOP 5 b.bon_afiliado_compra as 'Codigo de afiliado' FROM SOLARIS.Bono b
+ SELECT TOP 5 b.bon_afiliado_compra as 'Codigo de afiliado' ,
+  (select p1.pac_cant_familiares 
+   from SOLARIS.Paciente p1 
+   where p1.pac_nro_afiliado = b.bon_afiliado_compra) as 'Cantidad de familiares' FROM SOLARIS.Bono b
   
  WHERE YEAR(b.bon_fecha_compra) = @anioConsultado and 
        SOLARIS.devuelveNumeroSemestre (MONTH(b.bon_fecha_compra)) = @semestreConsultado 
