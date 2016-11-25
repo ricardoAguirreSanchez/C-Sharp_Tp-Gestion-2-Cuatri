@@ -11,4 +11,4 @@ Documento Readme
   Vivone Matias 1412450
 
 - Mail del responsable:
-  vivonematias@gmail.com
+  ricardo.aguirre.99@gmail.com
