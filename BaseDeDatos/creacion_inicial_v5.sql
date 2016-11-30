@@ -2247,8 +2247,17 @@ GO
 GO
 CREATE PROCEDURE SOLARIS.traigoHorario
  as
-	select hor_codigo as Codigo,hor_dia as Dia from [SOLARIS].[Horario]
+	select hor_codigo as Codigo,hor_dia as DiaCodigo, Dia = case hor_dia 
+													 when 2 then 'Lunes'
+													 when 3 then 'Martes'
+													 when 4 then 'Miercoles'
+													 when 5 then 'Jueves'
+													 when 6 then 'Viernes'
+													 when 7 then 'Sabado'
+													 else 'No hay dia' end	from [SOLARIS].[Horario]
+
 GO
+
 
 
 

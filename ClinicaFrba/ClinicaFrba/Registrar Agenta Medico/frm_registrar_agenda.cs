@@ -27,15 +27,21 @@ namespace ClinicaFrba.Registrar_Agenta_Medico
             gb_especialidad.Enabled = false;
             gb_horario.Enabled = false;
 
+            //asigno la fecha del sistema como fecha inicial al dtp
+            AppConfig ap = new AppConfig();
+            dtp_fecha_desde.Value = Convert.ToDateTime(ap.obtenerFecha());
+            dtp_fecha_hasta.Value = Convert.ToDateTime(ap.obtenerFecha());
+
 
             Conexion conexion = new Conexion();
             conexion.conectar();
 
-            //el dgv tendra check(0), codigo (1) y dia (2)
+            //el dgv tendra check(0), codigo (1) y DiaCodigo (2), (3)nombreDIa
             dgv_dias.DataSource = conexion.traigoHorario();
 
             //oculata la columna "Codigo"
             this.dgv_dias.Columns["Codigo"].Visible = false;
+            this.dgv_dias.Columns["DiaCodigo"].Visible = false;
         }
 
         private void but_dia_Click(object sender, EventArgs e)

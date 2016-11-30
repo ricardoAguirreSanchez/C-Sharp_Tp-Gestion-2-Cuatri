@@ -30,9 +30,6 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.but_siguiente = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.dgv_dias = new System.Windows.Forms.DataGridView();
-            this.Elegir = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.gb_especialidad = new System.Windows.Forms.GroupBox();
             this.dgv_especialidad = new System.Windows.Forms.DataGridView();
             this.dtp_horas_lv_desde = new System.Windows.Forms.DateTimePicker();
@@ -41,26 +38,27 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.gb_horario = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dtp_fecha_hasta = new System.Windows.Forms.DateTimePicker();
+            this.label5 = new System.Windows.Forms.Label();
+            this.dtp_fecha_desde = new System.Windows.Forms.DateTimePicker();
+            this.dtp_horas_s_hasta = new System.Windows.Forms.DateTimePicker();
+            this.dtp_horas_lv_hasta = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.tex_codigo_medico = new System.Windows.Forms.TextBox();
-            this.dtp_horas_lv_hasta = new System.Windows.Forms.DateTimePicker();
-            this.dtp_horas_s_hasta = new System.Windows.Forms.DateTimePicker();
-            this.dtp_fecha_desde = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
-            this.dtp_fecha_hasta = new System.Windows.Forms.DateTimePicker();
-            this.label6 = new System.Windows.Forms.Label();
+            this.dgv_dias = new System.Windows.Forms.DataGridView();
+            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_dias)).BeginInit();
             this.gb_especialidad.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_especialidad)).BeginInit();
             this.gb_horario.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_dias)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.but_siguiente);
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.dgv_dias);
+            this.groupBox1.Controls.Add(this.but_siguiente);
             this.groupBox1.Location = new System.Drawing.Point(12, 47);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(242, 304);
@@ -78,33 +76,6 @@
             this.but_siguiente.UseVisualStyleBackColor = true;
             this.but_siguiente.Click += new System.EventHandler(this.but_dia_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(14, 26);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(185, 26);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Dias: Lunes(2),Martes(3),Miercoles(4),\r\n         Jueves(5),Viernes(6),Sabado(7)";
-            // 
-            // dgv_dias
-            // 
-            this.dgv_dias.AllowUserToAddRows = false;
-            this.dgv_dias.AllowUserToDeleteRows = false;
-            this.dgv_dias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_dias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Elegir});
-            this.dgv_dias.Location = new System.Drawing.Point(17, 73);
-            this.dgv_dias.Name = "dgv_dias";
-            this.dgv_dias.Size = new System.Drawing.Size(205, 182);
-            this.dgv_dias.TabIndex = 2;
-            this.dgv_dias.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // Elegir
-            // 
-            this.Elegir.HeaderText = "Elegir";
-            this.Elegir.Name = "Elegir";
-            // 
             // gb_especialidad
             // 
             this.gb_especialidad.Controls.Add(this.dgv_especialidad);
@@ -117,9 +88,12 @@
             // 
             // dgv_especialidad
             // 
+            this.dgv_especialidad.AllowUserToAddRows = false;
+            this.dgv_especialidad.AllowUserToDeleteRows = false;
             this.dgv_especialidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_especialidad.Location = new System.Drawing.Point(22, 25);
             this.dgv_especialidad.Name = "dgv_especialidad";
+            this.dgv_especialidad.ReadOnly = true;
             this.dgv_especialidad.Size = new System.Drawing.Size(200, 229);
             this.dgv_especialidad.TabIndex = 3;
             // 
@@ -187,6 +161,57 @@
             this.gb_horario.TabStop = false;
             this.gb_horario.Text = "Horario";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(11, 16);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(217, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Respetar rango sino no se tomara en cuenta";
+            // 
+            // dtp_fecha_hasta
+            // 
+            this.dtp_fecha_hasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtp_fecha_hasta.Location = new System.Drawing.Point(28, 246);
+            this.dtp_fecha_hasta.Name = "dtp_fecha_hasta";
+            this.dtp_fecha_hasta.Size = new System.Drawing.Size(200, 20);
+            this.dtp_fecha_hasta.TabIndex = 11;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(25, 204);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(92, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Rango de fechas:";
+            // 
+            // dtp_fecha_desde
+            // 
+            this.dtp_fecha_desde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtp_fecha_desde.Location = new System.Drawing.Point(28, 220);
+            this.dtp_fecha_desde.Name = "dtp_fecha_desde";
+            this.dtp_fecha_desde.Size = new System.Drawing.Size(200, 20);
+            this.dtp_fecha_desde.TabIndex = 9;
+            this.dtp_fecha_desde.Value = new System.DateTime(2016, 11, 19, 0, 0, 0, 0);
+            // 
+            // dtp_horas_s_hasta
+            // 
+            this.dtp_horas_s_hasta.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtp_horas_s_hasta.Location = new System.Drawing.Point(26, 167);
+            this.dtp_horas_s_hasta.Name = "dtp_horas_s_hasta";
+            this.dtp_horas_s_hasta.Size = new System.Drawing.Size(203, 20);
+            this.dtp_horas_s_hasta.TabIndex = 8;
+            // 
+            // dtp_horas_lv_hasta
+            // 
+            this.dtp_horas_lv_hasta.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtp_horas_lv_hasta.Location = new System.Drawing.Point(26, 88);
+            this.dtp_horas_lv_hasta.Name = "dtp_horas_lv_hasta";
+            this.dtp_horas_lv_hasta.Size = new System.Drawing.Size(203, 20);
+            this.dtp_horas_lv_hasta.TabIndex = 7;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -203,56 +228,22 @@
             this.tex_codigo_medico.Size = new System.Drawing.Size(98, 20);
             this.tex_codigo_medico.TabIndex = 9;
             // 
-            // dtp_horas_lv_hasta
+            // dgv_dias
             // 
-            this.dtp_horas_lv_hasta.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_horas_lv_hasta.Location = new System.Drawing.Point(26, 88);
-            this.dtp_horas_lv_hasta.Name = "dtp_horas_lv_hasta";
-            this.dtp_horas_lv_hasta.Size = new System.Drawing.Size(203, 20);
-            this.dtp_horas_lv_hasta.TabIndex = 7;
+            this.dgv_dias.AllowUserToAddRows = false;
+            this.dgv_dias.AllowUserToDeleteRows = false;
+            this.dgv_dias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_dias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewCheckBoxColumn1});
+            this.dgv_dias.Location = new System.Drawing.Point(17, 26);
+            this.dgv_dias.Name = "dgv_dias";
+            this.dgv_dias.Size = new System.Drawing.Size(205, 229);
+            this.dgv_dias.TabIndex = 29;
             // 
-            // dtp_horas_s_hasta
+            // dataGridViewCheckBoxColumn1
             // 
-            this.dtp_horas_s_hasta.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_horas_s_hasta.Location = new System.Drawing.Point(26, 167);
-            this.dtp_horas_s_hasta.Name = "dtp_horas_s_hasta";
-            this.dtp_horas_s_hasta.Size = new System.Drawing.Size(203, 20);
-            this.dtp_horas_s_hasta.TabIndex = 8;
-            // 
-            // dtp_fecha_desde
-            // 
-            this.dtp_fecha_desde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtp_fecha_desde.Location = new System.Drawing.Point(28, 220);
-            this.dtp_fecha_desde.Name = "dtp_fecha_desde";
-            this.dtp_fecha_desde.Size = new System.Drawing.Size(200, 20);
-            this.dtp_fecha_desde.TabIndex = 9;
-            this.dtp_fecha_desde.Value = new System.DateTime(2016, 11, 19, 0, 0, 0, 0);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(25, 204);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(92, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Rango de fechas:";
-            // 
-            // dtp_fecha_hasta
-            // 
-            this.dtp_fecha_hasta.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtp_fecha_hasta.Location = new System.Drawing.Point(28, 246);
-            this.dtp_fecha_hasta.Name = "dtp_fecha_hasta";
-            this.dtp_fecha_hasta.Size = new System.Drawing.Size(200, 20);
-            this.dtp_fecha_hasta.TabIndex = 11;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(11, 16);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(217, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Respetar rango sino no se tomara en cuenta";
+            this.dataGridViewCheckBoxColumn1.HeaderText = "Elegir";
+            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
             // 
             // frm_registrar_agenda
             // 
@@ -268,12 +259,11 @@
             this.Text = "Registrar Agenda";
             this.Load += new System.EventHandler(this.frm_registrar_agenda_Load);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_dias)).EndInit();
             this.gb_especialidad.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_especialidad)).EndInit();
             this.gb_horario.ResumeLayout(false);
             this.gb_horario.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_dias)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -282,9 +272,7 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dgv_dias;
         private System.Windows.Forms.Button but_siguiente;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gb_especialidad;
         private System.Windows.Forms.DataGridView dgv_especialidad;
         private System.Windows.Forms.DateTimePicker dtp_horas_lv_desde;
@@ -293,7 +281,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox gb_horario;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Elegir;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tex_codigo_medico;
         private System.Windows.Forms.DateTimePicker dtp_fecha_hasta;
@@ -302,5 +289,7 @@
         private System.Windows.Forms.DateTimePicker dtp_horas_s_hasta;
         private System.Windows.Forms.DateTimePicker dtp_horas_lv_hasta;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DataGridView dgv_dias;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
     }
 }
