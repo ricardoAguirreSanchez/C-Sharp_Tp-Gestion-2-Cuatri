@@ -61,24 +61,24 @@ namespace ClinicaFrba.Registrar_Agenta_Medico
             this.dgv_especialidad.Columns["Codigo"].Visible = false;
 
             gb_horario.Enabled = true;
-            dtp_horas_s_desde.Enabled = false;
-            dtp_horas_s_hasta.Enabled = false;
-            dtp_horas_lv_desde.Enabled = false;
-            dtp_horas_lv_hasta.Enabled = false;
+            tex_horas_s_desde.Enabled = false;
+            tex_horas_s_hasta.Enabled = false;
+            tex_horas_lv_hasta.Enabled = false;
+            tex_hora_lv_desde.Enabled = false;
 
             for (int i = 0; i < dgv_dias.Rows.Count; i++)
             {
 
                 if (Convert.ToBoolean(dgv_dias.Rows[i].Cells[0].Value) == true && (dgv_dias.Rows[i].Cells[2].Value.ToString() == "7") )
                 {
-                    dtp_horas_s_desde.Enabled = true;
-                    dtp_horas_s_hasta.Enabled = true;
+                    tex_horas_s_desde.Enabled = true;
+                    tex_horas_s_hasta.Enabled = true;
                 }
 
                 if (Convert.ToBoolean(dgv_dias.Rows[i].Cells[0].Value) == true && (dgv_dias.Rows[i].Cells[2].Value.ToString() != "7"))
                 {
-                    dtp_horas_lv_desde.Enabled = true;
-                    dtp_horas_lv_hasta.Enabled = true;
+                    tex_hora_lv_desde.Enabled = true;
+                    tex_horas_lv_hasta.Enabled = true;
                 }
 
 
@@ -108,6 +108,32 @@ namespace ClinicaFrba.Registrar_Agenta_Medico
             conexion.conectar();
 
 
+            DateTime dtp_horas_lv_desde = new DateTime();
+            if (tex_hora_lv_desde.Text != "")
+            {
+                dtp_horas_lv_desde = Convert.ToDateTime(tex_hora_lv_desde.Text);
+            }
+
+            DateTime dtp_horas_lv_hasta = new DateTime();
+            if (tex_horas_lv_hasta.Text != "")
+            {
+                dtp_horas_lv_hasta = Convert.ToDateTime(tex_horas_lv_hasta.Text);
+            }
+
+            DateTime dtp_horas_s_desde = new DateTime();
+            if (tex_horas_s_desde.Text != "")
+            {
+                dtp_horas_s_desde = Convert.ToDateTime(tex_horas_s_desde.Text);
+            }
+
+            DateTime dtp_horas_s_hasta = new DateTime();
+            if (tex_horas_s_hasta.Text != "")
+            {
+                dtp_horas_s_hasta = Convert.ToDateTime(tex_horas_s_hasta.Text);
+            }
+
+
+
             for (int i = 0; i < dgv_dias.Rows.Count; i++)
             {
                 //consulta si fue elegido ese dia
@@ -120,17 +146,17 @@ namespace ClinicaFrba.Registrar_Agenta_Medico
                     
                     while (auxiliarFecha.Date != fechaTope.Date  )
                     {
-                        DateTime auxliarHoraLunVier = dtp_horas_lv_desde.Value;
-                        DateTime auxliarHoraSabado = dtp_horas_s_desde.Value;
+                        DateTime auxliarHoraLunVier = dtp_horas_lv_desde;
+                        DateTime auxliarHoraSabado = dtp_horas_s_desde;
                         //consulta si el dia elegido es igual a algun dia dentro de la fecha
                         if ((int)auxiliarFecha.DayOfWeek == Convert.ToInt32(dgv_dias.Rows[i].Cells[2].Value.ToString()) - 1)
                         { 
                             //ES DIA SABADO
-                            if (((int)auxiliarFecha.DayOfWeek == 6) && (dtp_horas_s_desde.Value.Hour >= 10) && (dtp_horas_s_hasta.Value.Hour <= 15))
+                            if (((int)auxiliarFecha.DayOfWeek == 6) && (dtp_horas_s_desde.Hour >= 10) && (dtp_horas_s_hasta.Hour <= 15))
                             {
                                 //empezamos a insertar por cada tramo de 30 min
 
-                                while (auxliarHoraSabado.Hour != dtp_horas_s_hasta.Value.Hour)
+                                while (auxliarHoraSabado.Hour != dtp_horas_s_hasta.Hour)
                                 {
                                     int codigoMedico = Convert.ToInt32(tex_codigo_medico.Text);
                                     int codigoEspecialidad = Convert.ToInt32(dgv_especialidad.CurrentRow.Cells[0].Value.ToString());
@@ -145,10 +171,10 @@ namespace ClinicaFrba.Registrar_Agenta_Medico
 
                             }
                             //ES DIA LUN - VIER
-                            if (((int)auxiliarFecha.DayOfWeek != 6) && (dtp_horas_lv_desde.Value.Hour >= 7) && (dtp_horas_lv_hasta.Value.Hour <= 20))
+                            if (((int)auxiliarFecha.DayOfWeek != 6) && (dtp_horas_lv_desde.Hour >= 7) && (dtp_horas_lv_hasta.Hour <= 20))
                             {
                                 //empezamos a insertar por cada tramo de 30 min
-                                while (auxliarHoraLunVier.Hour != dtp_horas_lv_hasta.Value.Hour)
+                                while (auxliarHoraLunVier.Hour != dtp_horas_lv_hasta.Hour)
                                 {
                                     int codigoMedico = Convert.ToInt32(tex_codigo_medico.Text);
                                     int codigoEspecialidad = Convert.ToInt32(dgv_especialidad.CurrentRow.Cells[0].Value.ToString());

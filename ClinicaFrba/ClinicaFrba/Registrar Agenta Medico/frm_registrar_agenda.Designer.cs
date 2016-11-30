@@ -32,8 +32,6 @@
             this.but_siguiente = new System.Windows.Forms.Button();
             this.gb_especialidad = new System.Windows.Forms.GroupBox();
             this.dgv_especialidad = new System.Windows.Forms.DataGridView();
-            this.dtp_horas_lv_desde = new System.Windows.Forms.DateTimePicker();
-            this.dtp_horas_s_desde = new System.Windows.Forms.DateTimePicker();
             this.but_guardar = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -42,12 +40,18 @@
             this.dtp_fecha_hasta = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
             this.dtp_fecha_desde = new System.Windows.Forms.DateTimePicker();
-            this.dtp_horas_s_hasta = new System.Windows.Forms.DateTimePicker();
-            this.dtp_horas_lv_hasta = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.tex_codigo_medico = new System.Windows.Forms.TextBox();
             this.dgv_dias = new System.Windows.Forms.DataGridView();
             this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.tex_hora_lv_desde = new System.Windows.Forms.TextBox();
+            this.tex_horas_lv_hasta = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tex_horas_s_desde = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tex_horas_s_hasta = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.gb_especialidad.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_especialidad)).BeginInit();
@@ -97,22 +101,6 @@
             this.dgv_especialidad.Size = new System.Drawing.Size(200, 229);
             this.dgv_especialidad.TabIndex = 3;
             // 
-            // dtp_horas_lv_desde
-            // 
-            this.dtp_horas_lv_desde.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_horas_lv_desde.Location = new System.Drawing.Point(26, 62);
-            this.dtp_horas_lv_desde.Name = "dtp_horas_lv_desde";
-            this.dtp_horas_lv_desde.Size = new System.Drawing.Size(203, 20);
-            this.dtp_horas_lv_desde.TabIndex = 2;
-            // 
-            // dtp_horas_s_desde
-            // 
-            this.dtp_horas_s_desde.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_horas_s_desde.Location = new System.Drawing.Point(26, 141);
-            this.dtp_horas_s_desde.Name = "dtp_horas_s_desde";
-            this.dtp_horas_s_desde.Size = new System.Drawing.Size(203, 20);
-            this.dtp_horas_s_desde.TabIndex = 3;
-            // 
             // but_guardar
             // 
             this.but_guardar.Location = new System.Drawing.Point(126, 274);
@@ -143,17 +131,21 @@
             // 
             // gb_horario
             // 
+            this.gb_horario.Controls.Add(this.label9);
+            this.gb_horario.Controls.Add(this.tex_horas_s_hasta);
+            this.gb_horario.Controls.Add(this.label8);
+            this.gb_horario.Controls.Add(this.tex_horas_s_desde);
+            this.gb_horario.Controls.Add(this.label7);
+            this.gb_horario.Controls.Add(this.label1);
+            this.gb_horario.Controls.Add(this.tex_horas_lv_hasta);
+            this.gb_horario.Controls.Add(this.tex_hora_lv_desde);
             this.gb_horario.Controls.Add(this.label6);
             this.gb_horario.Controls.Add(this.dtp_fecha_hasta);
             this.gb_horario.Controls.Add(this.label5);
             this.gb_horario.Controls.Add(this.dtp_fecha_desde);
-            this.gb_horario.Controls.Add(this.dtp_horas_s_hasta);
-            this.gb_horario.Controls.Add(this.dtp_horas_lv_hasta);
             this.gb_horario.Controls.Add(this.label2);
             this.gb_horario.Controls.Add(this.but_guardar);
             this.gb_horario.Controls.Add(this.label3);
-            this.gb_horario.Controls.Add(this.dtp_horas_s_desde);
-            this.gb_horario.Controls.Add(this.dtp_horas_lv_desde);
             this.gb_horario.Location = new System.Drawing.Point(526, 39);
             this.gb_horario.Name = "gb_horario";
             this.gb_horario.Size = new System.Drawing.Size(235, 312);
@@ -196,22 +188,6 @@
             this.dtp_fecha_desde.TabIndex = 9;
             this.dtp_fecha_desde.Value = new System.DateTime(2016, 11, 19, 0, 0, 0, 0);
             // 
-            // dtp_horas_s_hasta
-            // 
-            this.dtp_horas_s_hasta.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_horas_s_hasta.Location = new System.Drawing.Point(26, 167);
-            this.dtp_horas_s_hasta.Name = "dtp_horas_s_hasta";
-            this.dtp_horas_s_hasta.Size = new System.Drawing.Size(203, 20);
-            this.dtp_horas_s_hasta.TabIndex = 8;
-            // 
-            // dtp_horas_lv_hasta
-            // 
-            this.dtp_horas_lv_hasta.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp_horas_lv_hasta.Location = new System.Drawing.Point(26, 88);
-            this.dtp_horas_lv_hasta.Name = "dtp_horas_lv_hasta";
-            this.dtp_horas_lv_hasta.Size = new System.Drawing.Size(203, 20);
-            this.dtp_horas_lv_hasta.TabIndex = 7;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -245,6 +221,70 @@
             this.dataGridViewCheckBoxColumn1.HeaderText = "Elegir";
             this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
             // 
+            // tex_hora_lv_desde
+            // 
+            this.tex_hora_lv_desde.Location = new System.Drawing.Point(75, 65);
+            this.tex_hora_lv_desde.Name = "tex_hora_lv_desde";
+            this.tex_hora_lv_desde.Size = new System.Drawing.Size(68, 20);
+            this.tex_hora_lv_desde.TabIndex = 10;
+            // 
+            // tex_horas_lv_hasta
+            // 
+            this.tex_horas_lv_hasta.Location = new System.Drawing.Point(75, 91);
+            this.tex_horas_lv_hasta.Name = "tex_horas_lv_hasta";
+            this.tex_horas_lv_hasta.Size = new System.Drawing.Size(68, 20);
+            this.tex_horas_lv_hasta.TabIndex = 11;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(31, 65);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Desde:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(31, 91);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(38, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Hasta:";
+            // 
+            // tex_horas_s_desde
+            // 
+            this.tex_horas_s_desde.Location = new System.Drawing.Point(75, 141);
+            this.tex_horas_s_desde.Name = "tex_horas_s_desde";
+            this.tex_horas_s_desde.Size = new System.Drawing.Size(68, 20);
+            this.tex_horas_s_desde.TabIndex = 11;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(31, 148);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(41, 13);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Desde:";
+            // 
+            // tex_horas_s_hasta
+            // 
+            this.tex_horas_s_hasta.Location = new System.Drawing.Point(75, 167);
+            this.tex_horas_s_hasta.Name = "tex_horas_s_hasta";
+            this.tex_horas_s_hasta.Size = new System.Drawing.Size(68, 20);
+            this.tex_horas_s_hasta.TabIndex = 12;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(31, 170);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(38, 13);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "Hasta:";
+            // 
             // frm_registrar_agenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -275,8 +315,6 @@
         private System.Windows.Forms.Button but_siguiente;
         private System.Windows.Forms.GroupBox gb_especialidad;
         private System.Windows.Forms.DataGridView dgv_especialidad;
-        private System.Windows.Forms.DateTimePicker dtp_horas_lv_desde;
-        private System.Windows.Forms.DateTimePicker dtp_horas_s_desde;
         private System.Windows.Forms.Button but_guardar;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -286,10 +324,16 @@
         private System.Windows.Forms.DateTimePicker dtp_fecha_hasta;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker dtp_fecha_desde;
-        private System.Windows.Forms.DateTimePicker dtp_horas_s_hasta;
-        private System.Windows.Forms.DateTimePicker dtp_horas_lv_hasta;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.DataGridView dgv_dias;
         private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
+        private System.Windows.Forms.TextBox tex_hora_lv_desde;
+        private System.Windows.Forms.TextBox tex_horas_lv_hasta;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tex_horas_s_desde;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox tex_horas_s_hasta;
+        private System.Windows.Forms.Label label9;
     }
 }
