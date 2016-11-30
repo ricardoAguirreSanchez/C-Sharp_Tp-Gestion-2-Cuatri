@@ -37,7 +37,21 @@ namespace ClinicaFrba.Cancelar_Atencion
              *1.- se cancelan todos los turnos q tengan ese horario
              *2.- se borra ese horario o perido de la agenda del medico
              */
-            
+
+            DateTime dtp_desde = new DateTime();
+            if (tex_desde.Text != "")
+            {
+                dtp_desde = Convert.ToDateTime(tex_desde.Text);
+            }
+
+            DateTime dtp_hasta = new DateTime();
+            if (tex_hasta.Text != "")
+            {
+                dtp_hasta = Convert.ToDateTime(tex_hasta.Text);
+            }
+
+
+
             if (rb_cancelar_dia.Checked == true)
             {
                 Conexion cn = new Conexion();
@@ -68,8 +82,8 @@ namespace ClinicaFrba.Cancelar_Atencion
                 DateTime fechaSistema = Convert.ToDateTime(dgv_cancelar_dia.CurrentRow.Cells[0].Value.ToString());
                                 
                 //obtengo los horarios
-                DateTime desde = Convert.ToDateTime(dtp_desde.Value.ToString("HH:mm "));
-                DateTime hasta = Convert.ToDateTime(dtp_hasta.Value.ToString("HH:mm "));
+                DateTime desde = Convert.ToDateTime(dtp_desde.ToString("HH:mm "));
+                DateTime hasta = Convert.ToDateTime(dtp_hasta.ToString("HH:mm "));
                 
 
                 String detalle = tex_detalle_cancelacion.Text;

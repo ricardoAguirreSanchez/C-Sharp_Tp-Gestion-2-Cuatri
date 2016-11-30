@@ -22,6 +22,11 @@ namespace ClinicaFrba.Pedir_Turno
             Conexion conexion = new Conexion();
             conexion.conectar();
 
+            //asigno la fecha del sistema como fecha inicial al dtp
+            AppConfig ap = new AppConfig();
+            dtp_fecha_hasta.Value = Convert.ToDateTime(ap.obtenerFecha());
+            dtp_fecha_desde.Value = Convert.ToDateTime(ap.obtenerFecha());
+
             //el dgv tendra codigo(0) y descripcion de especialidad(1) del medico
             dgv_especialidades.DataSource = conexion.especialidadesNombreCodigo();
 
@@ -83,6 +88,8 @@ namespace ClinicaFrba.Pedir_Turno
 
         private void but_mostrar_horario_Click(object sender, EventArgs e)
         {
+            //Solo mostrar aquellos horarios disponibles que NO tengan asociado previamente un turno, inicialmente en la migracion
+            //todo esta como RESERVADO, asi que para probar la funcionalidad es necesario crear previamente unas cuantas fechas para la agenda
             but_reservar.Enabled = true;
 
             Conexion conexion = new Conexion();

@@ -43,8 +43,8 @@
             this.dgv_listado_medicos = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.but_mostrar_horario = new System.Windows.Forms.Button();
+            this.dtp_fecha_desde = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_listado_horarios)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_especialidades)).BeginInit();
@@ -202,15 +202,6 @@
             this.label6.TabIndex = 8;
             this.label6.Text = "Especialidad medica:";
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(435, 20);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(49, 13);
-            this.label7.TabIndex = 40;
-            this.label7.Text = "ACTUAL";
-            // 
             // but_mostrar_horario
             // 
             this.but_mostrar_horario.Location = new System.Drawing.Point(543, 62);
@@ -221,13 +212,22 @@
             this.but_mostrar_horario.UseVisualStyleBackColor = true;
             this.but_mostrar_horario.Click += new System.EventHandler(this.but_mostrar_horario_Click);
             // 
+            // dtp_fecha_desde
+            // 
+            this.dtp_fecha_desde.Enabled = false;
+            this.dtp_fecha_desde.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtp_fecha_desde.Location = new System.Drawing.Point(438, 17);
+            this.dtp_fecha_desde.Name = "dtp_fecha_desde";
+            this.dtp_fecha_desde.Size = new System.Drawing.Size(200, 20);
+            this.dtp_fecha_desde.TabIndex = 42;
+            // 
             // frm_pedir_turno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(686, 386);
+            this.Controls.Add(this.dtp_fecha_desde);
             this.Controls.Add(this.but_mostrar_horario);
-            this.Controls.Add(this.label7);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.but_reservar);
             this.Controls.Add(this.label3);
@@ -267,7 +267,7 @@
         private System.Windows.Forms.DataGridView dgv_listado_medicos;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button but_mostrar_horario;
+        private System.Windows.Forms.DateTimePicker dtp_fecha_desde;
     }
 }
