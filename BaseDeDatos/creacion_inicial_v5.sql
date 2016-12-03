@@ -2160,6 +2160,60 @@ INSERT INTO [SOLARIS].[Bono_Farmacia]
 		   ,@bfm_plan_afiliado)
 GO
 
+IF OBJECT_ID('SOLARIS.insertarUnBono') IS NOT NULL
+	DROP PROCEDURE SOLARIS.insertarUnBono;
+GO
+
+CREATE PROCEDURE [SOLARIS].[insertarUnBono]
+@bon_afiliado_compra int,
+@bon_tipo_bono char(1),
+@fecha_de_hoy datetime
+
+	as
+
+	DECLARE @bon_precio int
+	DECLARE @bon_plan_afiliado int
+	DECLARE @bon_numero int
+	
+	 if @bon_tipo_bono = 'F' 
+	 begin
+		SELECT @bon_precio = pl.plm_precio_bono_farmacia, @bon_plan_afiliado = pl.plm_codigo FROM solaris.plan_medico pl 
+		INNER JOIN SOLARIS.Paciente p ON pl.plm_codigo = p.pac_plan_medico 
+		WHERE p.pac_nro_afiliado = @bon_afiliado_compra
+	 end
+	
+	 if @bon_tipo_bono = 'C' 
+	 begin
+			SELECT @bon_precio = pl.plm_precio_bono_consulta, @bon_plan_afiliado = pl.plm_codigo FROM solaris.plan_medico pl 
+		INNER JOIN SOLARIS.Paciente p ON pl.plm_codigo = p.pac_plan_medico 
+		WHERE p.pac_nro_afiliado = @bon_afiliado_compra
+	 end
+
+	SELECT @bon_numero = (MAX(bon_numero) + 1) from SOLARIS.Bono
+	INSERT INTO [SOLARIS].[Bono]
+           ([bon_numero]
+		   ,[bon_fecha_compra]
+           ,[bon_fecha_impresion]
+           ,[bon_afiliado_compra]
+           ,[bon_plan_afiliado]
+           ,[bon_nro_consulta_med]
+           ,[bon_fue_utilizado]
+           ,[bon_afiliado_uso]
+		   ,[bon_tipo_bono])
+     VALUES
+           (@bon_numero
+           ,@fecha_de_hoy
+           ,@fecha_de_hoy
+           ,@bon_afiliado_compra
+           ,@bon_plan_afiliado
+           ,NULL
+           ,0
+           ,NULL
+		   ,@bon_tipo_bono)
+
+GO
+
+
 --trae los tipos de cancelacion y codigo
 GO
 IF OBJECT_ID('SOLARIS.tiposCancelacion') IS NOT NULL
