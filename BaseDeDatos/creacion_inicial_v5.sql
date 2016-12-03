@@ -1492,6 +1492,7 @@ CREATE PROCEDURE [SOLARIS].[buscarPacientePorID]
 	 ,p.pac_sexo
 	 ,p.pac_plan_medico
 	 ,p.pac_nro_doc
+	 ,p.pac_estado_civil
 	FROM [SOLARIS].[Paciente] p
 	
 	WHERE p.pac_nro_afiliado = @ID_Paciente and p.pac_esta_activo = 1
@@ -1910,6 +1911,35 @@ CREATE PROCEDURE SOLARIS.traigoDescripcionPlan
 		
 GO
 
+
+IF OBJECT_ID('SOLARIS.traigoIDEstadoCivil') IS NOT NULL
+	DROP PROCEDURE SOLARIS.traigoIDEstadoCivil;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.traigoIDEstadoCivil
+@ecv_descripcion varchar(255),
+@ecv_codigo int OUTPUT
+	as
+		select @ecv_codigo = ecv_codigo from SOLARIS.Estado_Civil where ecv_descripcion = @ecv_descripcion
+		
+GO
+
+IF OBJECT_ID('SOLARIS.traigoNombreEstadoCivil') IS NOT NULL
+	DROP PROCEDURE SOLARIS.traigoNombreEstadoCivil;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.traigoNombreEstadoCivil
+@ecv_descripcion varchar(255) OUTPUT,
+@ecv_codigo int
+	as
+		select @ecv_descripcion = ecv_descripcion from [SOLARIS].[Estado_Civil] where ecv_codigo = @ecv_codigo
+		print @ecv_descripcion
+GO
+
 IF OBJECT_ID('SOLARIS.bajarPacientes') IS NOT NULL
 	DROP PROCEDURE SOLARIS.bajarPacientes;
 GO
@@ -1952,7 +1982,8 @@ CREATE PROCEDURE SOLARIS.insertaPaciente
 @pac_mail VARCHAR(255),
 @pac_fecha_nac datetime,
 @pac_sexo char(1),
-@pac_plan_medico numeric(18,0)
+@pac_plan_medico numeric(18,0),
+@pac_estado_civil int
 As
 
 BEGIN TRANSACTION
@@ -1980,13 +2011,57 @@ BEGIN TRANSACTION
 		pac_tit_relacion,
 		pac_esta_activo,
 		pac_fecha_baja)
+
 	VALUES 
-		((SELECT (MAX(pac_nro_afiliado) + 100) from SOLARIS.Paciente),@pac_usuario,@pac_apellido,@pac_nombre,1,@pac_nro_doc,@pac_direccion,@pac_telefono,@pac_mail,@pac_fecha_nac,@pac_sexo,NULL,0,
+		((SELECT (MAX(pac_nro_afiliado) + 100) from SOLARIS.Paciente),@pac_usuario,@pac_apellido,@pac_nombre,1,@pac_nro_doc,@pac_direccion,@pac_telefono,@pac_mail,@pac_fecha_nac,@pac_sexo,@pac_estado_civil,0,
 		@pac_plan_medico, NULL, 1, NULL)
 
 COMMIT TRANSACTION
 GO
 
+-------------
+
+GO
+IF OBJECT_ID('SOLARIS.modificarPaciente') IS NOT NULL
+	DROP PROCEDURE SOLARIS.modificarPaciente;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.modificarPaciente
+@pac_nro_afiliado int,
+@pac_nombre VARCHAR(255),
+@pac_apellido VARCHAR(255),
+@pac_nro_doc numeric(18,0),
+@pac_fecha_nac datetime,
+@pac_direccion VARCHAR(255),
+@pac_telefono numeric(18,0),
+@pac_mail VARCHAR(255),
+@pac_sexo char(1),
+@pac_plan_medico numeric(18,0),
+@pac_estado_civil int
+As
+
+BEGIN TRANSACTION
+		
+		UPDATE SOLARIS.Paciente
+		SET
+		
+		pac_apellido = @pac_apellido,
+		pac_nombre = @pac_nombre,
+		pac_nro_doc = @pac_nro_doc,
+		pac_direccion = @pac_direccion,
+		pac_telefono = @pac_telefono,
+		pac_mail = @pac_mail,
+		pac_fecha_nac = @pac_fecha_nac,
+		pac_sexo = @pac_sexo,
+		pac_estado_civil = @pac_estado_civil,
+		pac_plan_medico = @pac_plan_medico
+		
+	WHERE
+	[pac_nro_afiliado] = @pac_nro_afiliado
+
+COMMIT TRANSACTION
+GO
 -------------
 GO
 IF OBJECT_ID('SOLARIS.calcularPrecioCompraBono') IS NOT NULL

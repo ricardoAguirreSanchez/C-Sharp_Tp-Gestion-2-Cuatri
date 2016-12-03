@@ -169,6 +169,7 @@
             this.Controls.Add(this.but_comprar);
             this.Controls.Add(this.label1);
             this.Name = "frm_comprar_bono";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Comprar bono";
             this.Load += new System.EventHandler(this.frm_comprar_bono_Load);
             this.ResumeLayout(false);

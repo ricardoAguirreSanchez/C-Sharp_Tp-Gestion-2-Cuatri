@@ -226,6 +226,20 @@ namespace ClinicaFrba
 
         }
 
+        public string traigoNombreEstadoCivil(string idPlan)
+        {
+            SqlCommand command = new SqlCommand("SOLARIS.traigoNombreEstadoCivil", cn);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlParameter descripcion = new SqlParameter("@ecv_descripcion", SqlDbType.VarChar, 255);
+            descripcion.Direction = ParameterDirection.Output;
+            command.Parameters.Add(descripcion);
+
+            command.Parameters.AddWithValue("@ecv_codigo", idPlan);
+            command.ExecuteScalar();
+            return command.Parameters["@ecv_descripcion"].Value.ToString();
+
+        }
+
         //del github
         public int traigoIDPlan(string nombrePlan)
         {
@@ -239,8 +253,22 @@ namespace ClinicaFrba
             command.ExecuteScalar();
             return int.Parse(command.Parameters["@plm_codigo"].Value.ToString());
         }
-        
-        public void modificarAfiliado(int tex_numero_afiliado, String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico)
+
+        public int traigoIDEstadoCivil(string estadoCivil)
+        {
+            SqlCommand command = new SqlCommand("SOLARIS.traigoIDEstadoCivil", cn);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlParameter ID = new SqlParameter("@ecv_codigo", SqlDbType.VarChar, 255);
+            ID.Direction = ParameterDirection.Output;
+            command.Parameters.Add(ID);
+
+            command.Parameters.AddWithValue("@ecv_descripcion", estadoCivil);
+            command.ExecuteScalar();
+            return int.Parse(command.Parameters["@ecv_codigo"].Value.ToString());
+        }
+
+
+        public void modificarAfiliado(int tex_numero_afiliado, String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico, int estado_civil)
         {
             SqlCommand command = new SqlCommand("SOLARIS.modificarPaciente", cn);
             command.CommandType = CommandType.StoredProcedure;
@@ -255,11 +283,12 @@ namespace ClinicaFrba
             command.Parameters.AddWithValue("@pac_mail", tex_mail);
             command.Parameters.AddWithValue("@pac_sexo", sexo);
             command.Parameters.AddWithValue("@pac_plan_medico", com_plan_medico);
-
+            command.Parameters.AddWithValue("@pac_estado_civil", estado_civil);
+            
             command.ExecuteNonQuery();
 
         }
-        public void insertarAfiliado(String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico)
+        public void insertarAfiliado(String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico, int estado_civil)
         {
             SqlCommand command = new SqlCommand("SOLARIS.insertaPaciente", cn);
             command.CommandType = CommandType.StoredProcedure;
@@ -273,6 +302,7 @@ namespace ClinicaFrba
             command.Parameters.AddWithValue("@pac_mail", tex_mail);
             command.Parameters.AddWithValue("@pac_sexo", sexo);
             command.Parameters.AddWithValue("@pac_plan_medico", com_plan_medico);
+            command.Parameters.AddWithValue("@pac_estado_civil", estado_civil);
 
             command.ExecuteNonQuery();
 

@@ -30,6 +30,7 @@ namespace ClinicaFrba.AbmRol
             rdb_femenino.Enabled = false;
             rdb_masculino.Enabled = false;
             com_plan_medico.Enabled = false;
+            com_estado_civil.Enabled = false;
             tex_dni_asociado_principal.Enabled = false;
             but_modificar.Visible = false;
             but_eliminar.Visible = false;
@@ -76,6 +77,7 @@ namespace ClinicaFrba.AbmRol
             rdb_femenino.Enabled = true;
             rdb_masculino.Enabled = true;
             com_plan_medico.Enabled = true;
+            com_estado_civil.Enabled = true;
             tex_dni_asociado_principal.Enabled = true;
             but_modificar.Visible = true;
             but_eliminar.Visible = true;
@@ -102,6 +104,7 @@ namespace ClinicaFrba.AbmRol
             { rdb_femenino.Checked = true; rdb_masculino.Checked = false;}
             else if (filaPaciente["pac_sexo"].ToString() == "M")
             {rdb_femenino.Checked = false; rdb_masculino.Checked = true; }
+            com_estado_civil.SelectedItem = conexion.traigoNombreEstadoCivil(filaPaciente["pac_estado_civil"].ToString());
             com_plan_medico.SelectedItem = conexion.traigoNombrePlan(Convert.ToInt64(filaPaciente["pac_plan_medico"].ToString()));
             tex_dni_asociado_principal.Text = filaPaciente["pac_nro_doc"].ToString();	 
         }
@@ -137,8 +140,10 @@ namespace ClinicaFrba.AbmRol
                 else { sexo = 'F'; };
 
                 int plan_medico = conexion.traigoIDPlan(com_plan_medico.SelectedItem.ToString());
+                int estado_civil = conexion.traigoIDEstadoCivil(com_estado_civil.SelectedItem.ToString());
+
                 //paso todos los valores para actualizar
-                conexion.insertarAfiliado(tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico);
+                conexion.insertarAfiliado(tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico,estado_civil);
                 MessageBox.Show("Agregado!");
             }
             catch (Exception er1)
@@ -162,6 +167,7 @@ namespace ClinicaFrba.AbmRol
             dtp_fecha_nacimiento.Enabled = true;
             rdb_femenino.Enabled = true; rdb_masculino.Enabled = true; rdb_masculino.Checked = true;
             com_plan_medico.Enabled = true; com_plan_medico.SelectedIndex = 1;
+            com_estado_civil.Enabled = true; com_estado_civil.SelectedIndex = 1;
             tex_dni_asociado_principal.Text = ""; tex_dni_asociado_principal.Enabled = true;
             tex_direccion.Text = ""; tex_direccion.Enabled = true;
 
@@ -209,9 +215,11 @@ namespace ClinicaFrba.AbmRol
                 { sexo = 'M'; }
                 else { sexo = 'F'; };
 
-                int plan_medico = conexion.traigoIDPlan(com_plan_medico.SelectedItem.ToString());    //ANCLADO PARA CORREGIR!!
+                int plan_medico = conexion.traigoIDPlan(com_plan_medico.SelectedItem.ToString());
+                int estado_civil = conexion.traigoIDEstadoCivil(com_estado_civil.SelectedItem.ToString());
+
                 //paso todos los valores para actualizar
-                conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico);
+                    conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico,estado_civil);
                 MessageBox.Show("Modificado!");
             }
             catch (Exception er1)
@@ -239,6 +247,11 @@ namespace ClinicaFrba.AbmRol
             }
 
             this.Close();
+        }
+
+        private void label12_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

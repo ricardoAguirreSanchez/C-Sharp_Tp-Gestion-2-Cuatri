@@ -59,6 +59,8 @@
             this.lineShape1 = new Microsoft.VisualBasic.PowerPacks.LineShape();
             this.but_cargarnuevo = new System.Windows.Forms.Button();
             this.but_descartarNuevo = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.com_estado_civil = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -86,7 +88,7 @@
             // 
             // but_modificar
             // 
-            this.but_modificar.Location = new System.Drawing.Point(29, 376);
+            this.but_modificar.Location = new System.Drawing.Point(19, 416);
             this.but_modificar.Name = "but_modificar";
             this.but_modificar.Size = new System.Drawing.Size(117, 48);
             this.but_modificar.TabIndex = 3;
@@ -96,7 +98,7 @@
             // 
             // but_eliminar
             // 
-            this.but_eliminar.Location = new System.Drawing.Point(186, 376);
+            this.but_eliminar.Location = new System.Drawing.Point(176, 416);
             this.but_eliminar.Name = "but_eliminar";
             this.but_eliminar.Size = new System.Drawing.Size(131, 48);
             this.but_eliminar.TabIndex = 4;
@@ -230,7 +232,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 313);
+            this.label10.Location = new System.Drawing.Point(12, 346);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(100, 13);
             this.label10.TabIndex = 21;
@@ -269,7 +271,7 @@
             "Plan Medico 130",
             "Plan Medico 140",
             "Plan Medico 150"});
-            this.com_plan_medico.Location = new System.Drawing.Point(145, 307);
+            this.com_plan_medico.Location = new System.Drawing.Point(145, 340);
             this.com_plan_medico.Name = "com_plan_medico";
             this.com_plan_medico.Size = new System.Drawing.Size(204, 21);
             this.com_plan_medico.TabIndex = 24;
@@ -287,7 +289,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 341);
+            this.label11.Location = new System.Drawing.Point(12, 374);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(134, 13);
             this.label11.TabIndex = 26;
@@ -295,7 +297,7 @@
             // 
             // tex_dni_asociado_principal
             // 
-            this.tex_dni_asociado_principal.Location = new System.Drawing.Point(145, 334);
+            this.tex_dni_asociado_principal.Location = new System.Drawing.Point(145, 367);
             this.tex_dni_asociado_principal.Name = "tex_dni_asociado_principal";
             this.tex_dni_asociado_principal.Size = new System.Drawing.Size(204, 20);
             this.tex_dni_asociado_principal.TabIndex = 27;
@@ -314,7 +316,7 @@
             this.shapeContainer1.Name = "shapeContainer1";
             this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.lineShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(374, 436);
+            this.shapeContainer1.Size = new System.Drawing.Size(374, 467);
             this.shapeContainer1.TabIndex = 30;
             this.shapeContainer1.TabStop = false;
             // 
@@ -329,7 +331,7 @@
             // 
             // but_cargarnuevo
             // 
-            this.but_cargarnuevo.Location = new System.Drawing.Point(38, 376);
+            this.but_cargarnuevo.Location = new System.Drawing.Point(28, 416);
             this.but_cargarnuevo.Name = "but_cargarnuevo";
             this.but_cargarnuevo.Size = new System.Drawing.Size(124, 48);
             this.but_cargarnuevo.TabIndex = 31;
@@ -339,7 +341,7 @@
             // 
             // but_descartarNuevo
             // 
-            this.but_descartarNuevo.Location = new System.Drawing.Point(196, 376);
+            this.but_descartarNuevo.Location = new System.Drawing.Point(186, 416);
             this.but_descartarNuevo.Name = "but_descartarNuevo";
             this.but_descartarNuevo.Size = new System.Drawing.Size(131, 48);
             this.but_descartarNuevo.TabIndex = 32;
@@ -347,11 +349,37 @@
             this.but_descartarNuevo.UseVisualStyleBackColor = true;
             this.but_descartarNuevo.Click += new System.EventHandler(this.button1_Click_1);
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(13, 314);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(65, 13);
+            this.label12.TabIndex = 33;
+            this.label12.Text = "Estado Civil:";
+            this.label12.Click += new System.EventHandler(this.label12_Click);
+            // 
+            // com_estado_civil
+            // 
+            this.com_estado_civil.FormattingEnabled = true;
+            this.com_estado_civil.Items.AddRange(new object[] {
+            "CASADO/A",
+            "CONCUBINATO",
+            "DIVORCIADO/A",
+            "SOLTERO/A",
+            "VIUDO/A"});
+            this.com_estado_civil.Location = new System.Drawing.Point(145, 311);
+            this.com_estado_civil.Name = "com_estado_civil";
+            this.com_estado_civil.Size = new System.Drawing.Size(204, 21);
+            this.com_estado_civil.TabIndex = 34;
+            // 
             // frm_administrar_afiliados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 436);
+            this.ClientSize = new System.Drawing.Size(374, 467);
+            this.Controls.Add(this.com_estado_civil);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.but_descartarNuevo);
             this.Controls.Add(this.but_cargarnuevo);
             this.Controls.Add(this.dtp_fecha_nacimiento);
@@ -424,5 +452,7 @@
         private Microsoft.VisualBasic.PowerPacks.LineShape lineShape1;
         private System.Windows.Forms.Button but_cargarnuevo;
         private System.Windows.Forms.Button but_descartarNuevo;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox com_estado_civil;
     }
 }
