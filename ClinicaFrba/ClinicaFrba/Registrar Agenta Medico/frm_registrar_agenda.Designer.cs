@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.dgv_dias = new System.Windows.Forms.DataGridView();
+            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.but_siguiente = new System.Windows.Forms.Button();
             this.gb_especialidad = new System.Windows.Forms.GroupBox();
             this.dgv_especialidad = new System.Windows.Forms.DataGridView();
@@ -36,27 +38,25 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.gb_horario = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tex_horas_s_hasta = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tex_horas_s_desde = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tex_horas_lv_hasta = new System.Windows.Forms.TextBox();
+            this.tex_hora_lv_desde = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.dtp_fecha_hasta = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
             this.dtp_fecha_desde = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.tex_codigo_medico = new System.Windows.Forms.TextBox();
-            this.dgv_dias = new System.Windows.Forms.DataGridView();
-            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.tex_hora_lv_desde = new System.Windows.Forms.TextBox();
-            this.tex_horas_lv_hasta = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tex_horas_s_desde = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tex_horas_s_hasta = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_dias)).BeginInit();
             this.gb_especialidad.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_especialidad)).BeginInit();
             this.gb_horario.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_dias)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -69,6 +69,23 @@
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Elegir el o los dias:";
+            // 
+            // dgv_dias
+            // 
+            this.dgv_dias.AllowUserToAddRows = false;
+            this.dgv_dias.AllowUserToDeleteRows = false;
+            this.dgv_dias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_dias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewCheckBoxColumn1});
+            this.dgv_dias.Location = new System.Drawing.Point(17, 26);
+            this.dgv_dias.Name = "dgv_dias";
+            this.dgv_dias.Size = new System.Drawing.Size(205, 229);
+            this.dgv_dias.TabIndex = 29;
+            // 
+            // dataGridViewCheckBoxColumn1
+            // 
+            this.dataGridViewCheckBoxColumn1.HeaderText = "Elegir";
+            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
             // 
             // but_siguiente
             // 
@@ -153,6 +170,70 @@
             this.gb_horario.TabStop = false;
             this.gb_horario.Text = "Horario";
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(31, 170);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(38, 13);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "Hasta:";
+            // 
+            // tex_horas_s_hasta
+            // 
+            this.tex_horas_s_hasta.Location = new System.Drawing.Point(75, 167);
+            this.tex_horas_s_hasta.Name = "tex_horas_s_hasta";
+            this.tex_horas_s_hasta.Size = new System.Drawing.Size(68, 20);
+            this.tex_horas_s_hasta.TabIndex = 12;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(31, 148);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(41, 13);
+            this.label8.TabIndex = 15;
+            this.label8.Text = "Desde:";
+            // 
+            // tex_horas_s_desde
+            // 
+            this.tex_horas_s_desde.Location = new System.Drawing.Point(75, 141);
+            this.tex_horas_s_desde.Name = "tex_horas_s_desde";
+            this.tex_horas_s_desde.Size = new System.Drawing.Size(68, 20);
+            this.tex_horas_s_desde.TabIndex = 11;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(31, 91);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(38, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Hasta:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(31, 65);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "Desde:";
+            // 
+            // tex_horas_lv_hasta
+            // 
+            this.tex_horas_lv_hasta.Location = new System.Drawing.Point(75, 91);
+            this.tex_horas_lv_hasta.Name = "tex_horas_lv_hasta";
+            this.tex_horas_lv_hasta.Size = new System.Drawing.Size(68, 20);
+            this.tex_horas_lv_hasta.TabIndex = 11;
+            // 
+            // tex_hora_lv_desde
+            // 
+            this.tex_hora_lv_desde.Location = new System.Drawing.Point(75, 65);
+            this.tex_hora_lv_desde.Name = "tex_hora_lv_desde";
+            this.tex_hora_lv_desde.Size = new System.Drawing.Size(68, 20);
+            this.tex_hora_lv_desde.TabIndex = 10;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -175,9 +256,10 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(25, 204);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(92, 13);
+            this.label5.Size = new System.Drawing.Size(87, 13);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Rango de fechas:";
+            this.label5.Text = "Rango de fecha:";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // dtp_fecha_desde
             // 
@@ -204,87 +286,6 @@
             this.tex_codigo_medico.Size = new System.Drawing.Size(98, 20);
             this.tex_codigo_medico.TabIndex = 9;
             // 
-            // dgv_dias
-            // 
-            this.dgv_dias.AllowUserToAddRows = false;
-            this.dgv_dias.AllowUserToDeleteRows = false;
-            this.dgv_dias.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_dias.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewCheckBoxColumn1});
-            this.dgv_dias.Location = new System.Drawing.Point(17, 26);
-            this.dgv_dias.Name = "dgv_dias";
-            this.dgv_dias.Size = new System.Drawing.Size(205, 229);
-            this.dgv_dias.TabIndex = 29;
-            // 
-            // dataGridViewCheckBoxColumn1
-            // 
-            this.dataGridViewCheckBoxColumn1.HeaderText = "Elegir";
-            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
-            // 
-            // tex_hora_lv_desde
-            // 
-            this.tex_hora_lv_desde.Location = new System.Drawing.Point(75, 65);
-            this.tex_hora_lv_desde.Name = "tex_hora_lv_desde";
-            this.tex_hora_lv_desde.Size = new System.Drawing.Size(68, 20);
-            this.tex_hora_lv_desde.TabIndex = 10;
-            // 
-            // tex_horas_lv_hasta
-            // 
-            this.tex_horas_lv_hasta.Location = new System.Drawing.Point(75, 91);
-            this.tex_horas_lv_hasta.Name = "tex_horas_lv_hasta";
-            this.tex_horas_lv_hasta.Size = new System.Drawing.Size(68, 20);
-            this.tex_horas_lv_hasta.TabIndex = 11;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 65);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 13);
-            this.label1.TabIndex = 13;
-            this.label1.Text = "Desde:";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(31, 91);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(38, 13);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "Hasta:";
-            // 
-            // tex_horas_s_desde
-            // 
-            this.tex_horas_s_desde.Location = new System.Drawing.Point(75, 141);
-            this.tex_horas_s_desde.Name = "tex_horas_s_desde";
-            this.tex_horas_s_desde.Size = new System.Drawing.Size(68, 20);
-            this.tex_horas_s_desde.TabIndex = 11;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(31, 148);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(41, 13);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "Desde:";
-            // 
-            // tex_horas_s_hasta
-            // 
-            this.tex_horas_s_hasta.Location = new System.Drawing.Point(75, 167);
-            this.tex_horas_s_hasta.Name = "tex_horas_s_hasta";
-            this.tex_horas_s_hasta.Size = new System.Drawing.Size(68, 20);
-            this.tex_horas_s_hasta.TabIndex = 12;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(31, 170);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(38, 13);
-            this.label9.TabIndex = 16;
-            this.label9.Text = "Hasta:";
-            // 
             // frm_registrar_agenda
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -299,11 +300,11 @@
             this.Text = "Registrar Agenda";
             this.Load += new System.EventHandler(this.frm_registrar_agenda_Load);
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_dias)).EndInit();
             this.gb_especialidad.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_especialidad)).EndInit();
             this.gb_horario.ResumeLayout(false);
             this.gb_horario.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_dias)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

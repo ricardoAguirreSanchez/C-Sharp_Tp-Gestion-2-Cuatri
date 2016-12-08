@@ -201,5 +201,10 @@ namespace ClinicaFrba.Registrar_Agenta_Medico
             MessageBox.Show("FINALZADO CORRECTAMENTE");
             this.Close();
         }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
