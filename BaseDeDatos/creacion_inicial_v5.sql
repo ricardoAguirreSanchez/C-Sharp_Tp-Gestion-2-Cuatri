@@ -1029,7 +1029,7 @@ BEGIN
 	BEGIN	
 	
 		UPDATE SOLARIS.Bono
-			SET	bon_fue_utilizado = 0,
+			SET	bon_fue_utilizado = 1,
 				bon_afiliado_uso = @nroAfiliado,
 				bon_nro_consulta_med = @nroConsulta
 			WHERE bon_numero = @nroBono;
