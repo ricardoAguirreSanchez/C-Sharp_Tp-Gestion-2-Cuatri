@@ -730,6 +730,7 @@ INSERT INTO SOLARIS.Funcionalidad_x_Rol
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'ADMIN'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Registrar Llegada')),
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'ADMIN'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Comprar Bonos')),
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'ADMIN'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Pedir Turno')),
+		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'ADMIN'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Registrar Usuario')),
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'PACIENTE'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Comprar Bonos')),
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'PACIENTE'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Pedir Turno')),
 		((SELECT rol_codigo FROM  SOLARIS.Rol  WHERE rol_nombre = 'PACIENTE'), (SELECT fun_codigo FROM SOLARIS.Funcionalidad WHERE fun_nombre = 'Cancelar Atencion')),

@@ -61,7 +61,6 @@ C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\Cl
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csprojResolveAssemblyReference.cache
 C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Registrar_Agenta_Medico.frm_registrar_agenda.resources
-C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csprojResolveAssemblyReference.cache
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\bin\Debug\ClinicaFrba.exe.config
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.exe
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.pdb
@@ -86,3 +85,4 @@ C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\Clin
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.AbmRol.frm_registrar_llegada.resources
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Registro_Resultado.frm_registro_resultado.resources
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
+C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Registrar_Usuario.frm_registrar_usuario.resources
