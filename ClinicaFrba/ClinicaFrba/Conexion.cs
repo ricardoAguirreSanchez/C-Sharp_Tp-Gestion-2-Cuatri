@@ -116,7 +116,57 @@ namespace ClinicaFrba
             return dt;
 
         }
+        //verificarFaltaUsuarioEnMedico
+        public Boolean verificarFaltaUsuarioEnMedico(int codigo)
+        {
 
+            Boolean result = false;
+
+            cm = new SqlCommand("Execute SOLARIS.verificarFaltaUsuarioEnMedico "+codigo, cn);
+            dr = cm.ExecuteReader();
+            //se lee, si no hay nada, no entra en el while, si hay algo, entra
+            while (dr.Read())
+            {
+                result = true;
+            }
+            dr.Close();
+            return result;
+        }
+
+        //verificarFaltaUsuarioEnPaciente
+        public Boolean verificarFaltaUsuarioEnPaciente(int codigo)
+        {
+
+            Boolean result = false;
+
+            cm = new SqlCommand("Execute SOLARIS.verificarFaltaUsuarioEnPaciente " + codigo, cn);
+            dr = cm.ExecuteReader();
+            //se lee, si no hay nada, no entra en el while, si hay algo, entra
+            while (dr.Read())
+            {
+                result = true;
+            }
+            dr.Close();
+            return result;
+        }
+
+        //registra el usuario en medicocompletarUsuarioMedico(codigo,usuario,contraseña,fechaCreacion);
+        public void completarUsuarioMedico(int codigo,string usuario,string contraseña, DateTime fechaCreacion)
+        {
+
+            cm = new SqlCommand("Execute SOLARIS.completarUsuarioMedico " + codigo + ",'" + usuario + "','" + contraseña + "','" + fechaCreacion + "'" , cn);
+            cm.ExecuteNonQuery();
+
+        }
+        //registra el usuario en paciente
+        public void completarUsuarioPaciente(int codigo, string usuario, string contraseña, DateTime fechaCreacion)
+        {
+
+            cm = new SqlCommand("Execute SOLARIS.completarUsuarioPaciente " + codigo + ",'" + usuario + "','" + contraseña + "','" + fechaCreacion + "'", cn);
+            cm.ExecuteNonQuery();
+
+        }
+               
         //verifica la existencia de algun rol
         public Boolean verificarRoles()
         {

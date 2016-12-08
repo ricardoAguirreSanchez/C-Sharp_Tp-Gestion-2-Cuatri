@@ -1,6 +1,7 @@
 ﻿using ClinicaFrba.AbmRol;
 using ClinicaFrba.Compra_Bono;
 using ClinicaFrba.Pedir_Turno;
+using ClinicaFrba.Registrar_Usuario;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -89,6 +90,11 @@ namespace ClinicaFrba
             if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Comprar Bonos")
             {
                 frm_comprar_bono pt = new frm_comprar_bono();
+                pt.Show();
+            }
+            if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Registrar Usuario")
+            {
+                frm_registrar_usuario pt = new frm_registrar_usuario();
                 pt.Show();
             }
             if (dgv_listadoFuncionalidades.CurrentRow.Cells[0].Value.ToString() == "Pedir Turno")

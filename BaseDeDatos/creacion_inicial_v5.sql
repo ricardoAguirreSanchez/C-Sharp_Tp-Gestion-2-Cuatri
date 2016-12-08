@@ -2790,4 +2790,80 @@ CREATE TABLE #tablatemporal (
 end
 GO
 
+--verificarFaltaUsuarioEnMedico
+IF OBJECT_ID('SOLARIS.verificarFaltaUsuarioEnMedico') IS NOT NULL
+	DROP PROCEDURE SOLARIS.verificarFaltaUsuarioEnMedico;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.verificarFaltaUsuarioEnMedico
+@codigo int 
+	as
+		select * from SOLARIS.Medico where med_cod_medico = @codigo and med_cod_usuario is null
+		
+GO
+
+--verificarFaltaUsuarioEnPaciente
+IF OBJECT_ID('SOLARIS.verificarFaltaUsuarioEnPaciente') IS NOT NULL
+	DROP PROCEDURE SOLARIS.verificarFaltaUsuarioEnPaciente;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.verificarFaltaUsuarioEnPaciente
+@codigo int 
+	as
+		select * from SOLARIS.Paciente where pac_nro_afiliado = @codigo and pac_usuario is null
+		
+GO
+
+
+--cm = new SqlCommand("Execute SOLARIS.completarUsuarioPaciente " + codigo + ",'" + usuario + "','" + contraseña + "','" + fechaCreacion + "'", cn);
+
+IF OBJECT_ID('SOLARIS.completarUsuarioPaciente') IS NOT NULL
+	DROP PROCEDURE SOLARIS.completarUsuarioPaciente;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.completarUsuarioPaciente
+@codigo int,
+@usuario varchar(255),
+@contraseña varchar(255),
+@fechaCreacion datetime
+	as
+	begin
+		INSERT INTO SOLARIS.Usuario(usu_usuario,usu_passwd,usu_fecha_creacion,usu_estado,usu_login_fallidos)
+		VALUES (@usuario, HASHBYTES('SHA2_256',@contraseña),@fechaCreacion,0,0)
+
+		UPDATE SOLARIS.Paciente
+		SET pac_usuario = (select usu_codigo from SOLARIS.Usuario WHERE usu_passwd = HASHBYTES('SHA2_256',@contraseña) ) 
+		where pac_nro_afiliado = @codigo
+	end	
+GO          
+---
+
+IF OBJECT_ID('SOLARIS.completarUsuarioMedico') IS NOT NULL
+	DROP PROCEDURE SOLARIS.completarUsuarioMedico;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.completarUsuarioMedico
+@codigo int,
+@usuario varchar(255),
+@contraseña varchar(255),
+@fechaCreacion datetime
+	as
+	begin
+		INSERT INTO SOLARIS.Usuario(usu_usuario,usu_passwd,usu_fecha_creacion,usu_estado,usu_login_fallidos)
+		VALUES (@usuario, HASHBYTES('SHA2_256',@usuario),@fechaCreacion,0,0)
+
+		UPDATE SOLARIS.Medico
+		SET med_cod_usuario = (select usu_codigo from SOLARIS.Usuario WHERE usu_passwd = HASHBYTES('SHA2_256',@usuario) ) 
+		where med_cod_medico = @codigo
+		end
+GO 
+
 -- [EOF]

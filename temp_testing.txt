@@ -1,8 +1,8 @@
-1. Fecha del Sistema
+1. Fecha del Sistema (LISTO)
 
 Creo que la fecha del sistema que deberíamos usar es 01/01/2016 (No 2015. Los datos de la Maestra son del 2015.)
 
-2. ADM AFILIADOS
+2. ADM AFILIADOS 
 
 2.1	No pude actualizar el Plan Medico de los afiliados.
 	Además se debería haber una opción para ver el Historial del Afiliado.
@@ -14,7 +14,7 @@ Creo que la fecha del sistema que deberíamos usar es 01/01/2016 (No 2015. Los da
 
 
 
-3. ADM USUARIOS
+3. ADM USUARIOS (LISTO)
 
 El usuario con rol ADMIN deberia poder tener una funcionalidad de 'Administrar Usuarios', no?
 Asi, dado un Medico que existe en la tabla, pero no tiene usuario inicialmente, un ADMIN puede crear el usuario y vincularlo con el Medico.
@@ -24,7 +24,7 @@ Lo mismo para los pacientes.
 Sino, los unicos usuarios del sistema son los que creamos por medio del script... y deberian poder crearse ...
 
 
-4. AGENDA
+4. AGENDA 
 
 No puedo generar agenda.
 
