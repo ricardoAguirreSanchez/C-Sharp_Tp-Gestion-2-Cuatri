@@ -717,7 +717,8 @@ INSERT INTO SOLARIS.Funcionalidad
 		(6,'Pedir Turno'),
 		(7,'Registrar Resultados'),
 		(8,'Cancelar Atencion'),
-		(9,'Registrar Agenda');
+		(9,'Registrar Usuario'),
+		(10,'Registrar Agenda');
 
 -- Tabla "Roles x Funcionalidades"
 INSERT INTO SOLARIS.Funcionalidad_x_Rol

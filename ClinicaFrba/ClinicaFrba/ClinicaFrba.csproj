@@ -90,6 +90,12 @@
     <Compile Include="Cancelar Atencion\frm_cancelar_atencion_afiliado.Designer.cs">
       <DependentUpon>frm_cancelar_atencion_afiliado.cs</DependentUpon>
     </Compile>
+    <Compile Include="Registrar Usuario\frm_registrar_usuario.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Registrar Usuario\frm_registrar_usuario.Designer.cs">
+      <DependentUpon>frm_registrar_usuario.cs</DependentUpon>
+    </Compile>
     <Compile Include="Registro Llegada\frm_registrar_llegada.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -215,6 +221,9 @@
     </Compile>
     <EmbeddedResource Include="Registrar Agenta Medico\frm_registrar_agenda.resx">
       <DependentUpon>frm_registrar_agenda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Registrar Usuario\frm_registrar_usuario.resx">
+      <DependentUpon>frm_registrar_usuario.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Registro Llegada\frm_registrar_llegada.resx">
       <DependentUpon>frm_registrar_llegada.cs</DependentUpon>
