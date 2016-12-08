@@ -1,0 +1,38 @@
+1. Fecha del Sistema
+
+Creo que la fecha del sistema que deberíamos usar es 01/01/2016 (No 2015. Los datos de la Maestra son del 2015.)
+
+2. ADM AFILIADOS
+
+2.1	No pude actualizar el Plan Medico de los afiliados.
+	Además se debería haber una opción para ver el Historial del Afiliado.
+	Este cambio debería reflejarse en la Tabla Hist_Plan_Afiliado.
+	
+2.2	Al agregar un afiliado, me tiró error la app cuando no llené el campo mail.
+
+2.3	Al agregar un afiliado, deberíamos informar el numero del afiliado una vez confirmado que se agregó. Asi podemos agregarle familiares sin mucha búsqueda.
+
+
+
+3. ADM USUARIOS
+
+El usuario con rol ADMIN deberia poder tener una funcionalidad de 'Administrar Usuarios', no?
+Asi, dado un Medico que existe en la tabla, pero no tiene usuario inicialmente, un ADMIN puede crear el usuario y vincularlo con el Medico.
+Lo mismo para los pacientes.
+(Tanto la tabla Medico, como Paciente, tienen el campo cod_usuario, para vincularlo con el usuario que tiene en el sistema)
+
+Sino, los unicos usuarios del sistema son los que creamos por medio del script... y deberian poder crearse ...
+
+
+4. AGENDA
+
+No puedo generar agenda.
+
+
+
+5. BONOS
+
+Corregí la parte del script de migración que actualiza los bonos cuando se migran. (procedure usp_actzBono).
+Por alguna razón dejaba el valor del campo bon_fue_utilizado en 0 (FALSE).
+Ahora lo corregí para que queden en 1 (TRUE).
+
