@@ -2587,6 +2587,7 @@ CREATE PROCEDURE SOLARIS.datosHorarios
 	convert(date,age_fecha_desde) >= convert(date ,@fechaInicial) and
 	convert(date,age_fecha_hasta) <= convert(date ,@fechaFinal) and
 	age_cod_entrada not in (select tur_agenda_cod from SOLARIS.Turno)
+	order by 2
 GO
 
 --SOLARIS.crearTurno " + codigoPaciente + "," + codigoAgenda, cn);
