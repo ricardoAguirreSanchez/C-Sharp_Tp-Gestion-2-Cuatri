@@ -1107,7 +1107,7 @@ INSERT INTO SOLARIS.Medico
 			NULL,
 			NULL,
 			NULL,
-			0
+			1
 	from gd_esquema.Maestra
 	where Medico_Dni IS NOT NULL
 	;
