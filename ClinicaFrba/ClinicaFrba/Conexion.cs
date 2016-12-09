@@ -688,6 +688,8 @@ namespace ClinicaFrba
         
         public void insertarAgendaMedico(int codigoMedico, int codigoEspecialidad, DateTime fechafinal )
         {
+            //MessageBox.Show("Execute SOLARIS.insertarAgendaMedico " + codigoMedico + "," + codigoEspecialidad + ",'" + fechafinal + "'");
+            
             cm = new SqlCommand("Execute SOLARIS.insertarAgendaMedico " + codigoMedico + "," + codigoEspecialidad + ",'" + fechafinal + "'", cn);
             cm.ExecuteNonQuery();
 

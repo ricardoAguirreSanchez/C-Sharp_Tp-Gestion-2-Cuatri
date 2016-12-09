@@ -8,6 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Threading;
+
 namespace ClinicaFrba.Registrar_Agenta_Medico
 {
     public partial class frm_registrar_agenda : Form
@@ -107,6 +111,8 @@ namespace ClinicaFrba.Registrar_Agenta_Medico
             Conexion conexion = new Conexion();
             conexion.conectar();
 
+            //calendario gregoriano 
+            GregorianCalendar grego = new GregorianCalendar();
 
             DateTime dtp_horas_lv_desde = new DateTime();
             if (tex_hora_lv_desde.Text != "")
@@ -160,11 +166,14 @@ namespace ClinicaFrba.Registrar_Agenta_Medico
                                 {
                                     int codigoMedico = Convert.ToInt32(tex_codigo_medico.Text);
                                     int codigoEspecialidad = Convert.ToInt32(dgv_especialidad.CurrentRow.Cells[0].Value.ToString());
-                                    DateTime fechafinal = new DateTime(auxiliarFecha.Year, auxiliarFecha.Month, auxiliarFecha.Day, auxliarHoraSabado.Hour, auxliarHoraSabado.Minute, auxliarHoraSabado.Second);
+                                    DateTime fechafinal = new DateTime(auxiliarFecha.Year, auxiliarFecha.Month, auxiliarFecha.Day, auxliarHoraSabado.Hour, auxliarHoraSabado.Minute, auxliarHoraSabado.Second, grego);
 
-                                    //MessageBox.Show("parametros:" + codigoMedico + codigoEspecialidad + "'" + fechafinal + "'");
-                                    conexion.insertarAgendaMedico(codigoMedico,codigoEspecialidad,fechafinal);
-
+                                    //sacar el am y pm
+                                    String fechaA1 = fechafinal.ToString("yyyy/MM/dd, HH:mm:ss");
+                                    DateTime ff = Convert.ToDateTime(fechaA1);
+                                    
+                                    conexion.insertarAgendaMedico(codigoMedico,codigoEspecialidad,ff);
+                                    
                                     //agrego 30 min
                                     auxliarHoraSabado = auxliarHoraSabado.AddMinutes(30);
                                 }
@@ -178,11 +187,15 @@ namespace ClinicaFrba.Registrar_Agenta_Medico
                                 {
                                     int codigoMedico = Convert.ToInt32(tex_codigo_medico.Text);
                                     int codigoEspecialidad = Convert.ToInt32(dgv_especialidad.CurrentRow.Cells[0].Value.ToString());
-                                    DateTime fechafinal = new DateTime(auxiliarFecha.Year, auxiliarFecha.Month, auxiliarFecha.Day, auxliarHoraLunVier.Hour, auxliarHoraLunVier.Minute, auxliarHoraLunVier.Second);
 
-                                    //MessageBox.Show("parametros:" + codigoMedico + codigoEspecialidad + "'" + fechafinal + "'");
-                                    conexion.insertarAgendaMedico(codigoMedico, codigoEspecialidad, fechafinal);
+                                    DateTime fechafinal = new DateTime(auxiliarFecha.Year, auxiliarFecha.Month, auxiliarFecha.Day, auxliarHoraLunVier.Hour, auxliarHoraLunVier.Minute, auxliarHoraLunVier.Second, grego);
+                                   
+                                    //sacar el am y pm
+                                    String fechaA1 = fechafinal.ToString("yyyy/MM/dd, HH:mm:ss");
+                                    DateTime ff = Convert.ToDateTime(fechaA1);
 
+                                    conexion.insertarAgendaMedico(codigoMedico, codigoEspecialidad, ff);
+                                    
                                     //agrego 30 min
                                     auxliarHoraLunVier = auxliarHoraLunVier.AddMinutes(30);
                                 }
