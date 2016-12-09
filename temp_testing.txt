@@ -12,6 +12,8 @@ Creo que la fecha del sistema que deberíamos usar es 01/01/2016 (No 2015. Los da
 
 2.3	Al agregar un afiliado, deberíamos informar el numero del afiliado una vez confirmado que se agregó. Asi podemos agregarle familiares sin mucha búsqueda.
 
+2.4	Error al buscar un afiliado dado de baja.
+
 
 
 3. ADM USUARIOS (LISTO)
@@ -24,9 +26,10 @@ Lo mismo para los pacientes.
 Sino, los unicos usuarios del sistema son los que creamos por medio del script... y deberian poder crearse ...
 
 
-4. AGENDA 
+4. AGENDA (Listo parece)
 
-No puedo generar agenda.
+No puedo generar agenda ----> Cambié el formato de fecha de mi sisop y ahora anda OK.
+Viernes a la noche sigo con mas pruebas.
 
 
 
