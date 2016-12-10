@@ -275,13 +275,13 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(12, 18);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(43, 13);
+            this.label4.Size = new System.Drawing.Size(95, 13);
             this.label4.TabIndex = 8;
-            this.label4.Text = "Codigo:";
+            this.label4.Text = "Codigo de medico:";
             // 
             // tex_codigo_medico
             // 
-            this.tex_codigo_medico.Location = new System.Drawing.Point(61, 15);
+            this.tex_codigo_medico.Location = new System.Drawing.Point(113, 18);
             this.tex_codigo_medico.Name = "tex_codigo_medico";
             this.tex_codigo_medico.Size = new System.Drawing.Size(98, 20);
             this.tex_codigo_medico.TabIndex = 9;

@@ -34,6 +34,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.gb_cancelar_periodo = new System.Windows.Forms.GroupBox();
+            this.tex_hasta = new System.Windows.Forms.TextBox();
+            this.tex_desde = new System.Windows.Forms.TextBox();
             this.rb_cancelar_periodo = new System.Windows.Forms.RadioButton();
             this.gb_cancelar_dia = new System.Windows.Forms.GroupBox();
             this.dgv_cancelar_dia = new System.Windows.Forms.DataGridView();
@@ -44,8 +46,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.dgv_tipo_cancelacion = new System.Windows.Forms.DataGridView();
             this.but_Buscar_dias = new System.Windows.Forms.Button();
-            this.tex_desde = new System.Windows.Forms.TextBox();
-            this.tex_hasta = new System.Windows.Forms.TextBox();
             this.gb_cancelar_periodo.SuspendLayout();
             this.gb_cancelar_dia.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_cancelar_dia)).BeginInit();
@@ -72,11 +72,11 @@
             // 
             // but_cancelar
             // 
-            this.but_cancelar.Location = new System.Drawing.Point(519, 300);
+            this.but_cancelar.Location = new System.Drawing.Point(487, 296);
             this.but_cancelar.Name = "but_cancelar";
-            this.but_cancelar.Size = new System.Drawing.Size(75, 23);
+            this.but_cancelar.Size = new System.Drawing.Size(138, 23);
             this.but_cancelar.TabIndex = 7;
-            this.but_cancelar.Text = "Cancelar";
+            this.but_cancelar.Text = "Confirmar Cancelacion";
             this.but_cancelar.UseVisualStyleBackColor = true;
             this.but_cancelar.Click += new System.EventHandler(this.but_cancelar_periodo_Click);
             // 
@@ -110,6 +110,20 @@
             this.gb_cancelar_periodo.Size = new System.Drawing.Size(362, 104);
             this.gb_cancelar_periodo.TabIndex = 16;
             this.gb_cancelar_periodo.TabStop = false;
+            // 
+            // tex_hasta
+            // 
+            this.tex_hasta.Location = new System.Drawing.Point(106, 57);
+            this.tex_hasta.Name = "tex_hasta";
+            this.tex_hasta.Size = new System.Drawing.Size(100, 20);
+            this.tex_hasta.TabIndex = 27;
+            // 
+            // tex_desde
+            // 
+            this.tex_desde.Location = new System.Drawing.Point(106, 31);
+            this.tex_desde.Name = "tex_desde";
+            this.tex_desde.Size = new System.Drawing.Size(100, 20);
+            this.tex_desde.TabIndex = 26;
             // 
             // rb_cancelar_periodo
             // 
@@ -207,20 +221,6 @@
             this.but_Buscar_dias.Text = "Buscar Dias";
             this.but_Buscar_dias.UseVisualStyleBackColor = true;
             this.but_Buscar_dias.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // tex_desde
-            // 
-            this.tex_desde.Location = new System.Drawing.Point(106, 31);
-            this.tex_desde.Name = "tex_desde";
-            this.tex_desde.Size = new System.Drawing.Size(100, 20);
-            this.tex_desde.TabIndex = 26;
-            // 
-            // tex_hasta
-            // 
-            this.tex_hasta.Location = new System.Drawing.Point(106, 57);
-            this.tex_hasta.Name = "tex_hasta";
-            this.tex_hasta.Size = new System.Drawing.Size(100, 20);
-            this.tex_hasta.TabIndex = 27;
             // 
             // frm_cancelar_atencion_medico
             // 

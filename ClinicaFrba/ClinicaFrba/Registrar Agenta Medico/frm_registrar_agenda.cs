@@ -211,7 +211,7 @@ namespace ClinicaFrba.Registrar_Agenta_Medico
              
 
             }
-            MessageBox.Show("FINALZADO CORRECTAMENTE");
+            MessageBox.Show("SOLO SE REGISTRA HASTA CUMPLIR LAS 48H SEMANALES CORRECTAMENTE");
             this.Close();
         }
 
