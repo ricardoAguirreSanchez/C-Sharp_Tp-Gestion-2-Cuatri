@@ -55,7 +55,7 @@
             // 
             // tex_codigo_medico
             // 
-            this.tex_codigo_medico.Location = new System.Drawing.Point(70, 12);
+            this.tex_codigo_medico.Location = new System.Drawing.Point(100, 12);
             this.tex_codigo_medico.Name = "tex_codigo_medico";
             this.tex_codigo_medico.Size = new System.Drawing.Size(100, 20);
             this.tex_codigo_medico.TabIndex = 9;
@@ -65,9 +65,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(21, 12);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(43, 13);
+            this.label2.Size = new System.Drawing.Size(80, 13);
             this.label2.TabIndex = 8;
-            this.label2.Text = "Codigo:";
+            this.label2.Text = "Codigo medico:";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // but_cancelar
@@ -214,7 +214,7 @@
             // 
             // but_Buscar_dias
             // 
-            this.but_Buscar_dias.Location = new System.Drawing.Point(176, 12);
+            this.but_Buscar_dias.Location = new System.Drawing.Point(206, 12);
             this.but_Buscar_dias.Name = "but_Buscar_dias";
             this.but_Buscar_dias.Size = new System.Drawing.Size(88, 25);
             this.but_Buscar_dias.TabIndex = 25;
