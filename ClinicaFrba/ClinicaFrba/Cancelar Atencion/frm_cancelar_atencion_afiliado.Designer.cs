@@ -61,11 +61,11 @@
             // 
             // but_cancelar
             // 
-            this.but_cancelar.Location = new System.Drawing.Point(469, 261);
+            this.but_cancelar.Location = new System.Drawing.Point(421, 261);
             this.but_cancelar.Name = "but_cancelar";
-            this.but_cancelar.Size = new System.Drawing.Size(75, 23);
+            this.but_cancelar.Size = new System.Drawing.Size(123, 23);
             this.but_cancelar.TabIndex = 2;
-            this.but_cancelar.Text = "Cancelar";
+            this.but_cancelar.Text = "Confirmar Cancelacion";
             this.but_cancelar.UseVisualStyleBackColor = true;
             this.but_cancelar.Click += new System.EventHandler(this.but_cancelar_Click);
             // 
