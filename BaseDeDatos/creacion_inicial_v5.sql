@@ -1275,10 +1275,10 @@ INSERT INTO SOLARIS.Item_Factura
 	
 -- PARA AFILIAFO!!
 -- Carga de Tabla "usuario"..
-INSERT INTO SOLARIS.Usuario(usu_usuario,usu_passwd,usu_estado) SELECT  p.pac_nombre + CONVERT(varchar(125),p.pac_nro_doc), HASHBYTES('SHA2_256',(p.pac_nombre + CONVERT(varchar(125),p.pac_nro_doc))) , 0 FROM SOLARIS.Paciente p
+INSERT INTO SOLARIS.Usuario(usu_usuario,usu_passwd,usu_estado) SELECT REPLACE(p.pac_nombre, ' ', '') + CONVERT(varchar(125),p.pac_nro_doc), HASHBYTES('SHA2_256',(REPLACE(p.pac_nombre, ' ', '') + CONVERT(varchar(125),p.pac_nro_doc))) , 0 FROM SOLARIS.Paciente p
 -- Cargo campo usuario..
 UPDATE SOLARIS.Paciente  set pac_usuario = (select usu_codigo from SOLARIS.Usuario  
-where pac_nombre + CONVERT(varchar(125),pac_nro_doc) = usu_usuario)
+where (REPLACE(pac_nombre, ' ', '') + CONVERT(varchar(125),pac_nro_doc)) = usu_usuario)
 -- Cargo Tabla "rol x usuario"
 INSERT INTO SOLARIS.Rol_x_Usuario (rxu_usuario,rxu_rol) SELECT pac_usuario,2 FROM SOLARIS.Paciente
 
