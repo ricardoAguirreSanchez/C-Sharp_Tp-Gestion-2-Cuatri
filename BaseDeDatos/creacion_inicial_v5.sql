@@ -1176,7 +1176,7 @@ select distinct		Turno_Numero,
 					),
 					p.pac_nro_afiliado,
 					NULL,
-					0
+					2
 	from gd_esquema.Maestra m
 		JOIN SOLARIS.Paciente p ON m.Paciente_Dni = p.pac_nro_doc
 	where Turno_Numero IS NOT NULL 
