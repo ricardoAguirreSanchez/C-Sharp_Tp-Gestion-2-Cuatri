@@ -2,18 +2,23 @@
 
 Creo que la fecha del sistema que deberíamos usar es 01/01/2016 (No 2015. Los datos de la Maestra son del 2015.)
 
-2. ADM AFILIADOS 
+2. ADM AFILIADOS (LISTO)
 
 2.1	No pude actualizar el Plan Medico de los afiliados.
 	Además se debería haber una opción para ver el Historial del Afiliado.
 	Este cambio debería reflejarse en la Tabla Hist_Plan_Afiliado.
+	COMENTARIOS MATIAS: El error original era cuando no habia Estado Civil, ahora eso se esta validando. Para aquellos que no tienen Estado Civil, cuando se va a modificar hay que completarlo si o si.
+	La actualizacion de obra Social estaba rompiendo por un problema con el ID_Titular. Ya esta solucionado.
+Para el historial de modificaciones cree un trigger que dispara y chequea cada vez que se hace un update en paciente.
 	
 2.2	Al agregar un afiliado, me tiró error la app cuando no llené el campo mail.
+	COMENTARIOS MATIAS: Lo testee y parece andar. Lo guarda en la base de datos como NULL.
 
 2.3	Al agregar un afiliado, deberíamos informar el numero del afiliado una vez confirmado que se agregó. Asi podemos agregarle familiares sin mucha búsqueda.
+	COMENTARIOS MATIAS: Hecho, cuando se crea un nuevo afiliado, la app muestra un mensaje diciendo "Creado ID: [Numero de ID]"
 
 2.4	Error al buscar un afiliado dado de baja.
-
+	COMENTARIOS MATIAS: Ahora si no encuentra el afiliado o el mismo ha sido desactivado se muestra un mensaje diciendo "Afiliado no encontrado o eliminado"
 
 
 3. ADM USUARIOS (LISTO)

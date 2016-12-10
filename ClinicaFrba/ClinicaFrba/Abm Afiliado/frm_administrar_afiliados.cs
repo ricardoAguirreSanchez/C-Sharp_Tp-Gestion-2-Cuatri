@@ -114,7 +114,7 @@ namespace ClinicaFrba.AbmRol
         }
             catch (Exception er1)
             {
-                MessageBox.Show("Afiliado no encontrado");
+                MessageBox.Show("Afiliado no encontrado o eliminado");
             }
         }
 
@@ -146,21 +146,22 @@ namespace ClinicaFrba.AbmRol
                 int plan_medico = conexion.traigoIDPlan(com_plan_medico.SelectedItem.ToString());
                 int estado_civil = conexion.traigoIDEstadoCivil(com_estado_civil.SelectedItem.ToString());
                 int idTitular;
+                int idNuevoAfiliado = 0;
                 if (txtDNITitular.Text != "")
                 {
                     idTitular = int.Parse(txtDNITitular.Text);
                     
                     //paso todos los valores para actualizar si tiene un titular
-                    conexion.insertarAfiliado(tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil, idTitular);
+                    idNuevoAfiliado = conexion.insertarAfiliado(tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil, idTitular);
 
                 }
                 else {
                     //paso todos los valores para actualizar si NO tiene un titular
-                    conexion.insertarAfiliado(tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil);
+                   idNuevoAfiliado = conexion.insertarAfiliado(tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil);
                 }
 
                 //int idPaciente = conexion.traerUltimoPaciente();
-                MessageBox.Show("Agregado!");
+                MessageBox.Show("Agregado! ID: " + idNuevoAfiliado);
             }
             catch (Exception er1)
             {
@@ -230,31 +231,41 @@ namespace ClinicaFrba.AbmRol
                 { sexo = 'M'; }
                 else { sexo = 'F'; };
 
-                int plan_medico = conexion.traigoIDPlan(com_plan_medico.SelectedItem.ToString());
-                int estado_civil = conexion.traigoIDEstadoCivil(com_estado_civil.SelectedItem.ToString());
+                int estado_civil = 0;
+                                 
                 int dniTitular;
-                if (txtDNITitular.Text != "")
-                {
-                    dniTitular = int.Parse(txtDNITitular.Text);
 
-                    //paso todos los valores para actualizar si tiene un titular
-                    conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil,dniTitular);
-               
-                }
-                else
+                if (com_estado_civil.SelectedItem != null)
                 {
-                    //paso todos los valores para actualizar si NO tiene un titular
-                    conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil);
+                    int plan_medico = conexion.traigoIDPlan(com_plan_medico.SelectedItem.ToString());
+                    estado_civil = conexion.traigoIDEstadoCivil(com_estado_civil.SelectedItem.ToString());
+
+                    if (txtDNITitular.Text != "" & cbxFamiliar.Checked == true)
+                    {
+                        dniTitular = int.Parse(txtDNITitular.Text);
+
+                        //paso todos los valores para actualizar si tiene un titular
+                        conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil,dniTitular);
+               
+                    }
+                    else if ((txtDNITitular.Text == "" & cbxFamiliar.Checked == false))
+                    {
+                        //paso todos los valores para actualizar si NO tiene un titular
+                        conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil);
+                    }
+                    //paso todos los valores para actualizar
+                    MessageBox.Show("Modificado!");
                 }
-                //paso todos los valores para actualizar
-                MessageBox.Show("Modificado!");
+
+                else { MessageBox.Show("Completar Estado Civil!"); }
             }
             catch (Exception er1)
             {
                 MessageBox.Show("Error al actualizar el afiliado:" + er1);
+                this.Close();
             }
 
-            this.Close();
+
         }
 
         private void but_eliminar_Click(object sender, EventArgs e)
@@ -295,6 +306,18 @@ namespace ClinicaFrba.AbmRol
         private void txtDNITitular_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnHistorial_Click(object sender, EventArgs e)
+        {
+            if (tex_numero_afiliado.Text != "")
+            {
+                frm_historial_plan frm = new frm_historial_plan();
+                frm.txtID.Text = tex_numero_afiliado.Text;
+                frm.Show();
+            
+            }
+            
         }
     }
 }

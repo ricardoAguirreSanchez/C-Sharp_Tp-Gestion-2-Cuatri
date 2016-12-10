@@ -116,6 +116,19 @@ namespace ClinicaFrba
             return dt;
 
         }
+
+        //trae el historial de cambios de planes
+        public DataTable historialPlanes(String usuario)
+        {
+
+            da = new SqlDataAdapter("Execute SOLARIS.buscaHistorialPlan '" + usuario + "'", cn);
+
+
+            dt = new DataTable();
+            da.Fill(dt);
+            return dt;
+
+        }
         //verificarFaltaUsuarioEnMedico
         public Boolean verificarFaltaUsuarioEnMedico(int codigo)
         {
@@ -334,7 +347,7 @@ namespace ClinicaFrba
             command.Parameters.AddWithValue("@pac_sexo", sexo);
             command.Parameters.AddWithValue("@pac_plan_medico", com_plan_medico);
             command.Parameters.AddWithValue("@pac_estado_civil", estado_civil);
-            command.Parameters.AddWithValue("@pac_tit_relacion", docTitular);
+            //command.Parameters.AddWithValue("@pac_tit_relacion", docTitular);
 
 
             command.ExecuteNonQuery();
@@ -357,31 +370,22 @@ namespace ClinicaFrba
             command.Parameters.AddWithValue("@pac_sexo", sexo);
             command.Parameters.AddWithValue("@pac_plan_medico", com_plan_medico);
             command.Parameters.AddWithValue("@pac_estado_civil", estado_civil);
-            command.Parameters.AddWithValue("@pac_tit_relacion", null);
+            //command.Parameters.AddWithValue("@pac_tit_relacion", null);
 
 
             command.ExecuteNonQuery();
 
         }
 
-        public int traerUltimoPaciente()
-        {
-            //SqlCommand command = new SqlCommand("SOLARIS.traeUltimoUsuario", cn);
-            //command.CommandType = CommandType.StoredProcedure;
 
-            //SqlParameter id = new SqlParameter("@pac_nro_afiliado", SqlDbType.Int);
-            //id.Direction = ParameterDirection.Output;
-            //command.Parameters.Add(id);
-            //command.ExecuteScalar();
-            //return int.Parse(id.ToString());
-            return 1;
-
-        }
-        public void insertarAfiliado(String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico, int estado_civil)
+        public int insertarAfiliado(String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico, int estado_civil)
         {
+            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+            id.Direction = ParameterDirection.Output;
+            
             SqlCommand command = new SqlCommand("SOLARIS.insertaPacienteTitular", cn);
             command.CommandType = CommandType.StoredProcedure;
-
+            
             command.Parameters.AddWithValue("@pac_nombre", tex_Nombre);
             command.Parameters.AddWithValue("@pac_apellido", tex_apellido);
             command.Parameters.AddWithValue("@pac_nro_doc", tex_dni);
@@ -392,13 +396,18 @@ namespace ClinicaFrba
             command.Parameters.AddWithValue("@pac_sexo", sexo);
             command.Parameters.AddWithValue("@pac_plan_medico", com_plan_medico);
             command.Parameters.AddWithValue("@pac_estado_civil", estado_civil);
+            command.Parameters.Add(id);
             
-
             command.ExecuteNonQuery();
 
+            return int.Parse(command.Parameters["@id"].Value.ToString());
+
         }
-        public void insertarAfiliado(String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico, int estado_civil, int idTitular)
+        public int insertarAfiliado(String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico, int estado_civil, int idTitular)
         {
+            SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
+            id.Direction = ParameterDirection.Output;
+
             SqlCommand command = new SqlCommand("SOLARIS.insertaPaciente", cn);
             command.CommandType = CommandType.StoredProcedure;
 
@@ -413,8 +422,11 @@ namespace ClinicaFrba
             command.Parameters.AddWithValue("@pac_plan_medico", com_plan_medico);
             command.Parameters.AddWithValue("@pac_estado_civil", estado_civil);
             command.Parameters.AddWithValue("@pac_id_titular", idTitular);
+            command.Parameters.Add(id);
 
             command.ExecuteNonQuery();
+
+            return int.Parse(command.Parameters["@id"].Value.ToString());
 
         }
 

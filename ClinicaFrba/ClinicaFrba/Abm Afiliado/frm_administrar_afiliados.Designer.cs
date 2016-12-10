@@ -62,6 +62,7 @@
             this.cbxFamiliar = new System.Windows.Forms.CheckBox();
             this.txtDNITitular = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.btnHistorial = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -361,7 +362,7 @@
             // cbxFamiliar
             // 
             this.cbxFamiliar.AutoSize = true;
-            this.cbxFamiliar.Location = new System.Drawing.Point(16, 380);
+            this.cbxFamiliar.Location = new System.Drawing.Point(16, 395);
             this.cbxFamiliar.Name = "cbxFamiliar";
             this.cbxFamiliar.Size = new System.Drawing.Size(82, 17);
             this.cbxFamiliar.TabIndex = 0;
@@ -372,7 +373,7 @@
             // txtDNITitular
             // 
             this.txtDNITitular.Enabled = false;
-            this.txtDNITitular.Location = new System.Drawing.Point(221, 377);
+            this.txtDNITitular.Location = new System.Drawing.Point(221, 392);
             this.txtDNITitular.Name = "txtDNITitular";
             this.txtDNITitular.Size = new System.Drawing.Size(127, 20);
             this.txtDNITitular.TabIndex = 1;
@@ -381,18 +382,29 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(142, 380);
+            this.label13.Location = new System.Drawing.Point(142, 395);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(66, 13);
             this.label13.TabIndex = 2;
             this.label13.Text = "ID del titular:";
             this.label13.Click += new System.EventHandler(this.label13_Click);
             // 
+            // btnHistorial
+            // 
+            this.btnHistorial.Location = new System.Drawing.Point(185, 365);
+            this.btnHistorial.Name = "btnHistorial";
+            this.btnHistorial.Size = new System.Drawing.Size(163, 23);
+            this.btnHistorial.TabIndex = 35;
+            this.btnHistorial.Text = "Consultar historial de planes";
+            this.btnHistorial.UseVisualStyleBackColor = true;
+            this.btnHistorial.Click += new System.EventHandler(this.btnHistorial_Click);
+            // 
             // frm_administrar_afiliados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(374, 486);
+            this.Controls.Add(this.btnHistorial);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txtDNITitular);
             this.Controls.Add(this.cbxFamiliar);
@@ -471,5 +483,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtDNITitular;
         private System.Windows.Forms.CheckBox cbxFamiliar;
+        private System.Windows.Forms.Button btnHistorial;
     }
 }

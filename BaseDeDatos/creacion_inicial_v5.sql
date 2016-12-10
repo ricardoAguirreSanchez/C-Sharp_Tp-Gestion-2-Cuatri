@@ -1987,7 +1987,8 @@ CREATE PROCEDURE SOLARIS.insertaPaciente
 @pac_sexo char(1),
 @pac_plan_medico numeric(18,0),
 @pac_estado_civil int,
-@pac_id_titular int
+@pac_id_titular int,
+@id  int output
 As
 
 BEGIN TRANSACTION
@@ -1996,6 +1997,7 @@ BEGIN TRANSACTION
 		EXEC SOLARIS.insertarUsuario @pac_nombre
 		--Busco el ID que le toco como usuario
 		SELECT @pac_usuario = max(usu_codigo) from SOLARIS.Usuario
+		SET @id = (SELECT (MAX(pac_nro_afiliado)+1) from SOLARIS.Paciente p where (p.pac_nro_afiliado/100) = (@pac_id_titular/100))
 		--Inserto paciente
 		INSERT INTO SOLARIS.Paciente
 		(pac_nro_afiliado,
@@ -2042,16 +2044,22 @@ CREATE PROCEDURE SOLARIS.insertaPacienteTitular
 @pac_fecha_nac datetime,
 @pac_sexo char(1),
 @pac_plan_medico numeric(18,0),
-@pac_estado_civil int
+@pac_estado_civil int,
+@id  int output
 As
 
 BEGIN TRANSACTION
 		DECLARE @pac_usuario int
+		
 		--Creo el usuario para el nuevo paciente
 		EXEC SOLARIS.insertarUsuario @pac_nombre
 		--Busco el ID que le toco como usuario
 		SELECT @pac_usuario = max(usu_codigo) from SOLARIS.Usuario
+		
+		SET @id = (SELECT (MAX(pac_nro_afiliado) + 100) from SOLARIS.Paciente)
+		
 		--Inserto paciente
+
 		INSERT INTO SOLARIS.Paciente
 		(pac_nro_afiliado,
 		pac_usuario,
@@ -2075,8 +2083,11 @@ BEGIN TRANSACTION
 		((SELECT (MAX(pac_nro_afiliado) + 100) from SOLARIS.Paciente),@pac_usuario,@pac_apellido,@pac_nombre,1,@pac_nro_doc,@pac_direccion,@pac_telefono,@pac_mail,@pac_fecha_nac,@pac_sexo,@pac_estado_civil,0,
 		@pac_plan_medico,NULL, 1, NULL)
 
+
+
 COMMIT TRANSACTION
 GO
+
 -------------
 
 GO
@@ -2119,6 +2130,100 @@ BEGIN TRANSACTION
 	[pac_nro_afiliado] = @pac_nro_afiliado
 
 COMMIT TRANSACTION
+GO
+
+------------
+
+
+GO
+IF OBJECT_ID('SOLARIS.buscaHistorialPlan') IS NOT NULL
+	DROP PROCEDURE SOLARIS.buscaHistorialPlan;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.buscaHistorialPlan
+@hpa_cod_afiliado int
+As
+
+BEGIN TRANSACTION
+	SELECT 
+	[hpa_cod_afiliado] 'Codigo'
+	,[hpa_plan_anterior] 'Plan Anterior'
+	,[hpa_plan_nuevo] 'Plan Nuevo'
+	,[hpa_fecha_cambio] 'Fecha'
+	,[hpa_comentarios] 'Comentarios'
+	 FROM [SOLARIS].[Hist_Plan_Afiliado] h where h.hpa_cod_afiliado = @hpa_cod_afiliado
+COMMIT TRANSACTION
+GO
+
+
+
+
+-------------
+
+GO
+IF OBJECT_ID('SOLARIS.insertaHistorialPlan') IS NOT NULL
+	DROP PROCEDURE SOLARIS.insertaHistorialPlan;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.insertaHistorialPlan
+@hpa_cod_afiliado int,
+@hpa_plan_anterior numeric(18,0),
+@hpa_plan_nuevo numeric(18,0),
+@hpa_fecha_cambio datetime,
+@hpa_comentarios VARCHAR(1022)
+
+As
+
+BEGIN TRANSACTION
+		INSERT INTO [SOLARIS].[Hist_Plan_Afiliado]
+           (
+		   [hpa_cod_afiliado],
+		   [hpa_plan_anterior],
+		   [hpa_plan_nuevo],
+		   [hpa_fecha_cambio],
+		   [hpa_comentarios]
+		   )
+	     VALUES
+           (@hpa_cod_afiliado
+		   ,@hpa_plan_anterior
+		   ,@hpa_plan_nuevo
+		   ,@hpa_fecha_cambio
+		   ,@hpa_comentarios
+		   )
+
+COMMIT TRANSACTION
+GO
+
+
+--TRIGGER QUE VERIFICA SI SE HIZO UN CAMBIO DE PLAN
+IF OBJECT_ID('SOLARIS.registraHistorialPlan') IS NOT NULL
+	DROP TRIGGER SOLARIS.registraHistorialPlan;
+GO
+
+GO
+CREATE TRIGGER SOLARIS.registraHistorialPlan
+ON SOLARIS.Paciente
+FOR UPDATE
+	as
+	 begin
+	 DECLARE @plan_viejo numeric(18,0),
+	 @plan_nuevo numeric(18,0),
+	 @pac_nro_afiliado int,
+	 @date datetime
+	 
+	 SELECT @plan_nuevo = [pac_plan_medico] from Inserted
+	 SELECT @plan_viejo = [pac_plan_medico], @pac_nro_afiliado = [pac_nro_afiliado] from Deleted
+	 SELECT @date = GETDATE()
+
+	 IF @plan_nuevo <> @plan_viejo
+	 EXEC SOLARIS.insertaHistorialPlan @pac_nro_afiliado,@plan_viejo,@plan_nuevo ,@date ,''
+
+     end
+GO
+
+
 GO
 
 ------------
