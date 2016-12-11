@@ -210,6 +210,10 @@ IF OBJECT_ID('SOLARIS.Usuario') IS NOT NULL
 IF OBJECT_ID('SOLARIS.Usuario_Estado') IS NOT NULL
 	DROP TABLE SOLARIS.Usuario_Estado;
 
+--Tabla auxiliar "FechaSistema"
+IF OBJECT_ID('SOLARIS.FechaSistema') IS NOT NULL
+	DROP table SOLARIS.FechaSistema;
+
 
 PRINT 'Tablas eliminadas ...';
 
@@ -220,6 +224,10 @@ PRINT 'Tablas eliminadas ...';
 
 PRINT 'Creando tablas ...';
 
+--Tabla auxiliar "FechaSistema"
+create table SOLARIS.FechaSistema (id int,fecha_sistema datetime);
+
+insert into SOLARIS.FechaSistema(id,fecha_sistema) values(1,NULL)
 
 
 -- Tabla "Estado Usuario"
@@ -811,7 +819,8 @@ INSERT INTO SOLARIS.Tipo_Cancelacion
 	VALUES
 		(1, 'Enfermedad'),
 		(2, 'Accidente'),
-		(3, 'Tragedia personal');
+		(3, 'Tragedia personal'),
+		(4, 'Otros');
 
 
 -- Tabla "Estado_Turno"
@@ -2004,8 +2013,12 @@ CREATE PROCEDURE SOLARIS.bajarPacientes
 		update SOLARIS.Usuario set usu_estado = 2 where usu_codigo = 
 		       (select p1.pac_usuario from SOLARIS.Paciente p1 where p1.pac_nro_afiliado = @plm_codigo)
 
-		--da baja a sus turnos pendientes si es que tiene
-		update SOLARIS.Turno set tur_estado = 5 where tur_afiliado = @plm_codigo
+		--da baja a sus turnos reservados si es que tiene y los carga en la tabla turno cancelado
+		insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel) 
+		select t1.tur_numero,4,'CANCELADO POR BAJA DE AFILIADO' from SOLARIS.Turno t1 where t1.tur_afiliado = @plm_codigo and t1.tur_estado = 0
+				
+		update SOLARIS.Turno set tur_estado = 5 where tur_afiliado = @plm_codigo and tur_estado = 0
+			
 	end
 GO
 
@@ -2269,7 +2282,8 @@ FOR UPDATE
 	 
 	 SELECT @plan_nuevo = [pac_plan_medico] from Inserted
 	 SELECT @plan_viejo = [pac_plan_medico], @pac_nro_afiliado = [pac_nro_afiliado] from Deleted
-	 SELECT @date = GETDATE()
+	 --busca la fecha del sistema desde la tabla auxiliar
+	 set @date = (select fecha_sistema from SOLARIS.FechaSistema)
 
 	 IF @plan_nuevo <> @plan_viejo
 	 EXEC SOLARIS.insertaHistorialPlan @pac_nro_afiliado,@plan_viejo,@plan_nuevo ,@date ,''
@@ -2277,10 +2291,20 @@ FOR UPDATE
      end
 GO
 
-
+--
+GO
+IF OBJECT_ID('SOLARIS.cargaFecha') IS NOT NULL
+	DROP PROCEDURE SOLARIS.cargaFecha;
 GO
 
-------------
+GO
+CREATE PROCEDURE SOLARIS.cargaFecha
+@fecha datetime
+	as
+	 UPDATE SOLARIS.FechaSistema set fecha_sistema = @fecha where id = 1
+GO
+
+-----------
 -------------
 GO
 IF OBJECT_ID('SOLARIS.traeUltimoUsuario') IS NOT NULL

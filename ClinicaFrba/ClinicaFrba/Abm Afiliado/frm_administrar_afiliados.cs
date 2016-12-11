@@ -243,6 +243,11 @@ namespace ClinicaFrba.AbmRol
                     if (txtDNITitular.Text != "" & cbxFamiliar.Checked == true)
                     {
                         dniTitular = int.Parse(txtDNITitular.Text);
+                        
+                        //cargo fecha del sistema
+                        AppConfig ap = new AppConfig();
+                        DateTime fechaSistema = Convert.ToDateTime(ap.obtenerFecha());
+                        conexion.cargaFecha(fechaSistema);
 
                         //paso todos los valores para actualizar si tiene un titular
                         conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil,dniTitular);
@@ -250,6 +255,11 @@ namespace ClinicaFrba.AbmRol
                     }
                     else if ((txtDNITitular.Text == "" & cbxFamiliar.Checked == false))
                     {
+                        //cargo fecha del sistema
+                        AppConfig ap = new AppConfig();
+                        DateTime fechaSistema = Convert.ToDateTime(ap.obtenerFecha());
+                        conexion.cargaFecha(fechaSistema);
+
                         //paso todos los valores para actualizar si NO tiene un titular
                         conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil);
                     }

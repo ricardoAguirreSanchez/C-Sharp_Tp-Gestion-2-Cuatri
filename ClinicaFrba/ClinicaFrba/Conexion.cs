@@ -449,8 +449,14 @@ namespace ClinicaFrba
 
         }
 
+        //cargo fecha de sistema en el sql
+        public void cargaFecha(DateTime fechaSistema)
+        {
+            cm = new SqlCommand("Execute SOLARIS.cargaFecha '" + fechaSistema + "'", cn);
+            cm.ExecuteNonQuery();
 
-
+        }
+        //
         public void agregaRol(String nombreRol)
         {
             cm = new SqlCommand("Execute SOLARIS.insertaRol " + nombreRol, cn);
