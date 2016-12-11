@@ -2849,27 +2849,42 @@ IF OBJECT_ID('SOLARIS.profesionalesMasConsultados') IS NOT NULL
 	DROP PROCEDURE SOLARIS.profesionalesMasConsultados;
 GO
 
-GO
 CREATE PROCEDURE SOLARIS.profesionalesMasConsultados
 @anioConsultado int,
 @semestreConsultado int
- as
+as
+BEGIN
+declare @t_temp table (
+	tmp_cod INT IDENTITY,
+	tmp_plan NUMERIC(18,0),
+	tmp_codmed INT,
+	tmp_especialidad NUMERIC(18,0),
+	tmp_cantConsultas INT
+	PRIMARY KEY (tmp_cod));
 
- SELECT TOP 5 a.age_cod_medico as 'Codigo de medico', 
-              b.bon_plan_afiliado as 'Codigo de plan',
-			  a.age_med_especialidad as 'Codigo de especialida'
- FROM SOLARIS.Consulta c JOIN SOLARIS.Bono b 
- on (c.con_numero = b.bon_nro_consulta_med)
- JOIN SOLARIS.Turno t 
- on (t.tur_numero = c.con_turno)
- JOIN SOLARIS.Agenda a
- on (a.age_cod_entrada = t.tur_agenda_cod)
- 
- WHERE YEAR(c.con_fecha) = @anioConsultado and 
-       SOLARIS.devuelveNumeroSemestre (MONTH(c.con_fecha)) = @semestreConsultado 
- GROUP BY a.age_cod_medico,b.bon_plan_afiliado,a.age_med_especialidad
- ORDER BY count(c.con_numero) desc 
-  
+INSERT INTO @t_temp (tmp_plan, tmp_codmed, tmp_especialidad, tmp_cantConsultas)
+	(SELECT b.bon_plan_afiliado,
+			a.age_cod_medico,		
+			a.age_med_especialidad,
+			count(c.con_numero)
+	FROM SOLARIS.Consulta c 
+		JOIN SOLARIS.Bono b on (c.con_numero = b.bon_nro_consulta_med)
+		JOIN SOLARIS.Turno t on (t.tur_numero = c.con_turno)
+		JOIN SOLARIS.Agenda a on (a.age_cod_entrada = t.tur_agenda_cod)
+	WHERE YEAR(c.con_fecha) = @anioConsultado 
+		and SOLARIS.devuelveNumeroSemestre (MONTH(c.con_fecha)) = @semestreConsultado
+	GROUP BY b.bon_plan_afiliado, a.age_cod_medico, a.age_med_especialidad
+	);
+
+SELECT	(SELECT plm_descripcion FROM SOLARIS.Plan_Medico WHERE plm_codigo = t.tmp_plan) as 'Plan Medico',
+		(SELECT med_apellido + ', ' + med_nombre FROM SOLARIS.Medico WHERE med_cod_medico = t.tmp_codmed) as 'Apellido y Nombres', 			
+		(SELECT esp_descripcion FROM SOLARIS.Especialidad WHERE esp_codigo = t.tmp_especialidad) as 'Especialidad',
+		t.tmp_cantConsultas as 'Cant. de Consultas'
+FROM @t_temp t
+where t.tmp_cod IN (select top 5 tt.tmp_cod from @t_temp tt where t.tmp_plan = tt.tmp_plan order by tt.tmp_cantConsultas DESC)
+order by t.tmp_plan ASC, t.tmp_cantConsultas DESC;
+
+END;  
 GO
 
 --
