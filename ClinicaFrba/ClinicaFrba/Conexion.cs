@@ -592,11 +592,12 @@ namespace ClinicaFrba
 
         }
 
-        internal void bajarAfiliado(int codigo)
+        internal void bajarAfiliado(int codigo,DateTime fechaSistema)
         {
-            SqlCommand command = new SqlCommand("SOLARIS.bajarPacientes", cn);
+            SqlCommand command = new SqlCommand("SOLARIS.bajarPacientes ", cn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@plm_codigo",codigo);
+            command.Parameters.AddWithValue("@fechaSistema", fechaSistema);
             command.ExecuteNonQuery();
         }
         public int consultarPrecioBono(Int64 codigo)
@@ -790,6 +791,21 @@ namespace ClinicaFrba
               return dt;
 
           }    
+        //afiliadoDadoBaja devolvera TRUE si esta dado de baja
+        public Boolean afiliadoDadoBaja(int codigo)
+        {
 
+            Boolean result = false;
+
+            cm = new SqlCommand("Execute SOLARIS.afiliadoDadoBaja " + codigo, cn);
+            dr = cm.ExecuteReader();
+            //se lee, si no hay nada, no entra en el while, si hay algo, entra
+            while (dr.Read())
+            {
+                result = true;
+            }
+            dr.Close();
+            return result;
+        }
     }
 }

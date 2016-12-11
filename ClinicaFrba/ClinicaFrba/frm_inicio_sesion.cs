@@ -28,7 +28,7 @@ namespace ClinicaFrba
 
             if (conexion.verificarLogeoInhabilitado(tex_username.Text, tex_password.Text))
                 {
-                    MessageBox.Show("Cuenta bloqueada");
+                    MessageBox.Show("Cuenta bloqueada o eliminada");
                     this.Close();
                 }
                 

@@ -90,9 +90,9 @@
             // 
             // but_modificar
             // 
-            this.but_modificar.Location = new System.Drawing.Point(21, 421);
+            this.but_modificar.Location = new System.Drawing.Point(11, 434);
             this.but_modificar.Name = "but_modificar";
-            this.but_modificar.Size = new System.Drawing.Size(117, 48);
+            this.but_modificar.Size = new System.Drawing.Size(107, 48);
             this.but_modificar.TabIndex = 3;
             this.but_modificar.Text = "Modificar";
             this.but_modificar.UseVisualStyleBackColor = true;
@@ -100,9 +100,9 @@
             // 
             // but_eliminar
             // 
-            this.but_eliminar.Location = new System.Drawing.Point(178, 421);
+            this.but_eliminar.Location = new System.Drawing.Point(197, 434);
             this.but_eliminar.Name = "but_eliminar";
-            this.but_eliminar.Size = new System.Drawing.Size(131, 48);
+            this.but_eliminar.Size = new System.Drawing.Size(124, 48);
             this.but_eliminar.TabIndex = 4;
             this.but_eliminar.Text = "Eliminar";
             this.but_eliminar.UseVisualStyleBackColor = true;
@@ -302,7 +302,7 @@
             this.shapeContainer1.Name = "shapeContainer1";
             this.shapeContainer1.Shapes.AddRange(new Microsoft.VisualBasic.PowerPacks.Shape[] {
             this.lineShape1});
-            this.shapeContainer1.Size = new System.Drawing.Size(374, 486);
+            this.shapeContainer1.Size = new System.Drawing.Size(370, 549);
             this.shapeContainer1.TabIndex = 30;
             this.shapeContainer1.TabStop = false;
             // 
@@ -317,9 +317,9 @@
             // 
             // but_cargarnuevo
             // 
-            this.but_cargarnuevo.Location = new System.Drawing.Point(30, 421);
+            this.but_cargarnuevo.Location = new System.Drawing.Point(209, 434);
             this.but_cargarnuevo.Name = "but_cargarnuevo";
-            this.but_cargarnuevo.Size = new System.Drawing.Size(124, 48);
+            this.but_cargarnuevo.Size = new System.Drawing.Size(139, 48);
             this.but_cargarnuevo.TabIndex = 31;
             this.but_cargarnuevo.Text = "Cargar nuevo afiliado";
             this.but_cargarnuevo.UseVisualStyleBackColor = true;
@@ -327,9 +327,9 @@
             // 
             // but_descartarNuevo
             // 
-            this.but_descartarNuevo.Location = new System.Drawing.Point(188, 421);
+            this.but_descartarNuevo.Location = new System.Drawing.Point(28, 434);
             this.but_descartarNuevo.Name = "but_descartarNuevo";
-            this.but_descartarNuevo.Size = new System.Drawing.Size(131, 48);
+            this.but_descartarNuevo.Size = new System.Drawing.Size(150, 48);
             this.but_descartarNuevo.TabIndex = 32;
             this.but_descartarNuevo.Text = "Descartar";
             this.but_descartarNuevo.UseVisualStyleBackColor = true;
@@ -403,7 +403,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 486);
+            this.ClientSize = new System.Drawing.Size(370, 549);
             this.Controls.Add(this.btnHistorial);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txtDNITitular);
