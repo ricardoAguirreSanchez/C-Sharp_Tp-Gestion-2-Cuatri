@@ -293,6 +293,19 @@ namespace ClinicaFrba
             return dt;
         }
 
+        public string traigoRelacion(Int64 idRelacion)
+        {
+            SqlCommand command = new SqlCommand("SOLARIS.traigoRelacion", cn);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlParameter descripcion = new SqlParameter("@rel_descripcion", SqlDbType.VarChar, 255);
+            descripcion.Direction = ParameterDirection.Output;
+            command.Parameters.Add(descripcion);
+
+            command.Parameters.AddWithValue("@rel_codigo", idRelacion);
+            command.ExecuteScalar();
+            return command.Parameters["@rel_descripcion"].Value.ToString();
+
+        }
         //del github
         public string traigoNombrePlan(Int64 idPlan)
         {
@@ -349,8 +362,21 @@ namespace ClinicaFrba
             return int.Parse(command.Parameters["@ecv_codigo"].Value.ToString());
         }
 
+        public int traigoIDRelacion(string relacion)
+        {
+            SqlCommand command = new SqlCommand("SOLARIS.traigoIDRelacion", cn);
+            command.CommandType = CommandType.StoredProcedure;
+            SqlParameter ID = new SqlParameter("@rel_codigo", SqlDbType.VarChar, 255);
+            ID.Direction = ParameterDirection.Output;
+            command.Parameters.Add(ID);
 
-        public void modificarAfiliado(int tex_numero_afiliado, String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico, int estado_civil, int docTitular)
+            command.Parameters.AddWithValue("@rel_descripcion", relacion);
+            command.ExecuteScalar();
+            return int.Parse(command.Parameters["@rel_codigo"].Value.ToString());
+        }
+
+
+        public void modificarAfiliado(int tex_numero_afiliado, String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico, int estado_civil, int docTitular,int relacion)
         {
             SqlCommand command = new SqlCommand("SOLARIS.modificarPaciente", cn);
             command.CommandType = CommandType.StoredProcedure;
@@ -366,7 +392,7 @@ namespace ClinicaFrba
             command.Parameters.AddWithValue("@pac_sexo", sexo);
             command.Parameters.AddWithValue("@pac_plan_medico", com_plan_medico);
             command.Parameters.AddWithValue("@pac_estado_civil", estado_civil);
-            //command.Parameters.AddWithValue("@pac_tit_relacion", docTitular);
+            command.Parameters.AddWithValue("@pac_tit_relacion", relacion);
 
 
             command.ExecuteNonQuery();
@@ -375,7 +401,7 @@ namespace ClinicaFrba
 
         public void modificarAfiliado(int tex_numero_afiliado, String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico, int estado_civil)
         {
-            SqlCommand command = new SqlCommand("SOLARIS.modificarPaciente", cn);
+            SqlCommand command = new SqlCommand("SOLARIS.modificarPacienteTitular", cn);
             command.CommandType = CommandType.StoredProcedure;
 
             command.Parameters.AddWithValue("@pac_nro_afiliado", tex_numero_afiliado);
@@ -422,7 +448,7 @@ namespace ClinicaFrba
             return int.Parse(command.Parameters["@id"].Value.ToString());
 
         }
-        public int insertarAfiliado(String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico, int estado_civil, int idTitular)
+        public int insertarAfiliado(String tex_Nombre, String tex_apellido, int tex_dni, DateTime dtp_fecha_nacimiento, String tex_direccion, int tex_telefono, String tex_mail, Char sexo, int com_plan_medico, int estado_civil, int idTitular, int relacion)
         {
             SqlParameter id = new SqlParameter("@id", SqlDbType.Int);
             id.Direction = ParameterDirection.Output;
@@ -441,6 +467,7 @@ namespace ClinicaFrba
             command.Parameters.AddWithValue("@pac_plan_medico", com_plan_medico);
             command.Parameters.AddWithValue("@pac_estado_civil", estado_civil);
             command.Parameters.AddWithValue("@pac_id_titular", idTitular);
+            command.Parameters.AddWithValue("@pac_tit_relacion", relacion);
             command.Parameters.Add(id);
 
             command.ExecuteNonQuery();

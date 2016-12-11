@@ -104,9 +104,13 @@ namespace ClinicaFrba.AbmRol
             {rdb_femenino.Checked = false; rdb_masculino.Checked = true; }
             com_estado_civil.SelectedItem = conexion.traigoNombreEstadoCivil(filaPaciente["pac_estado_civil"].ToString());
             com_plan_medico.SelectedItem = conexion.traigoNombrePlan(Convert.ToInt64(filaPaciente["pac_plan_medico"].ToString()));
+
+
+                
             if (filaPaciente["pac_tit_relacion"].ToString() != "")
             {
                 cbxFamiliar.Checked = true;
+                cbxRelacion.SelectedItem = conexion.traigoRelacion(Convert.ToInt64(filaPaciente["pac_tit_relacion"].ToString()));
                 txtDNITitular.Text = filaPaciente["pac_tit_relacion"].ToString();
             }
             else { cbxFamiliar.Checked = false; }
@@ -150,9 +154,10 @@ namespace ClinicaFrba.AbmRol
                 if (txtDNITitular.Text != "")
                 {
                     idTitular = int.Parse(txtDNITitular.Text);
+                    int relacion = conexion.traigoIDRelacion(cbxRelacion.SelectedItem.ToString());
                     
                     //paso todos los valores para actualizar si tiene un titular
-                    idNuevoAfiliado = conexion.insertarAfiliado(tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil, idTitular);
+                    idNuevoAfiliado = conexion.insertarAfiliado(tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil, idTitular, relacion);
 
                 }
                 else {
@@ -248,9 +253,9 @@ namespace ClinicaFrba.AbmRol
                         AppConfig ap = new AppConfig();
                         DateTime fechaSistema = Convert.ToDateTime(ap.obtenerFecha());
                         conexion.cargaFecha(fechaSistema);
-
+                        int relacion = conexion.traigoIDRelacion(cbxRelacion.SelectedItem.ToString());
                         //paso todos los valores para actualizar si tiene un titular
-                        conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil,dniTitular);
+                        conexion.modificarAfiliado(int.Parse(tex_numero_afiliado.Text), tex_nombre.Text, tex_apellido.Text, int.Parse(tex_dni.Text), fecha_nac, tex_direccion.Text, int.Parse(tex_telefono.Text), tex_mail.Text, sexo, plan_medico, estado_civil,dniTitular,relacion);
                
                     }
                     else if ((txtDNITitular.Text == "" & cbxFamiliar.Checked == false))
@@ -311,6 +316,9 @@ namespace ClinicaFrba.AbmRol
         {
             if (cbxFamiliar.Checked) { txtDNITitular.Enabled = true; }
             else { txtDNITitular.Enabled = false; }
+
+            if (cbxFamiliar.Checked) {cbxRelacion.Enabled = true; }
+            else { cbxRelacion.Enabled = false; }
         }
 
         private void label13_Click(object sender, EventArgs e)

@@ -63,6 +63,8 @@
             this.txtDNITitular = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.btnHistorial = new System.Windows.Forms.Button();
+            this.cbxRelacion = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -90,7 +92,7 @@
             // 
             // but_modificar
             // 
-            this.but_modificar.Location = new System.Drawing.Point(11, 434);
+            this.but_modificar.Location = new System.Drawing.Point(11, 452);
             this.but_modificar.Name = "but_modificar";
             this.but_modificar.Size = new System.Drawing.Size(107, 48);
             this.but_modificar.TabIndex = 3;
@@ -100,7 +102,7 @@
             // 
             // but_eliminar
             // 
-            this.but_eliminar.Location = new System.Drawing.Point(197, 434);
+            this.but_eliminar.Location = new System.Drawing.Point(197, 452);
             this.but_eliminar.Name = "but_eliminar";
             this.but_eliminar.Size = new System.Drawing.Size(124, 48);
             this.but_eliminar.TabIndex = 4;
@@ -317,7 +319,7 @@
             // 
             // but_cargarnuevo
             // 
-            this.but_cargarnuevo.Location = new System.Drawing.Point(209, 434);
+            this.but_cargarnuevo.Location = new System.Drawing.Point(209, 452);
             this.but_cargarnuevo.Name = "but_cargarnuevo";
             this.but_cargarnuevo.Size = new System.Drawing.Size(139, 48);
             this.but_cargarnuevo.TabIndex = 31;
@@ -327,7 +329,7 @@
             // 
             // but_descartarNuevo
             // 
-            this.but_descartarNuevo.Location = new System.Drawing.Point(28, 434);
+            this.but_descartarNuevo.Location = new System.Drawing.Point(28, 452);
             this.but_descartarNuevo.Name = "but_descartarNuevo";
             this.but_descartarNuevo.Size = new System.Drawing.Size(150, 48);
             this.but_descartarNuevo.TabIndex = 32;
@@ -373,16 +375,16 @@
             // txtDNITitular
             // 
             this.txtDNITitular.Enabled = false;
-            this.txtDNITitular.Location = new System.Drawing.Point(221, 392);
+            this.txtDNITitular.Location = new System.Drawing.Point(264, 392);
             this.txtDNITitular.Name = "txtDNITitular";
-            this.txtDNITitular.Size = new System.Drawing.Size(127, 20);
+            this.txtDNITitular.Size = new System.Drawing.Size(84, 20);
             this.txtDNITitular.TabIndex = 1;
             this.txtDNITitular.TextChanged += new System.EventHandler(this.txtDNITitular_TextChanged);
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(142, 395);
+            this.label13.Location = new System.Drawing.Point(182, 396);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(66, 13);
             this.label13.TabIndex = 2;
@@ -399,11 +401,39 @@
             this.btnHistorial.UseVisualStyleBackColor = true;
             this.btnHistorial.Click += new System.EventHandler(this.btnHistorial_Click);
             // 
+            // cbxRelacion
+            // 
+            this.cbxRelacion.Enabled = false;
+            this.cbxRelacion.FormattingEnabled = true;
+            this.cbxRelacion.Items.AddRange(new object[] {
+            "CONYUGE",
+            "HIJO/A",
+            "HERMANO/A",
+            "PADRE",
+            "MADRE",
+            "ABUELO/A",
+            "OTRO"});
+            this.cbxRelacion.Location = new System.Drawing.Point(264, 416);
+            this.cbxRelacion.Name = "cbxRelacion";
+            this.cbxRelacion.Size = new System.Drawing.Size(84, 21);
+            this.cbxRelacion.TabIndex = 36;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(151, 424);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(97, 13);
+            this.label11.TabIndex = 37;
+            this.label11.Text = "Relacion del titular:";
+            // 
             // frm_administrar_afiliados
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(370, 549);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.cbxRelacion);
             this.Controls.Add(this.btnHistorial);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.txtDNITitular);
@@ -484,5 +514,7 @@
         private System.Windows.Forms.TextBox txtDNITitular;
         private System.Windows.Forms.CheckBox cbxFamiliar;
         private System.Windows.Forms.Button btnHistorial;
+        private System.Windows.Forms.ComboBox cbxRelacion;
+        private System.Windows.Forms.Label label11;
     }
 }
