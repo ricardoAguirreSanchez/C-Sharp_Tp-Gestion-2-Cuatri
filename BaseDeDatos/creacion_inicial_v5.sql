@@ -1310,6 +1310,47 @@ CREATE PROCEDURE SOLARIS.buscarUsuario
 		usu_estado = 0 and @usu_usuario = usu_usuario
 GO
 
+--volverACero(String id, String clave)
+GO
+
+IF OBJECT_ID('SOLARIS.volverACero') IS NOT NULL
+	DROP PROCEDURE SOLARIS.volverACero;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.volverACero
+	@usu_passwd varchar(255),
+	@usu_usuario varchar(255)
+	as
+		UPDATE SOLARIS.Usuario set usu_login_fallidos = 0 where HASHBYTES('SHA2_256',@usu_passwd) = usu_passwd and
+		@usu_usuario = usu_usuario
+GO
+--sumaUnoLogin(String id, String clave)
+GO
+
+IF OBJECT_ID('SOLARIS.sumaUnoLogin') IS NOT NULL
+	DROP PROCEDURE SOLARIS.sumaUnoLogin;
+GO
+
+GO
+CREATE PROCEDURE SOLARIS.sumaUnoLogin
+	@usu_passwd varchar(255),
+	@usu_usuario varchar(255)
+	as
+	begin
+		UPDATE SOLARIS.Usuario set usu_login_fallidos = usu_login_fallidos + 1 where
+		@usu_usuario = usu_usuario
+
+		if exists (select * from SOLARIS.Usuario where
+		    @usu_usuario = usu_usuario and usu_login_fallidos = 3 ) 
+		begin
+			UPDATE SOLARIS.Usuario set usu_estado = 1 where 
+		    @usu_usuario = usu_usuario
+		end
+	end
+
+GO
+
 --verificarLogeoInhabilitado
 GO
 
@@ -1319,10 +1360,11 @@ GO
 
 GO
 CREATE PROCEDURE SOLARIS.verificarLogeoInhabilitado
+	@usu_passwd varchar(255),
 	@usu_usuario varchar(255)
 	as
 		select usu_usuario from SOLARIS.Usuario where @usu_usuario = usu_usuario and
-		usu_estado = 1
+		usu_estado = 1 and usu_login_fallidos = 3
 GO
 
 --inhabilitoUsuario

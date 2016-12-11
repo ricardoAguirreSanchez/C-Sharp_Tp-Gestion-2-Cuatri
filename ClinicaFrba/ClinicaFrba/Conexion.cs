@@ -45,7 +45,7 @@ namespace ClinicaFrba
             
             Boolean result = false;
             //ejecuta el comando select para buscar si existe 
-            cm = new SqlCommand("Execute SOLARIS.buscarUsuario '" + clave + "',"+id, cn);
+            cm = new SqlCommand("Execute SOLARIS.buscarUsuario '" + clave + "' , '"+id+"'", cn);
             dr = cm.ExecuteReader();
             
             //se lee, si no hay nada, no entra en el while, si hay algo, entra
@@ -63,7 +63,7 @@ namespace ClinicaFrba
             
             Boolean result = false;
             //ejecuta el comando select para buscar si existe 
-            cm = new SqlCommand("Execute SOLARIS.verificarLogeoInhabilitado " + id + "", cn);
+            cm = new SqlCommand("Execute SOLARIS.verificarLogeoInhabilitado '" + clave + "' , '" + id + "'", cn);
             dr = cm.ExecuteReader();
             
             //se lee, si no hay nada, no entra en el while, si hay algo, entra
@@ -74,6 +74,25 @@ namespace ClinicaFrba
             dr.Close();
             return result;
         }
+        //volverACero(tex_username.Text, tex_password.Text)
+        public void volverACero(String id, String clave)
+        {
+            cm = new SqlCommand("Execute SOLARIS.volverACero '" + clave + "' , '" + id + "'", cn);
+            cm.ExecuteNonQuery();
+
+        }
+        
+        //sumaUnoLogin(tex_username.Text, tex_password.Text)
+        public void sumaUnoLogin(String id, String clave)
+        {
+            cm = new SqlCommand("Execute SOLARIS.sumaUnoLogin '" + clave + "' , '" + id + "'", cn);
+            cm.ExecuteNonQuery();
+
+        }
+
+
+
+
 
         //inhabilitoUsuario 
         public void inhabilitoUsuario(String id, String clave)

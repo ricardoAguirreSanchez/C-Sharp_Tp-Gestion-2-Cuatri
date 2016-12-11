@@ -19,22 +19,15 @@ namespace ClinicaFrba
             
         }
 
-        int contador = 1;
+        
         private void but_Ingresar_Click(object sender, EventArgs e)
         {
             
             Conexion conexion = new Conexion();
             conexion.conectar();
 
-            if (conexion.verificarLogeoInhabilitado(tex_username.Text, tex_password.Text) || contador > 2)
+            if (conexion.verificarLogeoInhabilitado(tex_username.Text, tex_password.Text))
                 {
-                    
-                    
-                    if (contador > 2)
-                    {
-                        conexion.inhabilitoUsuario(tex_username.Text, tex_password.Text);
-                        
-                    }
                     MessageBox.Show("Cuenta bloqueada");
                     this.Close();
                 }
@@ -45,7 +38,7 @@ namespace ClinicaFrba
                     dgw_Roles_a_elegir.DataSource = conexion.roles(tex_username.Text);
                     but_Aceptar.Enabled = true;
                     but_Ingresar.Enabled = false;
-                    contador = 0;
+                    conexion.volverACero(tex_username.Text, tex_password.Text);
                 }
 
                 //entra si lo q fallo es la contraseña, muestra mensaje y suma uno al contador
@@ -54,7 +47,14 @@ namespace ClinicaFrba
                     MessageBox.Show("Contraseña incorrecta");
                     tex_password.Clear();
                     tex_username.Enabled = false;
-                    contador=contador + 1;
+                    conexion.sumaUnoLogin(tex_username.Text, tex_password.Text);
+
+                    if (conexion.verificarLogeoInhabilitado(tex_username.Text, tex_password.Text))
+                    {
+                        MessageBox.Show("Cuenta bloqueada");
+                        this.Close();
+                    }
+
                 }
                 
 
