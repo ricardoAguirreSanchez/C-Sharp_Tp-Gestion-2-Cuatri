@@ -2046,7 +2046,7 @@ CREATE PROCEDURE SOLARIS.bajarPacientes
 		insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel) 
 		select t1.tur_numero,4,'CANCELADO POR BAJA DE AFILIADO' from SOLARIS.Turno t1 where t1.tur_afiliado = @plm_codigo and t1.tur_estado = 0
 				
-		update SOLARIS.Turno set tur_estado = 5 where tur_afiliado = @plm_codigo and tur_estado = 0
+		update SOLARIS.Turno set tur_estado = 5, tur_agenda_cod = NULL where tur_afiliado = @plm_codigo and tur_estado = 0
 			
 	end
 GO
