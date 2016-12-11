@@ -2003,6 +2003,9 @@ CREATE PROCEDURE SOLARIS.bajarPacientes
 		--cambia el estado del usuario correspondiente
 		update SOLARIS.Usuario set usu_estado = 2 where usu_codigo = 
 		       (select p1.pac_usuario from SOLARIS.Paciente p1 where p1.pac_nro_afiliado = @plm_codigo)
+
+		--da baja a sus turnos pendientes si es que tiene
+		update SOLARIS.Turno set tur_estado = 5 where tur_afiliado = @plm_codigo
 	end
 GO
 
