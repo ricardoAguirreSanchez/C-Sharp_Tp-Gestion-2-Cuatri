@@ -45,6 +45,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.but_mostrar_horario = new System.Windows.Forms.Button();
             this.dtp_fecha_desde = new System.Windows.Forms.DateTimePicker();
+            this.but_verificar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_listado_horarios)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_especialidades)).BeginInit();
@@ -53,7 +54,7 @@
             // 
             // tex_numero_afiliado
             // 
-            this.tex_numero_afiliado.Location = new System.Drawing.Point(131, 20);
+            this.tex_numero_afiliado.Location = new System.Drawing.Point(108, 17);
             this.tex_numero_afiliado.Name = "tex_numero_afiliado";
             this.tex_numero_afiliado.Size = new System.Drawing.Size(100, 20);
             this.tex_numero_afiliado.TabIndex = 4;
@@ -221,11 +222,22 @@
             this.dtp_fecha_desde.Size = new System.Drawing.Size(200, 20);
             this.dtp_fecha_desde.TabIndex = 42;
             // 
+            // but_verificar
+            // 
+            this.but_verificar.Location = new System.Drawing.Point(214, 17);
+            this.but_verificar.Name = "but_verificar";
+            this.but_verificar.Size = new System.Drawing.Size(75, 23);
+            this.but_verificar.TabIndex = 43;
+            this.but_verificar.Text = "Verificar";
+            this.but_verificar.UseVisualStyleBackColor = true;
+            this.but_verificar.Click += new System.EventHandler(this.but_verificar_Click);
+            // 
             // frm_pedir_turno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(686, 386);
+            this.Controls.Add(this.but_verificar);
             this.Controls.Add(this.dtp_fecha_desde);
             this.Controls.Add(this.but_mostrar_horario);
             this.Controls.Add(this.groupBox1);
@@ -269,5 +281,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button but_mostrar_horario;
         private System.Windows.Forms.DateTimePicker dtp_fecha_desde;
+        private System.Windows.Forms.Button but_verificar;
     }
 }

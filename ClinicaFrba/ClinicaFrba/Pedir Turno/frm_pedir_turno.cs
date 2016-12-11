@@ -36,7 +36,7 @@ namespace ClinicaFrba.Pedir_Turno
             but_aceptar_medico.Enabled = false;
             but_mostrar_horario.Enabled = false;
             but_reservar.Enabled = false;
-
+            but_buscar_medicos.Enabled = false;
         }
 
         private void but_buscar_Click(object sender, EventArgs e)
@@ -110,6 +110,27 @@ namespace ClinicaFrba.Pedir_Turno
             this.dgv_listado_horarios.Columns["Codigo"].Visible = true;
 
 
+
+
+        }
+
+        private void but_verificar_Click(object sender, EventArgs e)
+        {
+            int codigoAfiliado = Convert.ToInt32(tex_numero_afiliado.Text);
+
+            Conexion conexion = new Conexion();
+            conexion.conectar();
+
+
+            if (conexion.afiliadoDadoBaja(codigoAfiliado))
+            {
+                MessageBox.Show("Imposible reserver, afiliado dado de baja");
+                this.Close();
+            }
+            else
+            {
+                but_buscar_medicos.Enabled=true; 
+            }
 
 
         }

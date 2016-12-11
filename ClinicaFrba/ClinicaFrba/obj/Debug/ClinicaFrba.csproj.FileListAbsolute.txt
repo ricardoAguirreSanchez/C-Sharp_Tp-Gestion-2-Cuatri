@@ -86,7 +86,6 @@ C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\Clin
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Registro_Resultado.frm_registro_resultado.resources
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csproj.GenerateResource.Cache
 C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Registrar_Usuario.frm_registrar_usuario.resources
-C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.csprojResolveAssemblyReference.cache
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.Registrar_Usuario.frm_registrar_usuario.resources
 C:\Users\Matias\Desktop\Tp_Gestion_2_Cuatri\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.frm_historial_plan.resources
 C:\Users\ricardo\Desktop\Tp_Gestion_2_Cuatri\ClinicaFrba\ClinicaFrba\obj\Debug\ClinicaFrba.frm_historial_plan.resources

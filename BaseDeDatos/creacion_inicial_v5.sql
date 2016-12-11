@@ -1363,8 +1363,10 @@ CREATE PROCEDURE SOLARIS.verificarLogeoInhabilitado
 	@usu_passwd varchar(255),
 	@usu_usuario varchar(255)
 	as
-		select usu_usuario from SOLARIS.Usuario where @usu_usuario = usu_usuario and
-		usu_estado = 1 and usu_login_fallidos = 3
+		select usu_usuario from SOLARIS.Usuario where (@usu_usuario = usu_usuario and
+		usu_estado = 1 ) or (@usu_usuario = usu_usuario and
+		usu_estado = 2 ) 
+		
 GO
 
 --inhabilitoUsuario
@@ -1992,9 +1994,16 @@ GO
 GO
 
 CREATE PROCEDURE SOLARIS.bajarPacientes
-@plm_codigo int
+@plm_codigo int,
+@fechaSistema datetime
 	as
-		update SOLARIS.Paciente set pac_esta_activo = 0 where pac_nro_afiliado = @plm_codigo
+	begin
+		update SOLARIS.Paciente set pac_esta_activo = 0 , pac_fecha_baja = @fechaSistema where pac_nro_afiliado = @plm_codigo
+
+		--cambia el estado del usuario correspondiente
+		update SOLARIS.Usuario set usu_estado = 2 where usu_codigo = 
+		       (select p1.pac_usuario from SOLARIS.Paciente p1 where p1.pac_nro_afiliado = @plm_codigo)
+	end
 GO
 
 GO
@@ -3013,5 +3022,21 @@ CREATE PROCEDURE SOLARIS.completarUsuarioMedico
 		where med_cod_medico = @codigo
 		end
 GO 
+---SOLARIS.afiliadoDadoBaja 
+IF OBJECT_ID('SOLARIS.afiliadoDadoBaja') IS NOT NULL
+	DROP PROCEDURE SOLARIS.afiliadoDadoBaja;
+GO
+
+GO
+
+CREATE PROCEDURE SOLARIS.afiliadoDadoBaja
+@codigo int 
+	as
+		select * from SOLARIS.Paciente where pac_esta_activo = 0 and pac_nro_afiliado = @codigo
+		
+GO
+
+
+
 
 -- [EOF]

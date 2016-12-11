@@ -38,16 +38,20 @@ namespace ClinicaFrba.Compra_Bono
                 int precioBono = conexion.consultarPrecioFarmacia(Convert.ToInt32(tex_numero_afiliado.Text));
                 tex_total.Text = (precioBono * Convert.ToInt32(tex_cant_bono_farmacia.Text)).ToString();
             }
+
+            but_comprar.Enabled = true;
         }
 
         private void rbn_bono_consulta_CheckedChanged(object sender, EventArgs e)
         {
             if (rbn_bono_consulta.Checked) { tex_cant_bono_farmacia.Enabled = false; tex_cant_bono_consulta.Enabled = true; }
+            but_calcular.Enabled = true;
         }
 
         private void rbn_bono_farmacia_CheckedChanged(object sender, EventArgs e)
         {
             if (rbn_bono_farmacia.Checked) { tex_cant_bono_farmacia.Enabled = true; tex_cant_bono_consulta.Enabled = false; }
+            but_calcular.Enabled = true;
         }
 
         private void but_comprar_Click(object sender, EventArgs e)
@@ -73,6 +77,7 @@ namespace ClinicaFrba.Compra_Bono
                     }
                     MessageBox.Show(tex_cant_bono_farmacia.Text + " bonos de farmacia comprados!"); 
                 }
+                this.Close();
             }
             catch (Exception error)
             {MessageBox.Show("No se pudo procesar la compra por: " + error.ToString());}
@@ -82,6 +87,35 @@ namespace ClinicaFrba.Compra_Bono
         {
             tex_cant_bono_farmacia.Enabled = false;
             tex_total.Enabled = false;
+
+            tex_cant_bono_consulta.Enabled = false;
+
+            rbn_bono_farmacia.Enabled = false;
+            rbn_bono_consulta.Enabled = false;
+
+            but_calcular.Enabled = false;
+            but_comprar.Enabled = false;
+
+        }
+
+        private void but_verificar_Click(object sender, EventArgs e)
+        {
+            int codigoAfiliado = Convert.ToInt32(tex_numero_afiliado.Text);
+
+            Conexion conexion = new Conexion();
+            conexion.conectar();
+
+
+            if (conexion.afiliadoDadoBaja(codigoAfiliado))
+            {
+                MessageBox.Show("Imposible comprar bonos, afiliado dado de baja");
+                this.Close();
+            }
+            else
+            {
+                rbn_bono_consulta.Enabled = true;
+                rbn_bono_farmacia.Enabled = true;
+            }
         }
     }
 }

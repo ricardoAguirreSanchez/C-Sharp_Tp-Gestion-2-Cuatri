@@ -273,10 +273,15 @@ namespace ClinicaFrba.AbmRol
             //modifico el nombre y estado
             try
             {
+                //busco la fecha del sistema
+                AppConfig ap = new AppConfig();
+                DateTime fechaSistema = Convert.ToDateTime(ap.obtenerFecha());
+                
+                
                 Conexion conexion = new Conexion();
                 conexion.conectar();
 
-                conexion.bajarAfiliado(int.Parse(tex_numero_afiliado.Text));
+                conexion.bajarAfiliado(int.Parse(tex_numero_afiliado.Text),fechaSistema);
                 MessageBox.Show("Eliminado!");
             }
             catch (Exception er1)

@@ -40,6 +40,7 @@
             this.tex_cant_bono_consulta = new System.Windows.Forms.TextBox();
             this.tex_cant_bono_farmacia = new System.Windows.Forms.TextBox();
             this.but_calcular = new System.Windows.Forms.Button();
+            this.but_verificar = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -63,7 +64,7 @@
             // 
             // tex_numero_afiliado
             // 
-            this.tex_numero_afiliado.Location = new System.Drawing.Point(149, 16);
+            this.tex_numero_afiliado.Location = new System.Drawing.Point(116, 16);
             this.tex_numero_afiliado.Name = "tex_numero_afiliado";
             this.tex_numero_afiliado.Size = new System.Drawing.Size(100, 20);
             this.tex_numero_afiliado.TabIndex = 2;
@@ -151,11 +152,22 @@
             this.but_calcular.UseVisualStyleBackColor = true;
             this.but_calcular.Click += new System.EventHandler(this.but_calcular_Click);
             // 
+            // but_verificar
+            // 
+            this.but_verificar.Location = new System.Drawing.Point(222, 16);
+            this.but_verificar.Name = "but_verificar";
+            this.but_verificar.Size = new System.Drawing.Size(75, 23);
+            this.but_verificar.TabIndex = 44;
+            this.but_verificar.Text = "Verificar";
+            this.but_verificar.UseVisualStyleBackColor = true;
+            this.but_verificar.Click += new System.EventHandler(this.but_verificar_Click);
+            // 
             // frm_comprar_bono
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(264, 265);
+            this.ClientSize = new System.Drawing.Size(311, 265);
+            this.Controls.Add(this.but_verificar);
             this.Controls.Add(this.but_calcular);
             this.Controls.Add(this.tex_cant_bono_farmacia);
             this.Controls.Add(this.tex_cant_bono_consulta);
@@ -191,5 +203,6 @@
         private System.Windows.Forms.TextBox tex_cant_bono_consulta;
         private System.Windows.Forms.TextBox tex_cant_bono_farmacia;
         private System.Windows.Forms.Button but_calcular;
+        private System.Windows.Forms.Button but_verificar;
     }
 }
