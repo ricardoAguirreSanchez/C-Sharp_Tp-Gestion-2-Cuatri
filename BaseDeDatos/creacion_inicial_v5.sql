@@ -2046,7 +2046,7 @@ CREATE PROCEDURE SOLARIS.bajarPacientes
 		insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel) 
 		select t1.tur_numero,4,'CANCELADO POR BAJA DE AFILIADO' from SOLARIS.Turno t1 where t1.tur_afiliado = @plm_codigo and t1.tur_estado = 0
 				
-		update SOLARIS.Turno set tur_estado = 5, tur_agenda_cod = NULL where tur_afiliado = @plm_codigo and tur_estado = 0
+		update SOLARIS.Turno set tur_estado = 5 where tur_afiliado = @plm_codigo and tur_estado = 0
 			
 	end
 GO
@@ -2594,17 +2594,20 @@ CREATE PROCEDURE SOLARIS.cancelarTurnos
 @motivo_cancel varchar(255),
 @tipo_turno int
  as
+	
+	insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel)
+	select tur_numero,@tipo_turno,@motivo_cancel from SOLARIS.Turno t1 join SOLARIS.Agenda a1 on (t1.tur_agenda_cod=a1.age_cod_entrada) where
+						   --cancelo todo el DIA ---
+	                      convert(date,a1.age_fecha_desde) = convert(date ,@fecha) and
+						  a1.age_cod_medico = @codigoMedico and
+						  t1.tur_estado = 0
+
 	update SOLARIS.Turno set tur_estado = 4 
 	where tur_numero in (select tur_numero from SOLARIS.Turno t join SOLARIS.Agenda a on (t.tur_agenda_cod=a.age_cod_entrada) where
 						   --cancelo todo el DIA ---
 	                      convert(date,a.age_fecha_desde) = convert(date ,@fecha) and
 						  a.age_cod_medico = @codigoMedico)
 	
-	insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel)
-	select tur_numero,@tipo_turno,@motivo_cancel from SOLARIS.Turno t1 join SOLARIS.Agenda a1 on (t1.tur_agenda_cod=a1.age_cod_entrada) where
-						   --cancelo todo el DIA ---
-	                      convert(date,a1.age_fecha_desde) = convert(date ,@fecha) and
-						  a1.age_cod_medico = @codigoMedico
  
 GO
 
@@ -2646,13 +2649,7 @@ CREATE PROCEDURE SOLARIS.cancelarTurnosHorarios
 @desde datetime,
 @hasta datetime
  as
-	update SOLARIS.Turno set tur_estado = 4, tur_agenda_cod = NULL
-	where tur_numero in (select tur_numero from SOLARIS.Turno t join SOLARIS.Agenda a on (t.tur_agenda_cod=a.age_cod_entrada) where
-						   --cancelo rango del DIA ---
-						  a.age_cod_medico = @codigoMedico and
-						  convert(date,a.age_fecha_desde) = convert(date ,@fecha) and
-	                      convert(time,a.age_fecha_desde) >= convert(time ,@desde) and
-	                      convert(time,a.age_fecha_desde) <= convert(time ,@hasta) )
+	
 
 	
 	insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel)
@@ -2661,8 +2658,17 @@ CREATE PROCEDURE SOLARIS.cancelarTurnosHorarios
 	                      convert(date,a1.age_fecha_desde) = convert(date ,@fecha) and
 	                      convert(time,a1.age_fecha_desde) >= convert(time ,@desde) and
 	                      convert(time,a1.age_fecha_desde) <= convert(time ,@hasta) and
-						  a1.age_cod_medico = @codigoMedico
- 
+						  a1.age_cod_medico = @codigoMedico and
+						  t1.tur_estado = 0
+
+
+	update SOLARIS.Turno set tur_estado = 4
+	where tur_numero in (select tur_numero from SOLARIS.Turno t join SOLARIS.Agenda a on (t.tur_agenda_cod=a.age_cod_entrada) where
+						   --cancelo rango del DIA ---
+						  a.age_cod_medico = @codigoMedico and
+						  convert(date,a.age_fecha_desde) = convert(date ,@fecha) and
+	                      convert(time,a.age_fecha_desde) >= convert(time ,@desde) and
+	                      convert(time,a.age_fecha_desde) <= convert(time ,@hasta) )
 GO
 
 
@@ -2761,11 +2767,13 @@ CREATE PROCEDURE SOLARIS.cancelarTurnoElegido
 @detalle varchar(255),
 @codigoTipoTurno int
  as
-	update SOLARIS.Turno set tur_estado = 3 , tur_agenda_cod = NUll
-	where tur_numero = @codigoTurno
+	
 	
 	insert into SOLARIS.Turno_Cancelado(tcl_turno,tcl_tipo_cancel,tcl_motivo_cancel)
 	values(@codigoTurno,@codigoTipoTurno,@detalle)
+
+	update SOLARIS.Turno set tur_estado = 3 
+	where tur_numero = @codigoTurno
 GO
 -- inserta en la agenda del medico
 GO
@@ -2848,7 +2856,7 @@ CREATE PROCEDURE SOLARIS.datosHorarios
 	age_med_especialidad = @codigoEspecialidad and 
 	convert(date,age_fecha_desde) >= convert(date ,@fechaInicial) and
 	convert(date,age_fecha_hasta) <= convert(date ,@fechaFinal) and
-	age_cod_entrada not in (select tur_agenda_cod from SOLARIS.Turno)
+	age_cod_entrada not in (select tur_agenda_cod from SOLARIS.Turno where tur_estado = 0)
 	order by 2
 GO
 
